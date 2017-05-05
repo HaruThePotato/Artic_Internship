@@ -16,6 +16,8 @@ public class UIManager : MonoBehaviour {
     public Canvas UIsave;
     [Tooltip("UI canvas for \"LOAD\" UI")]
     public Canvas UIload;
+    [Tooltip("UI canvas for \"DOWNLOAD\" UI")]
+    public Canvas UIDownload;
     [Tooltip("UI canvas for \"HELP\" UI")]
     public Canvas UIHelp;
 
@@ -115,6 +117,28 @@ public class UIManager : MonoBehaviour {
         {
             StartCoroutine(FadeCanvas(UIload, false));
             UIload.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            UIall.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            cc.cAllowCameraControls = true;
+        }
+    }
+
+    public void OpenDownloadScreen()
+    {
+        if (mouseOverUI && !holdingObject)
+        {
+            UIall.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            StartCoroutine(FadeCanvas(UIDownload, true));
+            UIDownload.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            cc.cAllowCameraControls = false;
+        }
+    }
+
+    public void CancelDownloadScreen()
+    {
+        if (mouseOverUI && !holdingObject)
+        {
+            StartCoroutine(FadeCanvas(UIDownload, false));
+            UIDownload.GetComponent<CanvasGroup>().blocksRaycasts = false;
             UIall.GetComponent<CanvasGroup>().blocksRaycasts = true;
             cc.cAllowCameraControls = true;
         }

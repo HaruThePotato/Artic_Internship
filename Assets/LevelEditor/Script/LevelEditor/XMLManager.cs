@@ -43,13 +43,13 @@ public class XMLManager : MonoBehaviour {
         stream.Close();
     }
 
-    public void UploadLevel(string fileName, AndroidDatabase androidDB)
+    public void UploadLevel(string fileName, LevelDatabase androidDB)
     {
         if (!Directory.Exists(Application.dataPath + "/Serialization/XMLa/temp"))
         {
             Directory.CreateDirectory(Application.dataPath + "/Serialization/XMLa/temp");
         }
-        XmlSerializer serilizer = new XmlSerializer(typeof(AndroidDatabase));
+        XmlSerializer serilizer = new XmlSerializer(typeof(LevelDatabase));
         StreamWriter stream = new StreamWriter(Application.dataPath + "/Serialization/XMLa/temp/" + fileName + ".xml", false, Encoding.GetEncoding("UTF-8"));
         serilizer.Serialize(stream, androidDB);
         stream.Close();

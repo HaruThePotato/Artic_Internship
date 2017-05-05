@@ -14,14 +14,16 @@ using System.Text.RegularExpressions;
 
 public class LevelManager : MonoBehaviour
 {
+    List<string> listOfDownloadables;
 
-	GridManager gm;
+    GridManager gm;
 	UIManager uim;
 	ObjectManager objm;
 	XMLManager xmlm;
 	CheckManager cm;
+    AWSscript aws;
 
-	LevelObject hObject;
+    LevelObject hObject;
 
 	[Header("LevelManager References")]
 	[Tooltip("The prefab for each \"LEVELBUTTON\"")]
@@ -35,8 +37,9 @@ public class LevelManager : MonoBehaviour
 	public bool bHoldingObject = false;
 
 	string levelSelected;
+    string downloadSelected;
 
-	int userNumber;
+    int userNumber;
 	int sameLaneNumber;
 	string runwayNumber;
 
@@ -76,7 +79,8 @@ public class LevelManager : MonoBehaviour
 		objm = ObjectManager.GetInstance();
 		xmlm = XMLManager.GetInstance();
 		cm = CheckManager.GetInstance();
-		userTextboxGO.SetActive(false);
+        aws = AWSscript.GetInstance();
+        userTextboxGO.SetActive(false);
 		userTextboxLCRGO.SetActive(false);
 		NumberOnlyGO.SetActive(false);
 		NumberLCRGO.SetActive(false);
@@ -544,27 +548,30 @@ public class LevelManager : MonoBehaviour
 
 			if (uim.UIsave.transform.GetChild(0).GetChild(0).FindChild("UploadToggle").GetComponent<Toggle>().isOn)
 			{
-				AndroidDatabase androidDB = new AndroidDatabase();
-				androidDB.cameraPosition = gm.cameraPlacementObject.transform.position;
-				androidDB.objectScale = gm.myGrid[0, 0].nVisualGrid.transform.localScale;
+				LevelDatabase levelAWSDB = new LevelDatabase();
+                levelAWSDB.cameraPosition = gm.cameraPlacementObject.transform.position;
+                levelAWSDB.objectScale = gm.myGrid[0, 0].nVisualGrid.transform.localScale;
 				List<string> myBundleA = new List<string>();
 				foreach (Node n in gm.myGrid)
 				{
 					if (n.nObjects.Count > 0)
 					{
-						AndroidNode androidNode = new AndroidNode();
-						for (int i = 0; i < n.nObjects.Count; i++)
+                        LevelNode levelNode = new LevelNode();
+                        levelNode.nodePositionX = n.nPosX;
+                        levelNode.nodePositionZ = n.nPosZ;
+                        for (int i = 0; i < n.nObjects.Count; i++)
 						{
-							androidNode.objectPositions.Add(n.nObjects[i].LObject.transform.position);
-							androidNode.objectRotations.Add(n.nObjects[i].LObject.transform.GetChild(0).transform.eulerAngles);
-							androidNode.objectIDs.Add(n.nObjects[i].LObject.name);
+                            levelNode.objectPositions.Add(n.nObjects[i].LObject.transform.position);
+                            levelNode.objectRotations.Add(n.nObjects[i].LObject.transform.GetChild(0).transform.eulerAngles);
+                            levelNode.objectTypes.Add(n.nObjects[i].LObjectType);
+                            levelNode.objectIDs.Add(n.nObjects[i].LObject.name);
 							myBundleA.Add(n.nObjects[i].bundleName);
 						}
-						androidDB.aList.Add(androidNode);
+                        levelAWSDB.dbList.Add(levelNode);
 					}
 				}
-				androidDB.objectBundleNames = myBundle.Distinct().ToList();
-				xmlm.UploadLevel(input, androidDB);
+                levelAWSDB.objectBundleNames = myBundle.Distinct().ToList();
+				xmlm.UploadLevel(input, levelAWSDB);
 				uim.Status.text = "Saved Level\nUploading ..";
 			}
 			uim.CancelSaveScreen();
@@ -653,7 +660,53 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
-	void AddBundleName(List<string> myBundle, string b)
+    public void loadDownloads()
+    {
+        uim.Status.text = "Connecting...";
+        Debug.Log("Connecting to AWS S3 Database.");
+        listOfDownloadables = aws.getListOfBucketObjects();
+    }
+
+    public void callDownload()
+    {
+        if (downloadSelected == null)
+        {
+            UIManager.GetInstance().Status.text = "No Download Found.";
+            Debug.Log("No downloadable object has been selected.");
+        }
+        else
+        {
+            uim.Status.text = "Downloading...";
+            aws.GetObject(downloadSelected + ".xml");
+        }
+    }
+
+    public void loadDownloadsInContainer()
+    {
+        levelSelected = null;
+        Transform t = uim.UIDownload.transform.GetChild(0).GetChild(0).FindChild("DownloadPanel").GetChild(0);
+        if (t.childCount > 0)
+        {
+            foreach (Transform child in t.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+        foreach (string objects in listOfDownloadables)
+        {
+            GameObject downloadButton = Instantiate(levelButtonPrefab, t) as GameObject;
+            downloadButton.transform.GetChild(0).GetComponent<Text>().text = objects.Substring(0, objects.Length - 5).Replace("level/", "");/*Path.GetFileName(objects).Substring(0, Path.GetFileName(objects).Length - 4);*/
+            downloadButton.name = objects.Substring(0, objects.Length - 5).Replace("level/", "");
+            downloadButton.GetComponent<Button>().onClick.AddListener(() => { SelectDownload(downloadButton.name); });
+        }
+    }
+
+    public void SelectDownload(string n)
+    {
+        downloadSelected = n;
+    }
+
+    void AddBundleName(List<string> myBundle, string b)
 	{
 		if (myBundle.Count == 0)
 		{

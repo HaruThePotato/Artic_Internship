@@ -147,68 +147,136 @@ public class AWSscript : MonoBehaviour
     }
 #endregion
 
-#region UploadXML
-    /// <summary>
-    /// UploadXML to S3 Bucket. 
-    /// </summary>
-    public void AWSUploadXML(string fileName)
-    {
-        uploadingXML = true;
+    #region UploadXML
+        /// <summary>
+        /// UploadXML to S3 Bucket. 
+        /// </summary>
+        public void AWSUploadXML(string fileName)
+        {
+            uploadingXML = true;
 		
-        var stream = new FileStream(Application.dataPath + "/Serialization/XMLa/temp/" + fileName + ".xml", FileMode.Open, FileAccess.Read, FileShare.Read);
-        var request = new PostObjectRequest()
-        {
-            Bucket = S3BucketName,
-            Key = levelFolderName + "/" + fileName + ".xml",
-            InputStream = stream,
-            CannedACL = S3CannedACL.Private
-        };
-
-        Client.PostObjectAsync(request, (responseObj) =>
-        {
-            if (responseObj.Exception == null)
+            var stream = new FileStream(Application.dataPath + "/Serialization/XMLa/temp/" + fileName + ".xml", FileMode.Open, FileAccess.Read, FileShare.Read);
+            var request = new PostObjectRequest()
             {
-                stream.Close();
-                uploadedXML = true;
+                Bucket = S3BucketName,
+                Key = levelFolderName + "/" + fileName + ".xml",
+                InputStream = stream,
+                CannedACL = S3CannedACL.Private
+            };
+
+            Client.PostObjectAsync(request, (responseObj) =>
+            {
+                if (responseObj.Exception == null)
+                {
+                    stream.Close();
+                    uploadedXML = true;
+                }
+            });
+        }
+    #endregion
+
+    #region List XMLs
+        /// <summary>
+        /// List XMLs in S3 Bucket
+        /// </summary>
+        public void AWSListLevels()
+        {
+            fetchingList = true;
+
+            var request = new ListObjectsRequest
+            {
+                Prefix = levelFolderName + "/",
+                BucketName = S3BucketName
+            };
+
+            Client.ListObjectsAsync(request, (responseObject) =>
+            {
+                if (responseObject.Exception == null)
+                {
+                    responseObject.Response.S3Objects.ForEach((o) =>
+                    {
+                        if (o.Key != levelFolderName + "/")
+                        {
+                        xmlList.Add(o.Key.Replace(levelFolderName + "/", ""));
+                        }
+                    }
+                    );
+                    fetchedList = true;
+                }
+                else
+                {
+
+                }
+            });
+        }
+        #endregion
+
+    #region Gets the objects from AWS S3
+    public void GetObject(string fileName)
+    {
+        Client.GetObjectAsync(S3BucketName, levelFolderName + "/" + fileName, (responseObj) =>
+        {
+            var response = responseObj.Response;
+            int progress;
+            if (response.ResponseStream != null)
+            {
+                string aeDir = Application.dataPath;
+                if (!Directory.Exists(aeDir + "/Serialization/XML/"))
+                {
+                    Directory.CreateDirectory(aeDir + "/Serialization/XML/");
+                }
+                using (BinaryReader bReader = new BinaryReader(response.ResponseStream))
+                {
+                    byte[] buffer = bReader.ReadBytes((int)response.ResponseStream.Length);
+                    progress = (int)response.ResponseStream.Length;
+                    bReader.ReadBytes((int)response.ResponseStream.Length);
+                    File.WriteAllBytes(aeDir + "/Serialization/XML/" + fileName, buffer);
+                    downloadedStuff = true;
+                }
+                UIManager.GetInstance().Status.text = "Downloaded.";
+                Debug.Log("The object selected has been downloaded.");
             }
         });
     }
-#endregion
+        #endregion
 
-#region List XMLs
-    /// <summary>
-    /// List XMLs in S3 Bucket
-    /// </summary>
-    public void AWSListLevels()
+    #region List the objects from the bucket in AWS S3
+    public List<string> getListOfBucketObjects()
     {
-        fetchingList = true;
-
-        var request = new ListObjectsRequest
+        List<string> list = new List<string>();
+        bool skippedFirst = false;
+        ListObjectsRequest request = new ListObjectsRequest
         {
-            Prefix = levelFolderName + "/",
-            BucketName = S3BucketName
+            BucketName = S3BucketName,
+            Prefix = levelFolderName + "/"
         };
 
         Client.ListObjectsAsync(request, (responseObject) =>
         {
             if (responseObject.Exception == null)
             {
+                UIManager.GetInstance().Status.text = "Connected to AWS S3 Database.";
+                Debug.Log("Connected to AWS S3 Database.");
                 responseObject.Response.S3Objects.ForEach((o) =>
                 {
-                    if (o.Key != levelFolderName + "/")
+                    // Because getting a list of object returns the folder as the first array
+                    if (skippedFirst)
                     {
-                    xmlList.Add(o.Key.Replace(levelFolderName + "/", ""));
+                        list.Add(string.Format("{0}\n", o.Key));
                     }
-                }
-                );
-                fetchedList = true;
+                    else
+                    {
+                        skippedFirst = true;
+                    }
+                });
+                LevelManager.GetInstance().loadDownloadsInContainer();
             }
             else
             {
-
+                Debug.Log("Got Exception \n");
             }
         });
+        return list;
     }
-#endregion
-
+        #endregion
 }

@@ -111,16 +111,27 @@ public class CameraController : MonoBehaviour {
 			{
 				transform.position = gm.GetCenterPosition();
 			}
-			if (Input.GetKey(KeyCode.E))
+			/*if (Input.GetKey(KeyCode.E))
 			{
 				transform.position = new Vector3(0, 0, 0);
-			}
+			}*/
 
 			//Movement with WASD
 			AdjustMovement3();
 
 			//Rotate camera with Arrow Keys
 			AdjustRotation2();
+
+			if (Input.GetKey(KeyCode.Q)) //Zoom out with Q
+			{
+				zoomControl = 0.01f;
+				AdjustZoom(zoomControl);
+			}
+			if (Input.GetKey(KeyCode.E)) //Zoom in with E
+			{
+				zoomControl = -0.01f;
+				AdjustZoom(zoomControl);
+			}
 		}
 
 	}

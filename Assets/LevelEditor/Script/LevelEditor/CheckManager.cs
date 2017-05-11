@@ -56,42 +56,29 @@ public class CheckManager : MonoBehaviour
 		{
 			if (collided.gameObject.transform.position.x == lastPos.x || collided.gameObject.transform.position.z == lastPos.z) //check for same row or column, ignoring diagonal
 			{
-				if (lvlm.selectedObj.LObject.name == "RW_BlastPad" && collided.gameObject.tag == "taxiway") //if blastpad was selected and taxiway is around
+				if (lvlm.selectedObj.LObject.name == "Runway_BlastPad" && collided.gameObject.tag == "taxiway") //if blastpad was selected and taxiway is around
 				{
 					adjacentCheck = false;
 					print("You cannot place that near a taxiway");
 					break;
 				}
-				else if (lvlm.selectedObj.LObject.tag == "taxiway" && collided.gameObject.name == "RW_BlastPad") //if taxyiway is selected and blastpad is around
+				else if (lvlm.selectedObj.LObject.tag == "taxiway" && collided.gameObject.name == "Runway_BlastPad") //if taxyiway is selected and blastpad is around
 				{
 					adjacentCheck = false;
 					print("You cannot place that near a blastpad");
 					break;
 				}
-				else if (lvlm.selectedObj.LObject.tag == "runway" && collided.gameObject.name == "Roadway") //if runway is selected and roadway is around
-				{
+				else if (lvlm.selectedObj.LObject.tag == "runway" && (collided.gameObject.tag == "roadway" || collided.gameObject.tag == "apron"))
+				{//if runway is selected and roadway/apron is around
 					adjacentCheck = false;
 					print("You cannot place that near a plane roadway");
 					break;
 				}
-				else if (lvlm.selectedObj.LObject.name == "Roadway" && collided.gameObject.tag == "runway") //if roadway is selected and runway is around
+				else if ((lvlm.selectedObj.LObject.tag == "roadway" || lvlm.selectedObj.LObject.tag == "apron") && collided.gameObject.tag == "runway") //if roadway is selected and runway is around
 				{
 					adjacentCheck = false;
 					print("You cannot place that near a runway");
 					break;
-				}
-				else if (lvlm.selectedObj.LObject.name == "TW_TaxiwayMarking") //if taxiway marking is selected, check for another taxiway marking and excludes itself
-				{
-					if ((collided.gameObject.transform.position.x != lastPos.x || collided.gameObject.transform.position.z != lastPos.z) && collided.gameObject.name == "TW_TaxiwayMarking")
-					{
-						adjacentCheck = true;
-						break;
-					}
-					else
-					{
-						adjacentCheck = false;
-						print("Connect the taxiway marking from a taxiway first");
-					}
 				}
 				else if (lvlm.selectedObj.LObject.name == "HoldingShortLine") //if holding short line is selected and check for taxiway
 				{
@@ -113,73 +100,59 @@ public class CheckManager : MonoBehaviour
 		}
 	}
 
-	/*void CheckTaxiway()
-	{
-		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y+1, gm.currentNode.nPosZ);
-		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid.
-		foreach (Collider collided in hitColliders)
-		{
-			if (collided.gameObject.transform.position.x == lastPos.x || collided.gameObject.transform.position.z == lastPos.z)
-			{
-				if (lvlm.selectedObj.LObject.tag == "taxiway" && collided.gameObject.name == "RW_BlastPad") //if taxyiway is selected and blastpad is around
-				{
-					adjacentCheck = false;
-					print("You cannot place that near a blastpad");
-					break;
-				}
-				else
-				{
-					adjacentCheck = true;
-				}
-			}
-		}
-	}*/
-
 	void CheckRunway() //check the runway lane for correct order. This is super long because of all the double checking and in opposite order.
 	{
 		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
 		RaycastHit hit;
-		if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
-			|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast left and back
+		if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))
+			|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))) //raycast left and back
 		{
-			if (lvlm.selectedObj.LObject.name == "RW_ThresholdMarker" && (hit.collider.gameObject.name == "RW_BlastPad" || hit.collider.gameObject.name == "RW_DisplacedThreshold"))
+			if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
+			{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
 			//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
 			{
 				runwayCheck = true;
 			}
-			else if (lvlm.selectedObj.LObject.name == "RW_RunwayNumber" && hit.collider.gameObject.name == "RW_ThresholdMarker")
+			else if (lvlm.selectedObj.LObject.name == "Runway_RunwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
 			{ //selected object is RunwayNumber and raycast hits ThresholdMarker
 				runwayCheck = true;
 			}
-			else if (lvlm.selectedObj.LObject.name == "RW_TouchdownZoneMarker" && hit.collider.gameObject.name == "RW_RunwayNumber")
+			else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.name == "Runway_RunwayNumber")
 			{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
 				runwayCheck = true;
 			}
-			else if (lvlm.selectedObj.LObject.name == "RW_AimingPointMarker" && hit.collider.gameObject.name == "RW_TouchdownZoneMarker")
-			{ //selected object is AimingPointMarker and ray cast hits TouchdownZoneMarker
+			else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchdownZone")
+			{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
 				runwayCheck = true;
 			}
 			else
 			{
 				runwayCheck = false;
-				if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
-					|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast right and forward
+				if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))
+					|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))) //raycast right and forward
 				{
-					if (lvlm.selectedObj.LObject.name == "RW_ThresholdMarker" && (hit.collider.gameObject.name == "RW_BlastPad" || hit.collider.gameObject.name == "RW_DisplacedThreshold"))
+					if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
+					{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
 					//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
 					{
 						runwayCheck = true;
 					}
-					else if (lvlm.selectedObj.LObject.name == "RW_RunwayNumber" && hit.collider.gameObject.name == "RW_ThresholdMarker")
+					else if (lvlm.selectedObj.LObject.name == "Runway_RunwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
 					{ //selected object is RunwayNumber and raycast hits ThresholdMarker
 						runwayCheck = true;
 					}
-					else if (lvlm.selectedObj.LObject.name == "RW_TouchdownZoneMarker" && hit.collider.gameObject.name == "RW_RunwayNumber")
+					else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.name == "Runway_RunwayNumber")
 					{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
 						runwayCheck = true;
 					}
-					else if (lvlm.selectedObj.LObject.name == "RW_AimingPointMarker" && hit.collider.gameObject.name == "RW_TouchdownZoneMarker")
-					{ //selected object is AimingPointMarker and ray cast hits TouchdownZoneMarker
+					else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchdownZone")
+					{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
 						runwayCheck = true;
 					}
 				}
@@ -189,47 +162,55 @@ public class CheckManager : MonoBehaviour
 				}
 			}
 		}
-		else if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
-				|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast right and forward
+		else if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))
+				|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))) //raycast right and forward
 		{
-			if (lvlm.selectedObj.LObject.name == "RW_ThresholdMarker" && (hit.collider.gameObject.name == "RW_BlastPad" || hit.collider.gameObject.name == "RW_DisplacedThreshold"))
+			if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
+			{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
 			//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
 			{
 				runwayCheck = true;
 			}
-			else if (lvlm.selectedObj.LObject.name == "RW_RunwayNumber" && hit.collider.gameObject.name == "RW_ThresholdMarker")
+			else if (lvlm.selectedObj.LObject.name == "Runway_RunwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
 			{ //selected object is RunwayNumber and raycast hits ThresholdMarker
 				runwayCheck = true;
 			}
-			else if (lvlm.selectedObj.LObject.name == "RW_TouchdownZoneMarker" && hit.collider.gameObject.name == "RW_RunwayNumber")
+			else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.name == "Runway_RunwayNumber")
 			{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
 				runwayCheck = true;
 			}
-			else if (lvlm.selectedObj.LObject.name == "RW_AimingPointMarker" && hit.collider.gameObject.name == "RW_TouchdownZoneMarker")
-			{ //selected object is AimingPointMarker and ray cast hits TouchdownZoneMarker
+			else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchdownZone")
+			{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
 				runwayCheck = true;
 			}
 			else
 			{
 				runwayCheck = false;
-				if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
-					|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast left and back
+				if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))
+					|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))) //raycast left and back
 				{
-					if (lvlm.selectedObj.LObject.name == "RW_ThresholdMarker" && (hit.collider.gameObject.name == "RW_BlastPad" || hit.collider.gameObject.name == "RW_DisplacedThreshold"))
+					if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
+					{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
 					//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
 					{
 						runwayCheck = true;
 					}
-					else if (lvlm.selectedObj.LObject.name == "RW_RunwayNumber" && hit.collider.gameObject.name == "RW_ThresholdMarker")
+					else if (lvlm.selectedObj.LObject.name == "Runway_RunwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
 					{ //selected object is RunwayNumber and raycast hits ThresholdMarker
 						runwayCheck = true;
 					}
-					else if (lvlm.selectedObj.LObject.name == "RW_TouchdownZoneMarker" && hit.collider.gameObject.name == "RW_RunwayNumber")
+					else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.name == "Runway_RunwayNumber")
 					{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
 						runwayCheck = true;
 					}
-					else if (lvlm.selectedObj.LObject.name == "RW_AimingPointMarker" && hit.collider.gameObject.name == "RW_TouchdownZoneMarker")
-					{ //selected object is AimingPointMarker and ray cast hits TouchdownZoneMarker
+					else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchdownZone")
+					{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
 						runwayCheck = true;
 					}
 				}
@@ -303,36 +284,41 @@ public class CheckManager : MonoBehaviour
 	{
 		if (gm.currentNode.nObjects.Count > 0) //if there is at least an object on the grid
 		{
-			if (gm.currentNode.nObjects.Last().LObjectType != 1 && gm.currentNode.nObjects.Last().LObjectType != 4) //if the bottom object allows stacking
+			if (gm.currentNode.nObjects.Last().LObjectType != 1) //if the bottom object allows stacking
 			{
 				if (lvlm.selectedObj.LObjectType == 1) //selected object is non-stackable
 				{
-					if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
+					if (gm.currentNode.nObjects.Last().LObjectType == 4) //bottom object is BaseOnlyNonStackable
 					{
-						print("This can only be built in apron area");
-						lvlm.CancelSelect();
+						if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
+						{
+							print("This can only be built in apron area");
+							lvlm.CancelSelect();
+						}
+						else
+						{
+							lvlm.CloneSucceed();
+						}
 					}
-					else if (lvlm.selectedObj.LObject.tag == "sign" && gm.currentNode.nObjects.Last().LObject.tag != "grass") //selected sign but not building on grass plain
+					else //bottom object type is 2 or 3
 					{
-						print("Signs can only be placed on grass plains");
-						lvlm.CancelSelect();
-					}
-					else if (lvlm.selectedObj.LObject.name == "Hangar" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected hangar but not building on apron block (not necessarily apron area)
-					{
-						print("This can only be placed on apron");
-						lvlm.CancelSelect();
-					}
-					else if (lvlm.selectedObj.LObject.tag == "plane" && (gm.currentNode.nObjects.Last().LObject.tag == "grass" || gm.currentNode.nObjects.Last().LObject.name == "Roadway"))
-					{ //selected plane but try to build on grass plain or plane roadway
-						lvlm.CancelSelect();
-					}
-					else if (lvlm.selectedObj.LObject.tag == "vehicle" && gm.currentNode.nObjects.Last().LObject.tag == "grass")
-					{ //selected vehicle but try to build on grass plain
-						lvlm.CancelSelect();
-					}
-					else
-					{
-						lvlm.CloneSucceed();
+						if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
+						{
+							print("This can only be built in apron area");
+							lvlm.CancelSelect();
+						}
+						else if (lvlm.selectedObj.LObject.tag == "plane" && (gm.currentNode.nObjects.Last().LObject.tag == "grass" || gm.currentNode.nObjects.Last().LObject.tag == "roadway"))
+						{ //selected plane but try to build on grass plain or plane roadway
+							lvlm.CancelSelect();
+						}
+						else if (lvlm.selectedObj.LObject.tag == "vehicle" && gm.currentNode.nObjects.Last().LObject.tag == "grass")
+						{ //selected vehicle but try to build on grass plain
+							lvlm.CancelSelect();
+						}
+						else
+						{
+							lvlm.CloneSucceed();
+						}
 					}
 				}
 				else if (lvlm.selectedObj.LObjectType == 2) //selected object is stackable
@@ -344,152 +330,43 @@ public class CheckManager : MonoBehaviour
 					print("That can only be used at ground level");
 					lvlm.CancelSelect();
 				}
-				else if (lvlm.selectedObj.LObjectType == 4) //selected object is lighting/marking
-				{
-					if (lvlm.selectedObj.LObject.tag == "markingRunway") //if anything with markingRunway tag is selected
-					{
-						if (lvlm.selectedObj.LObject.name == "RW_BlastPad") //selected BlastPad
-						{
-							if (gm.currentNode.nObjects.Last().LObject.tag == "runway")
-							{
-								CheckAdjacent();
-								CheckAdjacentTrueClone();
-							}
-						}
-						else if (lvlm.selectedObj.LObject.name == "RW_DisplacedThreshold") //selected DisplacedThreshhold
-						{
-							if (gm.currentNode.nObjects.Last().LObject.tag == "runway")
-							{
-								lvlm.CloneSucceed();
-							}
-						}
-						else if (lvlm.selectedObj.LObject.name == "RW_ThresholdMarker") //selected ThresholdMarker
-						{
-							if (gm.currentNode.nObjects.Last().LObject.tag == "runway")
-							{
-								CheckRunway();
-								CheckRunwayTrueClone();
-							}
-						}
-						else if (lvlm.selectedObj.LObject.name == "RW_RunwayNumber") //selected RunwayNumber
-						{
-							if (gm.currentNode.nObjects.Last().LObject.tag == "runway")
-							{
-								CheckRunway();
-								CheckRunwayTrueClone();
-							}
-							else
-							{
-								lvlm.CancelSelect();
-							}
-						}
-						else if (lvlm.selectedObj.LObject.name == "RW_TouchdownZoneMarker") //selected TouchdownZoneMarker
-						{
-							if (gm.currentNode.nObjects.Last().LObject.tag == "runway")
-							{
-								CheckRunway();
-								CheckRunwayTrueClone();
-							}
-						}
-						else if (lvlm.selectedObj.LObject.name == "RW_AimingPointMarker") //selected AimingPointMarker
-						{
-							if (gm.currentNode.nObjects.Last().LObject.tag == "runway")
-							{
-								CheckRunway();
-								CheckRunwayTrueClone();
-							}
-						}
-						else
-						{
-							lvlm.CancelSelect();
-							print("You can only build that on the runway.");
-						}
-					}
-					else if (lvlm.selectedObj.LObject.tag == "markingTaxiway")  //selected anything with markingTaxiway tag
-					{
-						if (gm.currentNode.nObjects.Last().LObject.tag == "taxiway")
-						{
-							if (lvlm.selectedObj.LObject.name == "HoldingShortLine")
-							{
-								CheckAdjacent();
-								CheckAdjacentTrueClone();
-							}
-							else
-							{
-								lvlm.CloneSucceed();
-							}
-						}
-						else if (gm.currentNode.nObjects.Last().LObject.tag == "runway")
-						{
-							CheckAdjacent();
-							CheckAdjacentTrueClone();
-						}
-						else
-						{
-							lvlm.CancelSelect();
-							print("You cannot place the marking here");
-						}
-					}
-					else
-					{
-						lvlm.CloneSucceed();
-					}
-				}
-			}
-			else if (gm.currentNode.nObjects.Last().LObjectType == 4) //if the top object is marking/lighting
-			{
-				if (lvlm.selectedObj.LObject.tag == "plane") //selected plane and try to build on marking/lighting
-				{
-					lvlm.CloneSucceed();
-				}
-				else if (lvlm.selectedObj.LObject.tag == "vehicle")
-				{ //selecteed vehicle and try to build on marking/lighting
-					lvlm.CloneSucceed();
-				}
-				else if (lvlm.selectedObj.LObjectType != 4) //if the selected object is not lighting/marking
-				{
-					print("You cannot build this on lighting/marking");
-					lvlm.CancelSelect();
-				}
-				else if (lvlm.selectedObj.LObject.tag == "markingRunway" && gm.currentNode.nObjects.Last().LObject.tag != "waylight")
-				{ //selected runway marking but not placing on waylight
-					print("Markings cannot stack");
-					lvlm.CancelSelect();
-				}
-				else
-				{
-					lvlm.CloneSucceed();
-				}
 			}
 		}
 		else //if there is no object on the grid
 		{
-			if (lvlm.selectedObj.LObjectType == 1 || lvlm.selectedObj.LObjectType == 2 || lvlm.selectedObj.LObjectType == 4)
+			if (lvlm.selectedObj.LObjectType == 1 || lvlm.selectedObj.LObjectType == 2)
 			{ //if object type 1, 2, or 3 is selected 
 				print("Place a ground object first");
 				lvlm.CancelSelect();
 			}
-			else if (lvlm.selectedObj.LObjectType == 3) //if object type 3 is selected
+			else if (lvlm.selectedObj.LObjectType == 3 || lvlm.selectedObj.LObjectType == 4) //if object type 3 or 4 is selected
 			{
-				if (lvlm.selectedObj.LObject.tag == "taxiway") //specifically taxiway
+				if (lvlm.selectedObj.LObject.tag == "runway") //specifically runway
 				{
-					CheckAdjacent();
-					CheckAdjacentTrueClone();
+					if (lvlm.selectedObj.LObject.name == "Runway_BlastPad" || lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold" || lvlm.selectedObj.LObject.name == "Runway_Line")
+					{//BlastPad, DisplacedThreshold or Line selected, no need to CheckRunway
+						CheckAdjacent();
+						CheckAdjacentTrueClone();
+					}
+					else
+					{
+						CheckAdjacent();
+						if (adjacentCheck == true)
+						{
+							CheckRunway();
+							CheckRunwayTrueClone();
+						}
+					}
 				}
-				else if (lvlm.selectedObj.LObject.tag == "runway") //specifically runway
-				{
-					CheckAdjacent();
-					CheckAdjacentTrueClone();
-				}
-
-				else if (lvlm.selectedObj.LObject.name == "Roadway") //specifically roadway
+				else if (lvlm.selectedObj.LObject.tag == "roadway") //specifically roadway
 				{
 					CheckAdjacent();
 					CheckAdjacentTrueClone();
 				}
 				else
 				{
-					lvlm.CloneSucceed();
+					CheckAdjacent();
+					CheckAdjacentTrueClone();
 				}
 			}
 		}
@@ -499,191 +376,81 @@ public class CheckManager : MonoBehaviour
 	{
 		if (gm.currentNode.nObjects.Count > 0) //if there is at least an object on the grid
 		{
-			if (gm.currentNode.nObjects.Last().LObjectType != 1 && gm.currentNode.nObjects.Last().LObjectType != 4) //if the bottom object allows stacking
+			if (gm.currentNode.nObjects.Last().LObjectType != 1) //if the bottom object allows stacking
 			{
 				if (lvlm.selectedObj.LObjectType == 1) //selected object is non-stackable
 				{
-					if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
+					if (gm.currentNode.nObjects.Last().LObjectType == 4) //bottom object is BaseOnlyNonStackable
 					{
-						print("This can only be built in apron area");
-						lvlm.CancelSelect();
+						if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
+						{
+							print("This can only be built in apron area");
+							lvlm.CancelSelect();
+						}
+						else
+						{
+							lvlm.PlaceSucceed();
+						}
 					}
-					else if (lvlm.selectedObj.LObject.tag == "sign" && gm.currentNode.nObjects.Last().LObject.tag != "grass") //selected sign but not building on grass plain
+					else //bottom object type is 2 or 3
 					{
-						print("Signs can only be placed on grass plains");
-						lvlm.CancelSelect();
-					}
-					else if (lvlm.selectedObj.LObject.name == "Hangar" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected hangar but not building on apron tile
-					{
-						print("This can only be placed on apron");
-						lvlm.CancelSelect();
-					}
-					else if (lvlm.selectedObj.LObject.tag == "plane" && (gm.currentNode.nObjects.Last().LObject.tag == "grass" || gm.currentNode.nObjects.Last().LObject.name == "Roadway"))
-					{ //selected plane but try to build on grass plain or plane roadway
-						lvlm.CancelSelect();
-					}
-					else if (lvlm.selectedObj.LObject.tag == "vehicle" && gm.currentNode.nObjects.Last().LObject.tag == "grass")
-					{ //selected vehicle but try to build on grass plain
-						lvlm.CancelSelect();
-					}
-					else
-					{
-						lvlm.PlaceSucceed();
+						if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
+						{
+							print("This can only be built in apron area");
+							lvlm.CancelSelect();
+						}
+						else if (lvlm.selectedObj.LObject.tag == "plane" && (gm.currentNode.nObjects.Last().LObject.tag == "grass" || gm.currentNode.nObjects.Last().LObject.tag == "roadway"))
+						{ //selected plane but try to build on grass plain or plane roadway
+							lvlm.CancelSelect();
+						}
+						else if (lvlm.selectedObj.LObject.tag == "vehicle" && gm.currentNode.nObjects.Last().LObject.tag == "grass")
+						{ //selected vehicle but try to build on grass plain
+							lvlm.CancelSelect();
+						}
+						else
+						{
+							lvlm.PlaceSucceed();
+						}
 					}
 				}
-				if (lvlm.selectedObj.LObjectType == 2) //selected object is stackable
+				else if (lvlm.selectedObj.LObjectType == 2) //selected object is stackable
 				{
 					lvlm.PlaceSucceed();
 				}
-				if (lvlm.selectedObj.LObjectType == 3) //selected object is base-only
+				else if (lvlm.selectedObj.LObjectType == 3) //selected object is base-only
 				{
 					print("That can only be used at ground level");
 					lvlm.CancelSelect();
-				}
-				if (lvlm.selectedObj.LObjectType == 4) //selected object is lighting/marking
-				{
-					if (lvlm.selectedObj.LObject.tag == "markingRunway") //if anything with markingRunway tag is selected
-					{
-						if (lvlm.selectedObj.LObject.name == "RW_BlastPad") //selected BlastPad
-						{
-							if (gm.currentNode.nObjects.Last().LObject.tag == "runway")
-							{
-								CheckAdjacent();
-								CheckAdjacentTrue();
-							}
-						}
-						else if (lvlm.selectedObj.LObject.name == "RW_DisplacedThreshold") //selected DisplacedThreshhold
-						{
-							if (gm.currentNode.nObjects.Last().LObject.tag == "runway")
-							{
-								lvlm.PlaceSucceed();
-							}
-						}
-						else if (lvlm.selectedObj.LObject.name == "RW_ThresholdMarker") //selected ThresholdMarker
-						{
-							if (gm.currentNode.nObjects.Last().LObject.tag == "runway")
-							{
-								CheckRunway();
-								CheckRunwayTrue();
-							}
-						}
-						else if (lvlm.selectedObj.LObject.name == "RW_RunwayNumber") //selected RunwayNumber
-						{
-							if (gm.currentNode.nObjects.Last().LObject.tag == "runway")
-							{
-								CheckRunway();
-								CheckRunwayTrue();
-							}
-							else
-							{
-								lvlm.CancelSelect();
-							}
-						}
-						else if (lvlm.selectedObj.LObject.name == "RW_TouchdownZoneMarker") //selected TouchdownZoneMarker
-						{
-							if (gm.currentNode.nObjects.Last().LObject.tag == "runway")
-							{
-								CheckRunway();
-								CheckRunwayTrue();
-							}
-						}
-						else if (lvlm.selectedObj.LObject.name == "RW_AimingPointMarker") //selected AimingPointMarker
-						{
-							if (gm.currentNode.nObjects.Last().LObject.tag == "runway")
-							{
-								CheckRunway();
-								CheckRunwayTrue();
-							}
-						}
-						else
-						{
-							lvlm.CancelSelect();
-							print("You can only build that on the runway.");
-						}
-					}
-					if (lvlm.selectedObj.LObject.tag == "markingTaxiway")  //selected anything with markingTaxiway tag
-					{
-						if (gm.currentNode.nObjects.Last().LObject.tag == "taxiway")
-						{
-							if (lvlm.selectedObj.LObject.name == "HoldingShortLine")
-							{
-								CheckAdjacent();
-								CheckAdjacentTrue();
-							}
-							else
-							{
-								lvlm.PlaceSucceed();
-							}
-						}
-						else if (gm.currentNode.nObjects.Last().LObject.tag == "runway")
-						{
-							CheckAdjacent();
-							CheckAdjacentTrue();
-						}
-						else
-						{
-							lvlm.CancelSelect();
-							print("You cannot place the marking here");
-						}
-					}
-					else
-					{
-						lvlm.PlaceSucceed();
-					}
-				}
-			}
-			else if (gm.currentNode.nObjects.Last().LObjectType == 4) //if the top object is marking/lighting
-			{
-				if (lvlm.selectedObj.LObject.tag == "plane") //selected plane and try to build on marking/lighting
-				{
-					lvlm.PlaceSucceed();
-				}
-				else if (lvlm.selectedObj.LObject.tag == "vehicle")
-				{ //selected vehicle and try to build on marking/lighting
-					lvlm.PlaceSucceed();
-				}
-				else if (lvlm.selectedObj.LObjectType != 4) //if the selected object is not lighting/marking
-				{
-					print("You cannot build this on lighting/marking");
-					lvlm.CancelSelect();
-				}
-				else if (lvlm.selectedObj.LObject.tag == "waylight" && gm.currentNode.nObjects.Last().LObject.tag != "markingRunway")
-				{ //selected waylight but not placing on runway marking
-					print("Lightings cannot stack");
-					lvlm.CancelSelect();
-				}
-				else if (lvlm.selectedObj.LObject.tag == "markingRunway" && gm.currentNode.nObjects.Last().LObject.tag != "waylight")
-				{ //selected runway marking but not placing on waylight
-					print("Markings cannot stack");
-					lvlm.CancelSelect();
-				}
-				else
-				{
-					lvlm.PlaceSucceed();
 				}
 			}
 		}
 		else //if there is no object on the grid
 		{
-			if (lvlm.selectedObj.LObjectType == 1 || lvlm.selectedObj.LObjectType == 2 || lvlm.selectedObj.LObjectType == 4)
+			if (lvlm.selectedObj.LObjectType == 1 || lvlm.selectedObj.LObjectType == 2)
 			{ //if object type 1, 2, or 3 is selected 
 				print("Place a ground object first");
 				lvlm.CancelSelect();
 			}
-			else if (lvlm.selectedObj.LObjectType == 3) //if object type 3 is selected
+			else if (lvlm.selectedObj.LObjectType == 3 || lvlm.selectedObj.LObjectType == 4) //if object type 3 or 4 is selected
 			{
-				if (lvlm.selectedObj.LObject.tag == "taxiway") //specifically taxiway
+				if (lvlm.selectedObj.LObject.tag == "runway") //specifically runway
 				{
-					CheckAdjacent();
-					CheckAdjacentTrue();
+					if (lvlm.selectedObj.LObject.name == "Runway_BlastPad" || lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold" ||  lvlm.selectedObj.LObject.name == "Runway_Line")
+					{//BlastPad, DisplacedThreshold or Line selected, no need to CheckRunway
+						CheckAdjacent();
+						CheckAdjacentTrue();
+					}
+					else
+					{
+						CheckAdjacent();
+						if (adjacentCheck == true)
+						{
+							CheckRunway();
+							CheckRunwayTrue();
+						}
+					}	
 				}
-				else if (lvlm.selectedObj.LObject.tag == "runway") //specifically runway
-				{
-					CheckAdjacent();
-					CheckAdjacentTrue();
-				}
-
-				else if (lvlm.selectedObj.LObject.name == "Roadway") //specifically roadway
+				else if (lvlm.selectedObj.LObject.tag == "roadway") //specifically roadway
 				{
 					CheckAdjacent();
 					CheckAdjacentTrue();
@@ -691,7 +458,7 @@ public class CheckManager : MonoBehaviour
 				else
 				{
 					CheckAdjacent();
-					lvlm.PlaceSucceed();
+					CheckAdjacentTrue();
 				}
 			}
 		}

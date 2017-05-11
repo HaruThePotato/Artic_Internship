@@ -387,6 +387,10 @@ public class CheckManager : MonoBehaviour
 							print("This can only be built in apron area");
 							lvlm.CancelSelect();
 						}
+						if (lvlm.selectedObj.LObject.tag == "plane")
+						{
+							lvlm.CancelSelect();
+						}
 						else
 						{
 							lvlm.PlaceSucceed();

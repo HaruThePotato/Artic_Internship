@@ -346,12 +346,7 @@ public class CheckManager : MonoBehaviour
 				}
 				else if (lvlm.selectedObj.LObjectType == 4) //selected object is lighting/marking
 				{
-					if (lvlm.selectedObj.LObject.tag == "waylight" && (gm.currentNode.nObjects.Last().LObject.tag != "runway" && gm.currentNode.nObjects.Last().LObject.tag != "taxiway"))
-					{ //selected taxiway/runway light but not building on taxiway/runway
-						print("Taxiway/Runway lightings can only be placed on taxiway/runway");
-						lvlm.CancelSelect();
-					}
-					else if (lvlm.selectedObj.LObject.tag == "markingRunway") //if anything with markingRunway tag is selected
+					if (lvlm.selectedObj.LObject.tag == "markingRunway") //if anything with markingRunway tag is selected
 					{
 						if (lvlm.selectedObj.LObject.name == "RW_BlastPad") //selected BlastPad
 						{
@@ -456,11 +451,6 @@ public class CheckManager : MonoBehaviour
 					print("You cannot build this on lighting/marking");
 					lvlm.CancelSelect();
 				}
-				else if (lvlm.selectedObj.LObject.tag == "waylight" && gm.currentNode.nObjects.Last().LObject.tag != "markingRunway")
-				{ //selected waylight but not placing on runway marking
-					print("Lightings cannot stack");
-					lvlm.CancelSelect();
-				}
 				else if (lvlm.selectedObj.LObject.tag == "markingRunway" && gm.currentNode.nObjects.Last().LObject.tag != "waylight")
 				{ //selected runway marking but not placing on waylight
 					print("Markings cannot stack");
@@ -552,12 +542,7 @@ public class CheckManager : MonoBehaviour
 				}
 				if (lvlm.selectedObj.LObjectType == 4) //selected object is lighting/marking
 				{
-					if (lvlm.selectedObj.LObject.tag == "waylight" && (gm.currentNode.nObjects.Last().LObject.tag != "runway" && gm.currentNode.nObjects.Last().LObject.tag != "taxiway"))
-					{ //selected taxiway/runway light but not building on taxiway/runway
-						print("Taxiway/Runway lightings can only be placed on taxiway/runway");
-						lvlm.CancelSelect();
-					}
-					else if (lvlm.selectedObj.LObject.tag == "markingRunway") //if anything with markingRunway tag is selected
+					if (lvlm.selectedObj.LObject.tag == "markingRunway") //if anything with markingRunway tag is selected
 					{
 						if (lvlm.selectedObj.LObject.name == "RW_BlastPad") //selected BlastPad
 						{

@@ -73,7 +73,6 @@ public class LevelManager : MonoBehaviour
 
 	void Start()
 	{
-
 		gm = GridManager.GetInstance();
 		uim = UIManager.GetInstance();
 		objm = ObjectManager.GetInstance();
@@ -601,7 +600,6 @@ public class LevelManager : MonoBehaviour
 				levelButton.name = Path.GetFileName(f);
 				levelButton.GetComponent<Button>().onClick.AddListener(() => { SelectLevel(levelButton.name); });
 			}
-
 		}
 	}
 
@@ -664,14 +662,14 @@ public class LevelManager : MonoBehaviour
     {
         uim.Status.text = "Connecting...";
         Debug.Log("Connecting to AWS S3 Database.");
-        listOfDownloadables = aws.getListOfBucketObjects();
+        listOfDownloadables = aws.getListOfBucketObjects("LevelManager");
     }
 
     public void callDownload()
     {
         if (downloadSelected == null)
         {
-            UIManager.GetInstance().Status.text = "No Download Found.";
+            UIManager.GetInstance().Status.text = "No Download Selected.";
             Debug.Log("No downloadable object has been selected.");
         }
         else

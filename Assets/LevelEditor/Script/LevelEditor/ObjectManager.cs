@@ -48,7 +48,7 @@ public class ObjectManager : MonoBehaviour {
         NonStackable = 1,
         Stackable = 2,
 		BaseOnly = 3,
-		MarkingLighting = 4
+		BaseOnlyNonStackable = 4
     }
 
 

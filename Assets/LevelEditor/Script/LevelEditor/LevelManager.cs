@@ -263,7 +263,7 @@ public class LevelManager : MonoBehaviour
 		NumberLCRGO.SetActive(true);
 	}
 
-	public void GetUserInputNum() //get user input from Set Runway Number (Number Only) input textfield, check for range and same lane number
+	/*public void GetUserInputNum() //get user input from Set Runway Number (Number Only) input textfield, check for range and same lane number
 	{
 		NumberOnlyGO.SetActive(false);
 		NumberLCRGO.SetActive(false);
@@ -484,7 +484,7 @@ public class LevelManager : MonoBehaviour
 			SetNumberGO.SetActive(true);
 			print("Please enter a runway number.");
 		}
-	}
+	}*/
 
 	//Button Functions 
 	public void NewLevelButton()

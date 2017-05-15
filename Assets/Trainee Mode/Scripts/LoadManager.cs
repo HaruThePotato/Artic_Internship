@@ -11,6 +11,11 @@ using System.Text.RegularExpressions;
 public class LoadManager : MonoBehaviour {
 
     AWSscript aws;
+    XMLManager xmlm;
+    GridManager gm;
+    ObjectManager objm;
+
+    public GameObject testingSphere;
 
     public GameObject localButtonPrefab;
     public GameObject remoteButtonPrefab;
@@ -21,7 +26,7 @@ public class LoadManager : MonoBehaviour {
     string levelSelected;
     string downloadSelected;
 
-    public List<string> listOfDownloadables;
+    List<string> listOfDownloadables;
 
     private static LoadManager instance = null;
 
@@ -38,6 +43,10 @@ public class LoadManager : MonoBehaviour {
     void Start()
     {
         aws = AWSscript.GetInstance();
+        xmlm = XMLManager.GetInstance();
+        gm = GridManager.GetInstance();
+        objm = ObjectManager.GetInstance();
+
         LoadLevelScreenButton();
         Invoke("loadDownloads", 0.1f);
     }
@@ -115,5 +124,45 @@ public class LoadManager : MonoBehaviour {
     public void SelectDownload(string n)
     {
         downloadSelected = n;
+    }
+
+    public void LoadSelectedLevel()
+    {
+        if (levelSelected != null)
+        {
+            //NewLevelButton();
+            LevelDatabase levelData = xmlm.LoadLevel(levelSelected);
+            //gm.cameraPlacementObject.transform.position = levelData.cameraPosition;
+            //gm.pCam = gm.FindNodeFromPos(levelData.cameraPosition.x, levelData.cameraPosition.z);
+            //gm.pCam.bFree = false;
+
+            foreach (LevelNode lNode in levelData.dbList)
+            {
+                for (int i = 0; i < lNode.objectIDs.Count; i++)
+                {
+                    LevelObject lObj = new LevelObject();
+                    Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
+                    //lObj.LObject = Instantiate(objm.GetLevelObject(lNode.objectIDs[i]).LObject, lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
+                    lObj.LObject = Instantiate(objm.GetLevelObject(lNode.objectIDs[i]).LObject, lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
+                    lObj.LObject.transform/*.GetChild(0)*/.transform.eulerAngles = lNode.objectRotations[i];
+                    lObj.LObject.transform.localScale = levelData.objectScale;
+                    lObj.LObject.name = lNode.objectIDs[i];
+                    //if (lObj.LObject.name == "RW_RunwayNumber")
+                    //{
+                    //    for (int j = 0; j < lNode.objectIDs.Count; j++)
+                    //    {
+                    //        if (lNode.numberStrings != null) //if there is/are runway number(s) being inputted previously before saving. THIS ALLOWS THE LEVEL TO LOAD EVEN IF THERE IS NO NUMBER.
+                    //        {
+                    //            lObj.LObject.transform.Find("UICanvas").transform.Find("lane_text").gameObject.GetComponent<Text>().text = lNode.numberStrings[j];
+                    //        }
+                    //    }
+                    //}
+                    lObj.LObjectType = lNode.objectTypes[i];
+                    //gm.FindNodeFromPos(lNode.nodePositionX, lNode.nodePositionZ).nObjects.Add(lObj);
+                }
+            }
+            //uim.CancelLoadScreen();
+            //uim.Status.text = "Loaded level";
+        }
     }
 }

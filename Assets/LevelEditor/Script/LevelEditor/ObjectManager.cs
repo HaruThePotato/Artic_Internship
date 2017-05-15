@@ -117,15 +117,15 @@ public class ObjectManager : MonoBehaviour {
 					lm.selectedObj.bundleName = tabNumber[i].tabItem[j].objectBundleName;
 					return;					
                 }
-				/*if (tabNumber[i].tabItem[j].objectPrefab.name != n)
-				{
-					lm.selectedObj.LObject = tabNumber[i].tabItem[j].objectPrefab;
-					lm.selectedObj.LObjectType = (int)tabNumber[i].tabItem[j].objectType;
-					lm.selectedObj.bundleName = tabNumber[i].tabItem[j].objectBundleName;
-					return;
-				}*/
+                if (tabNumber[i].tabItem[j].objectPrefab.name != n)
+                {
+                    lm.selectedObj.LObject = tabNumber[i].tabItem[j].objectPrefab;
+                    lm.selectedObj.LObjectType = (int)tabNumber[i].tabItem[j].objectType;
+                    lm.selectedObj.bundleName = tabNumber[i].tabItem[j].objectBundleName;
+                    return;
+                }
 
-			}
+            }
         }
     }
     

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
+//using System.Text.RegularExpressions;
 
 public class CheckManager : MonoBehaviour
 {

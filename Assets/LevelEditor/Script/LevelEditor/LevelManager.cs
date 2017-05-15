@@ -681,7 +681,7 @@ public class LevelManager : MonoBehaviour
 
     public void loadDownloadsInContainer()
     {
-        levelSelected = null;
+        downloadSelected = null;
         Transform t = uim.UIDownload.transform.GetChild(0).GetChild(0).FindChild("DownloadPanel").GetChild(0);
         if (t.childCount > 0)
         {

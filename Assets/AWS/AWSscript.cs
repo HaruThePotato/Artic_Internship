@@ -252,9 +252,12 @@ public class AWSscript : MonoBehaviour
 
         Client.ListObjectsAsync(request, (responseObject) =>
         {
+            //Debug.Log(request + " | Request");
+            //Debug.Log(responseObject + " | RequestObject");
             if (responseObject.Exception == null)
             {
-                UIManager.GetInstance().Status.text = "Connected to AWS S3 Database.";
+                if (redirect != "LoadManager")
+                    UIManager.GetInstance().Status.text = "Connected to AWS S3 Database.";
                 Debug.Log("Connected to AWS S3 Database.");
                 responseObject.Response.S3Objects.ForEach((o) =>
                 {
@@ -280,5 +283,5 @@ public class AWSscript : MonoBehaviour
         });
         return list;
     }
-        #endregion
+    #endregion
 }

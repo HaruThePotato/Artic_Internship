@@ -39,7 +39,7 @@ public class LoadManager : MonoBehaviour {
     {
         aws = AWSscript.GetInstance();
         LoadLevelScreenButton();
-        //loadDownloads();
+        Invoke("loadDownloads", 0.1f);
     }
 
     public void LoadLevelScreenButton()

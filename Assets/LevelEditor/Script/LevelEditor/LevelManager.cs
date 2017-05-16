@@ -92,8 +92,8 @@ public class LevelManager : MonoBehaviour
 	}
 
 	void SpawnAndHoverObject()
-	{
-		if (selectedObj.LObject != null)
+    {
+        if (selectedObj.LObject != null)
 		{
 			if (gm.isHovering && !uim.mouseOverUI && gm.currentNode.bFree)
 			{
@@ -177,7 +177,7 @@ public class LevelManager : MonoBehaviour
 		gm.currentNode.nObjects.Add(hObject);
 		bHoldingObject = false;
 		uim.holdingObject = false;
-	}
+    }
 
 	public void PlaceSucceed()
 	{
@@ -186,7 +186,6 @@ public class LevelManager : MonoBehaviour
 		uim.holdingObject = false;
 		hObject = new LevelObject();
 		selectedObj = new LevelObject();
-
 	}
 
 	public void CancelSelect() //destroys hovering object and resets object selection
@@ -250,7 +249,6 @@ public class LevelManager : MonoBehaviour
 				bHoldingObject = true;
 				uim.holdingObject = true;
 				selectedObj = hObject;
-
             }
 		}
 	}

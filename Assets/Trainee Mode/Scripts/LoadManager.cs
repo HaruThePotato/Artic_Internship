@@ -142,19 +142,16 @@ public class LoadManager : MonoBehaviour
 
     public IEnumerator LoadSelectedLevel()
     {
-        Debug.Log("Hello");
         if (levelSelected != null)
         {
             LevelDatabase levelData = xmlm.LoadLevel(levelSelected);
 
-            Debug.Log("Are");
             // Wait for the Caching system to be ready
             while (!Caching.ready)
                 yield return null;
 
             using (WWW www = WWW.LoadFromCacheOrDownload(BundleURL, version))
             {
-                Debug.Log("You");
                 yield return www;
                 if (www.error != null)
                     throw new Exception("WWW download had an error:" + www.error);
@@ -169,13 +166,11 @@ public class LoadManager : MonoBehaviour
 
                         if (assetName == "")
                         {
-                            Debug.Log("Okay");
                             Instantiate(bundle.mainAsset);
                             Debug.Log("Asset has no name.");
                         }
                         else
                         {
-                            Debug.Log("?");
                             Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
                             lObj.LObject = Instantiate(bundle.LoadAsset(lNode.objectIDs[i]), lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
                             lObj.LObject.transform.transform.eulerAngles = lNode.objectRotations[i];

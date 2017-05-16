@@ -86,9 +86,9 @@ public class LevelManager : MonoBehaviour
 	}
 
 	void Update()
-	{
-		SpawnAndHoverObject();
-		InputHandler();
+    {
+        SpawnAndHoverObject();
+        InputHandler();
 	}
 
 	void SpawnAndHoverObject()
@@ -239,8 +239,8 @@ public class LevelManager : MonoBehaviour
 	}
 
 	void GetObject()
-	{
-		if (gm.isHovering && !uim.mouseOverUI && gm.selectedNode != null)
+    {
+        if (gm.isHovering && !uim.mouseOverUI && gm.selectedNode != null)
 		{
 			if (gm.selectedNode == gm.currentNode && gm.selectedNode.nObjects.Count > 0)
 			{
@@ -250,7 +250,8 @@ public class LevelManager : MonoBehaviour
 				bHoldingObject = true;
 				uim.holdingObject = true;
 				selectedObj = hObject;
-			}
+
+            }
 		}
 	}
 

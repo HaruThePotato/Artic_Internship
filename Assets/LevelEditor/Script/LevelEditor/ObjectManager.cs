@@ -133,7 +133,6 @@ public class ObjectManager : MonoBehaviour {
                     lm.selectedObj.bundleName = tabNumber[i].tabItem[j].objectBundleName;
                     return;
                 }
-
             }
         }
     }

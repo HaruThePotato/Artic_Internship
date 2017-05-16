@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ObjectManager : MonoBehaviour {
 
@@ -71,9 +72,17 @@ public class ObjectManager : MonoBehaviour {
 
         lm = LevelManager.GetInstance();
         uim = UIManager.GetInstance();
-        CreateTabs();
-        PopulateTabs();
-	}
+
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
+        if (sceneName != "TraineeScene")
+        {
+            CreateTabs();
+            PopulateTabs();
+        }
+
+    }
 
     void CreateTabs()
     {
@@ -115,18 +124,18 @@ public class ObjectManager : MonoBehaviour {
 					lm.selectedObj.LObject = tabNumber[i].tabItem[j].objectPrefab;
                     lm.selectedObj.LObjectType = (int)tabNumber[i].tabItem[j].objectType; 
 					lm.selectedObj.bundleName = tabNumber[i].tabItem[j].objectBundleName;
-					return;					
+                    return;
                 }
-				/*if (tabNumber[i].tabItem[j].objectPrefab.name != n)
-				{
-					lm.selectedObj.LObject = tabNumber[i].tabItem[j].objectPrefab;
-					lm.selectedObj.LObjectType = (int)tabNumber[i].tabItem[j].objectType;
-					lm.selectedObj.bundleName = tabNumber[i].tabItem[j].objectBundleName;
-					return;
-				}*/
-
-			}
+                //if (tabNumber[i].tabItem[j].objectPrefab.name != n)
+                //{
+                //    lm.selectedObj.LObject = tabNumber[i].tabItem[j].objectPrefab;
+                //    lm.selectedObj.LObjectType = (int)tabNumber[i].tabItem[j].objectType;
+                //    lm.selectedObj.bundleName = tabNumber[i].tabItem[j].objectBundleName;
+                //    return;
+                //}
+            }
         }
+        //Debug.Log(lm.selectedObj.LObject);
     }
     
     public LevelObject GetLevelObject(string n)

@@ -23,7 +23,6 @@ using System.Text;
 
 public class AWSscript : MonoBehaviour
 {
-
     #region AWS Variables
     string IdentityPoolId = "us-west-2:070d16bc-2902-4ac4-940a-1ea8f56d7a06";
     string CognitoIdentityRegion = RegionEndpoint.USWest2.SystemName;
@@ -241,7 +240,7 @@ public class AWSscript : MonoBehaviour
         #endregion
 
     #region List the objects from the bucket in AWS S3
-    public List<string> getListOfBucketObjects()
+    public List<string> getListOfBucketObjects(string redirect)
     {
         List<string> list = new List<string>();
         bool skippedFirst = false;
@@ -253,9 +252,12 @@ public class AWSscript : MonoBehaviour
 
         Client.ListObjectsAsync(request, (responseObject) =>
         {
+            //Debug.Log(request + " | Request");
+            //Debug.Log(responseObject + " | RequestObject");
             if (responseObject.Exception == null)
             {
-                UIManager.GetInstance().Status.text = "Connected to AWS S3 Database.";
+                if (redirect != "LoadManager")
+                    UIManager.GetInstance().Status.text = "Connected to AWS S3 Database.";
                 Debug.Log("Connected to AWS S3 Database.");
                 responseObject.Response.S3Objects.ForEach((o) =>
                 {
@@ -269,7 +271,10 @@ public class AWSscript : MonoBehaviour
                         skippedFirst = true;
                     }
                 });
-                LevelManager.GetInstance().loadDownloadsInContainer();
+                if (redirect == "LevelManager")
+                    LevelManager.GetInstance().loadDownloadsInContainer();
+                else if (redirect == "LoadManager")
+                    LoadManager.GetInstance().loadDownloadsInContainer();
             }
             else
             {
@@ -278,5 +283,5 @@ public class AWSscript : MonoBehaviour
         });
         return list;
     }
-        #endregion
+    #endregion
 }

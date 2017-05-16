@@ -10,7 +10,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.IO;
 using System.Linq;
-//using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
 public class LevelManager : MonoBehaviour
 {
@@ -73,7 +73,6 @@ public class LevelManager : MonoBehaviour
 
 	void Start()
 	{
-
 		gm = GridManager.GetInstance();
 		uim = UIManager.GetInstance();
 		objm = ObjectManager.GetInstance();
@@ -87,14 +86,14 @@ public class LevelManager : MonoBehaviour
 	}
 
 	void Update()
-	{
-		SpawnAndHoverObject();
-		InputHandler();
+    {
+        SpawnAndHoverObject();
+        InputHandler();
 	}
 
 	void SpawnAndHoverObject()
-	{
-		if (selectedObj.LObject != null)
+    {
+        if (selectedObj.LObject != null)
 		{
 			if (gm.isHovering && !uim.mouseOverUI && gm.currentNode.bFree)
 			{
@@ -178,7 +177,7 @@ public class LevelManager : MonoBehaviour
 		gm.currentNode.nObjects.Add(hObject);
 		bHoldingObject = false;
 		uim.holdingObject = false;
-	}
+    }
 
 	public void PlaceSucceed()
 	{
@@ -187,7 +186,6 @@ public class LevelManager : MonoBehaviour
 		uim.holdingObject = false;
 		hObject = new LevelObject();
 		selectedObj = new LevelObject();
-
 	}
 
 	public void CancelSelect() //destroys hovering object and resets object selection
@@ -240,8 +238,8 @@ public class LevelManager : MonoBehaviour
 	}
 
 	void GetObject()
-	{
-		if (gm.isHovering && !uim.mouseOverUI && gm.selectedNode != null)
+    {
+        if (gm.isHovering && !uim.mouseOverUI && gm.selectedNode != null)
 		{
 			if (gm.selectedNode == gm.currentNode && gm.selectedNode.nObjects.Count > 0)
 			{
@@ -251,7 +249,7 @@ public class LevelManager : MonoBehaviour
 				bHoldingObject = true;
 				uim.holdingObject = true;
 				selectedObj = hObject;
-			}
+            }
 		}
 	}
 
@@ -263,7 +261,7 @@ public class LevelManager : MonoBehaviour
 		NumberLCRGO.SetActive(true);
 	}
 
-	/*public void GetUserInputNum() //get user input from Set Runway Number (Number Only) input textfield, check for range and same lane number
+	public void GetUserInputNum() //get user input from Set Runway Number (Number Only) input textfield, check for range and same lane number
 	{
 		NumberOnlyGO.SetActive(false);
 		NumberLCRGO.SetActive(false);
@@ -484,7 +482,7 @@ public class LevelManager : MonoBehaviour
 			SetNumberGO.SetActive(true);
 			print("Please enter a runway number.");
 		}
-	}*/
+	}
 
 	//Button Functions 
 	public void NewLevelButton()
@@ -601,7 +599,6 @@ public class LevelManager : MonoBehaviour
 				levelButton.name = Path.GetFileName(f);
 				levelButton.GetComponent<Button>().onClick.AddListener(() => { SelectLevel(levelButton.name); });
 			}
-
 		}
 	}
 
@@ -664,14 +661,14 @@ public class LevelManager : MonoBehaviour
     {
         uim.Status.text = "Connecting...";
         Debug.Log("Connecting to AWS S3 Database.");
-        listOfDownloadables = aws.getListOfBucketObjects();
+        listOfDownloadables = aws.getListOfBucketObjects("LevelManager");
     }
 
     public void callDownload()
     {
         if (downloadSelected == null)
         {
-            UIManager.GetInstance().Status.text = "No Download Found.";
+            UIManager.GetInstance().Status.text = "No Download Selected.";
             Debug.Log("No downloadable object has been selected.");
         }
         else
@@ -683,7 +680,7 @@ public class LevelManager : MonoBehaviour
 
     public void loadDownloadsInContainer()
     {
-        levelSelected = null;
+        downloadSelected = null;
         Transform t = uim.UIDownload.transform.GetChild(0).GetChild(0).FindChild("DownloadPanel").GetChild(0);
         if (t.childCount > 0)
         {

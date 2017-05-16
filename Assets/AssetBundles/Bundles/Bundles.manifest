@@ -1,10 +1,7 @@
 ManifestFileVersion: 0
-CRC: 2697880802
+CRC: 3101969774
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: demobundle
-      Dependencies: {}
-    Info_1:
-      Name: cubebundle
+      Name: highpoly
       Dependencies: {}

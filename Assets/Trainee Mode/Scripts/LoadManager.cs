@@ -5,17 +5,17 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.IO;
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-public class LoadManager : MonoBehaviour {
+public class LoadManager : MonoBehaviour
+{
 
     AWSscript aws;
     XMLManager xmlm;
     GridManager gm;
     ObjectManager objm;
-
-    public GameObject testingSphere;
 
     public GameObject localButtonPrefab;
     public GameObject remoteButtonPrefab;
@@ -27,6 +27,10 @@ public class LoadManager : MonoBehaviour {
     string downloadSelected;
 
     List<string> listOfDownloadables;
+
+    public string BundleURL;
+    public int version;
+    public string assetName;
 
     private static LoadManager instance = null;
 
@@ -49,6 +53,11 @@ public class LoadManager : MonoBehaviour {
 
         LoadLevelScreenButton();
         Invoke("loadDownloads", 0.1f);
+
+        assetName = "CompleteTank";
+        //BundleURL = "https://s3-us-west-2.amazonaws.com/articsp/AssetBundle/updatedmodels";
+        BundleURL = "https://s3-us-west-2.amazonaws.com/articsp/AssetBundle/highpoly";
+        version = 1;
     }
 
     public void LoadLevelScreenButton()
@@ -126,43 +135,132 @@ public class LoadManager : MonoBehaviour {
         downloadSelected = n;
     }
 
-    public void LoadSelectedLevel()
+    public void callLoadSelectedLevel()
     {
+        StartCoroutine(LoadSelectedLevel());
+    }
+
+    public IEnumerator LoadSelectedLevel()
+    {
+        Debug.Log("Hello");
         if (levelSelected != null)
         {
-            //NewLevelButton();
             LevelDatabase levelData = xmlm.LoadLevel(levelSelected);
-            //gm.cameraPlacementObject.transform.position = levelData.cameraPosition;
-            //gm.pCam = gm.FindNodeFromPos(levelData.cameraPosition.x, levelData.cameraPosition.z);
-            //gm.pCam.bFree = false;
 
-            foreach (LevelNode lNode in levelData.dbList)
+            Debug.Log("Are");
+            // Wait for the Caching system to be ready
+            while (!Caching.ready)
+                yield return null;
+
+            using (WWW www = WWW.LoadFromCacheOrDownload(BundleURL, version))
             {
-                for (int i = 0; i < lNode.objectIDs.Count; i++)
+                Debug.Log("You");
+                yield return www;
+                if (www.error != null)
+                    throw new Exception("WWW download had an error:" + www.error);
+                AssetBundle bundle = www.assetBundle;
+
+                foreach (LevelNode lNode in levelData.dbList)
                 {
-                    LevelObject lObj = new LevelObject();
-                    Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
-                    //lObj.LObject = Instantiate(objm.GetLevelObject(lNode.objectIDs[i]).LObject, lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
-                    lObj.LObject = Instantiate(objm.GetLevelObject(lNode.objectIDs[i]).LObject, lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
-                    lObj.LObject.transform/*.GetChild(0)*/.transform.eulerAngles = lNode.objectRotations[i];
-                    lObj.LObject.transform.localScale = levelData.objectScale;
-                    lObj.LObject.name = lNode.objectIDs[i];
-                    //if (lObj.LObject.name == "RW_RunwayNumber")
-                    //{
-                    //    for (int j = 0; j < lNode.objectIDs.Count; j++)
-                    //    {
-                    //        if (lNode.numberStrings != null) //if there is/are runway number(s) being inputted previously before saving. THIS ALLOWS THE LEVEL TO LOAD EVEN IF THERE IS NO NUMBER.
-                    //        {
-                    //            lObj.LObject.transform.Find("UICanvas").transform.Find("lane_text").gameObject.GetComponent<Text>().text = lNode.numberStrings[j];
-                    //        }
-                    //    }
-                    //}
-                    lObj.LObjectType = lNode.objectTypes[i];
-                    //gm.FindNodeFromPos(lNode.nodePositionX, lNode.nodePositionZ).nObjects.Add(lObj);
+                    for (int i = 0; i < lNode.objectIDs.Count; i++)
+                    {
+                        LevelObject lObj = new LevelObject();
+                        //Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
+
+                        if (assetName == "")
+                        {
+                            Debug.Log("Okay");
+                            Instantiate(bundle.mainAsset);
+                            Debug.Log("Asset has no name.");
+                        }
+                        else
+                        {
+                            Debug.Log("?");
+                            Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
+                            lObj.LObject = Instantiate(bundle.LoadAsset(lNode.objectIDs[i]), lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
+                            lObj.LObject.transform.transform.eulerAngles = lNode.objectRotations[i];
+                            lObj.LObject.transform.localScale = levelData.objectScale;
+                            lObj.LObject.name = lNode.objectIDs[i];
+                            lObj.LObjectType = lNode.objectTypes[i];
+                        }
+                    }
                 }
-            }
-            //uim.CancelLoadScreen();
-            //uim.Status.text = "Loaded level";
+
+                // Unload the AssetBundles compressed contents to conserve memory
+                bundle.Unload(false);
+
+            } // memory is freed from the web stream (www.Dispose() gets called implicitly)
         }
     }
+
+    public void CleanCache()
+    {
+        if (Caching.CleanCache())
+        {
+            Debug.Log("Successfully cleaned the cache.");
+        }
+        else
+        {
+            Debug.Log("Cache is being used.");
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    //public void LoadSelectedLevel()
+    //{
+    //    if (levelSelected != null)
+    //    {
+    //        LevelDatabase levelData = xmlm.LoadLevel(levelSelected);
+
+    //        foreach (LevelNode lNode in levelData.dbList)
+    //        {
+    //            for (int i = 0; i < lNode.objectIDs.Count; i++)
+    //            {
+    //                LevelObject lObj = new LevelObject();
+    //                Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
+    //                lObj.LObject = Instantiate(objm.GetLevelObject(lNode.objectIDs[i]).LObject, lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
+    //                lObj.LObject.transform.transform.eulerAngles = lNode.objectRotations[i];
+    //                lObj.LObject.transform.localScale = levelData.objectScale;
+    //                lObj.LObject.name = lNode.objectIDs[i];
+    //                lObj.LObjectType = lNode.objectTypes[i];
+    //            }
+    //        }
+    //    }
+    //}
+
+
+
+
+
+    //public IEnumerator DownloadAndCache()
+    //{
+    //    // Wait for the Caching system to be ready
+    //    while (!Caching.ready)
+    //        yield return null;
+
+    //    // Load the AssetBundle file from Cache if it exists with the same version or download and store it in the cache
+    //    using (WWW www = WWW.LoadFromCacheOrDownload(BundleURL, version))
+    //    {
+    //        Debug.Log("DownloadAndCache");
+    //        yield return www;
+    //        if (www.error != null)
+    //            throw new Exception("WWW download had an error:" + www.error);
+    //        AssetBundle bundle = www.assetBundle;
+    //        if (assetName == "")
+    //            Instantiate(bundle.mainAsset);
+    //        else
+    //            Instantiate(bundle.LoadAsset(assetName));
+    //        // Unload the AssetBundles compressed contents to conserve memory
+    //        bundle.Unload(false);
+
+    //    } // memory is freed from the web stream (www.Dispose() gets called implicitly)
+    //}
 }

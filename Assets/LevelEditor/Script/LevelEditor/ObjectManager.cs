@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ObjectManager : MonoBehaviour {
 
@@ -71,9 +72,17 @@ public class ObjectManager : MonoBehaviour {
 
         lm = LevelManager.GetInstance();
         uim = UIManager.GetInstance();
-        CreateTabs();
-        PopulateTabs();
-	}
+
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
+        if (sceneName != "TraineeScene")
+        {
+            CreateTabs();
+            PopulateTabs();
+        }
+
+    }
 
     void CreateTabs()
     {

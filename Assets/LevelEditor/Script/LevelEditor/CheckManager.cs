@@ -48,57 +48,7 @@ public class CheckManager : MonoBehaviour
 	{
 	}
 
-	void CheckAdjacent() //check the adjacent objects when trying to place a specified object
-	{
-		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
-		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid.
-		foreach (Collider collided in hitColliders)
-		{
-			if (collided.gameObject.transform.position.x == lastPos.x || collided.gameObject.transform.position.z == lastPos.z) //check for same row or column, ignoring diagonal
-			{
-				if (lvlm.selectedObj.LObject.name == "Runway_BlastPad" && collided.gameObject.tag == "taxiway") //if blastpad was selected and taxiway is around
-				{
-					adjacentCheck = false;
-					print("You cannot place that near a taxiway");
-					break;
-				}
-				else if (lvlm.selectedObj.LObject.tag == "taxiway" && collided.gameObject.name == "Runway_BlastPad") //if taxyiway is selected and blastpad is around
-				{
-					adjacentCheck = false;
-					print("You cannot place that near a blastpad");
-					break;
-				}
-				else if (lvlm.selectedObj.LObject.tag == "runway" && (collided.gameObject.tag == "roadway" || collided.gameObject.tag == "apron"))
-				{//if runway is selected and roadway/apron is around
-					adjacentCheck = false;
-					print("You cannot place that near a roadway");
-					break;
-				}
-				else if ((lvlm.selectedObj.LObject.tag == "roadway" || lvlm.selectedObj.LObject.tag == "apron") && collided.gameObject.tag == "runway") //if roadway is selected and runway is around
-				{
-					adjacentCheck = false;
-					print("You cannot place that near a runway");
-					break;
-				}
-				else if (lvlm.selectedObj.LObject.name == "HoldingShortLine") //if holding short line is selected and check for taxiway
-				{
-					if (collided.gameObject.tag == "taxiway")
-					{
-						adjacentCheck = true;
-						break;
-					}
-					else
-					{
-						adjacentCheck = false;
-					}
-				}
-				else
-				{
-					adjacentCheck = true;
-				}
-			}
-		}
-	}
+
 
 	void CheckRunway() //check the runway lane for correct order. This is super long because of all the double checking and in opposite order.
 	{
@@ -536,6 +486,123 @@ public class CheckManager : MonoBehaviour
 		}
 	}
 
+	void CheckAdjacent() //check the adjacent objects when trying to place a specified object
+	{
+		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
+		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid.
+		foreach (Collider collided in hitColliders)
+		{
+			if (collided.gameObject.transform.position.x == lastPos.x || collided.gameObject.transform.position.z == lastPos.z) //check for same row or column, ignoring diagonal
+			{
+				if (lvlm.selectedObj.LObject.name == "Runway_BlastPad" && collided.gameObject.tag == "taxiway") //if blastpad was selected and taxiway is around
+				{
+					adjacentCheck = false;
+					print("You cannot place that near a taxiway");
+					break;
+				}
+				else if (lvlm.selectedObj.LObject.tag == "taxiway" && collided.gameObject.name == "Runway_BlastPad") //if taxyiway is selected and blastpad is around
+				{
+					adjacentCheck = false;
+					print("You cannot place that near a blastpad");
+					break;
+				}
+				else if (lvlm.selectedObj.LObject.tag == "runway" && (collided.gameObject.tag == "roadway" || collided.gameObject.tag == "apron"))
+				{//if runway is selected and roadway/apron is around
+					adjacentCheck = false;
+					print("You cannot place that near a roadway");
+					break;
+				}
+				else if ((lvlm.selectedObj.LObject.tag == "roadway" || lvlm.selectedObj.LObject.tag == "apron") && collided.gameObject.tag == "runway") //if roadway is selected and runway is around
+				{
+					adjacentCheck = false;
+					print("You cannot place that near a runway");
+					break;
+				}
+				/*else if (lvlm.selectedObj.LObject.name == "Taxiway_HoldingShortLine" || lvlm.selectedObj.LObject.name == "Taxiway_HoldingShortLineDia") //if holding short line is selected and check for taxiway
+				{
+					if (collided.gameObject.tag == "taxiway")
+					{
+						adjacentCheck = true;
+						break;
+					}
+					else
+					{
+						adjacentCheck = false;
+					}
+				}*/
+				else if (lvlm.selectedObj.LObject.name == "Apron_GateBridgeLight")
+				{
+					if (collided.gameObject.name == "Terminal_Corner1" || collided.gameObject.name == "Terminal_Corner2" || collided.gameObject.name == "Terminal_End")
+					{
+						adjacentCheck = true;
+						break;
+					}
+					else
+					{
+						adjacentCheck = false;
+					}
+				}
+				else if (lvlm.selectedObj.LObject.name == "Apron_Taxi")
+				{
+					if ((collided.gameObject.name == "Apron_Main" || collided.gameObject.tag == "taxiway") 
+						|| (collided.gameObject.name == "Apron_Taxi" && collided.gameObject.transform.position != lastPos))
+					{
+						adjacentCheck = true;
+						break;
+					}
+					else
+					{
+						adjacentCheck = false;
+					}
+				}
+				else if (lvlm.selectedObj.LObject.name == "Grass_Taxi")
+				{
+					if ((collided.gameObject.name == "Grass_Main" || collided.gameObject.tag == "taxiway")
+						|| (collided.gameObject.name == "Grass_Taxi" && collided.gameObject.transform.position != lastPos))
+					{
+						adjacentCheck = true;
+						break;
+					}
+					else
+					{
+						adjacentCheck = false;
+					}
+				}
+				else if (lvlm.selectedObj.LObject.name == "Grass_Runway")
+				{
+					if ((collided.gameObject.name == "Grass_Main" || collided.gameObject.tag == "runway")
+						|| (collided.gameObject.name == "Grass_Runway" && collided.gameObject.transform.position != lastPos))
+					{
+						adjacentCheck = true;
+						break;
+					}
+					else
+					{
+						adjacentCheck = false;
+					}
+				}
+				else if (lvlm.selectedObj.LObject.name == "Hangar_Front")
+				{
+					if (collided.gameObject.name != "Hangar_Corner")
+					{
+						adjacentCheck = false;
+					}
+					else
+					{
+						adjacentCheck = true;
+						break;
+					}
+				}
+				
+				else
+				{
+					adjacentCheck = true;
+				}
+			}
+		}
+	}
+
+
 	void CheckAdjacentTrue() //build if CheckAdjacent passes
 	{
 		if (adjacentCheck == true)
@@ -590,7 +657,7 @@ public class CheckManager : MonoBehaviour
 		}
 	}
 
-	public void PlaceObjectClone() //clone and place object
+	/*public void PlaceObjectClone() //clone and place object
 	{
 		if (gm.currentNode.nObjects.Count > 0) //if there is at least an object on the grid
 		{
@@ -680,7 +747,7 @@ public class CheckManager : MonoBehaviour
 				}
 			}
 		}
-	}
+	}*/
 
 	public void PlaceObjectSingle() //place ONE object and no clone
 	{
@@ -708,7 +775,28 @@ public class CheckManager : MonoBehaviour
 					}
 					else //bottom object type is 2 or 3
 					{
-						if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
+						if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag == "apron")
+						{
+							if (lvlm.selectedObj.LObject.name == "Apron_GateBridgeLight")
+							{
+								CheckAdjacent();
+								if(adjacentCheck == false)
+								{
+									print("You need to start building with a Terminal block first.");
+								}
+								CheckAdjacentTrue();
+							}
+							else if (lvlm.selectedObj.LObject.name == "Hangar_Front" || lvlm.selectedObj.LObject.name == "Hangar_Corner" || lvlm.selectedObj.LObject.name == "Hangar_Side")
+							{
+								CheckAdjacent();
+								CheckAdjacentTrue();
+							}
+							else
+							{
+								lvlm.PlaceSucceed();
+							}
+						}
+						else if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
 						{
 							print("This can only be built in apron area");
 							lvlm.CancelSelect();
@@ -767,6 +855,33 @@ public class CheckManager : MonoBehaviour
 				else if (lvlm.selectedObj.LObject.tag == "roadway") //specifically roadway
 				{
 					CheckAdjacent();
+					CheckAdjacentTrue();
+				}
+				else if (lvlm.selectedObj.LObject.name == "Apron_Taxi")
+				{
+					CheckAdjacent();
+					if (adjacentCheck == false)
+					{
+						print("You can only place this block if there is an Apron or Taxiway block beside it.");
+					}
+					CheckAdjacentTrue();
+				}
+				else if (lvlm.selectedObj.LObject.name == "Grass_Taxi")
+				{
+					CheckAdjacent();
+					if (adjacentCheck == false)
+					{
+						print("You can only place this block if there is an Grass or Taxiway block beside it.");
+					}
+					CheckAdjacentTrue();
+				}
+				else if (lvlm.selectedObj.LObject.name == "Grass_Runway")
+				{
+					CheckAdjacent();
+					if (adjacentCheck == false)
+					{
+						print("You can only place this block if there is an Grass or Runway block beside it.");
+					}
 					CheckAdjacentTrue();
 				}
 				else

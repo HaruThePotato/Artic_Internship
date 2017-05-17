@@ -108,12 +108,13 @@ public class LoadManager : MonoBehaviour
             //uim.Status.text = "Downloading...";
             aws.GetObject(downloadSelected + ".xml");
         }
+        loadDownloadsInContainer();
     }
 
     public void loadDownloadsInContainer()
     {
         levelSelected = null;
-        Transform t = UILoad.transform.FindChild("BackgroundPanel").FindChild("RemoteExteriorPanel").FindChild("RemotePanel").FindChild("Image");
+        Transform t = UILoad.transform.FindChild("BackgroundPanel").FindChild("DownloadExteriorPanel").FindChild("DownloadPanel").FindChild("Image");
         if (t.childCount > 0)
         {
             foreach (Transform child in t.transform)

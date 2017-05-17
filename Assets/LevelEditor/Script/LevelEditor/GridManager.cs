@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GridManager : MonoBehaviour {
 
@@ -51,8 +52,15 @@ public class GridManager : MonoBehaviour {
 
     void Start()
     {
-        uim = UIManager.GetInstance();
-        uim.Status.text = "Started New Level";
+
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
+        if (sceneName != "TraineeScene")
+        {
+            uim = UIManager.GetInstance();
+            uim.Status.text = "Started New Level";
+        }
 
         ResetCameraObject();
     }

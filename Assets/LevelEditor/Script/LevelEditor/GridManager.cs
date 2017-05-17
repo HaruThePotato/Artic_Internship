@@ -67,10 +67,16 @@ public class GridManager : MonoBehaviour {
 
     void Update()
     {
-        UpdateMousePosition();
-        UpdateMouseHover();
-        UpdateSelectedNode();
-        CameraPlacement();
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
+        if (sceneName != "TraineeScene")
+        {
+            UpdateMousePosition();
+            UpdateMouseHover();
+            UpdateSelectedNode();
+            CameraPlacement();
+        }
 
         // ========== DEBUGGING USE ========== \\
 

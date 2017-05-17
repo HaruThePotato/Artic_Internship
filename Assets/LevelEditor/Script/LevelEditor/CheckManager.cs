@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.IO;
 using System.Linq;
-//using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
 public class CheckManager : MonoBehaviour
 {
@@ -48,15 +48,18 @@ public class CheckManager : MonoBehaviour
 	{
 	}
 
+	
 
 
 	void CheckRunway() //check the runway lane for correct order. This is super long because of all the double checking and in opposite order.
 	{
+		//Vector3 lastPos = new Vector3(gm.selectedNode.nPosX, lvlm.selectedObj.LObject.transform.GetChild(0).transform.position.y, gm.selectedNode.nPosZ);
 		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ+0.5f);
 		RaycastHit hit;
-		if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
-			|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast left and back
+		if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))
+			|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))) //raycast left and back
 		{
+			print("1");
 			if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 			{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
 				runwayCheck = true;
@@ -66,24 +69,25 @@ public class CheckManager : MonoBehaviour
 			{
 				runwayCheck = true;
 			}
-			else if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
+			else if (lvlm.selectedObj.LObject.name == "Runway_RunwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
 			{ //selected object is RunwayNumber and raycast hits ThresholdMarker
-				CheckRunwayNumber();
+				runwayCheck = true;
 			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
+			else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.name == "Runway_RunwayNumber")
 			{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
 				runwayCheck = true;
 			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchDownZone")
+			else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchdownZone")
 			{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
 				runwayCheck = true;
 			}
 			else
 			{
 				runwayCheck = false;
-				if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
-					|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast right and forward
+				if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))
+					|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))) //raycast right and forward
 				{
+					print("2");
 					if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 					{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
 						runwayCheck = true;
@@ -93,15 +97,15 @@ public class CheckManager : MonoBehaviour
 					{
 						runwayCheck = true;
 					}
-					else if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
+					else if (lvlm.selectedObj.LObject.name == "Runway_RunwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
 					{ //selected object is RunwayNumber and raycast hits ThresholdMarker
-						CheckRunwayNumber();
+						runwayCheck = true;
 					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
+					else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.name == "Runway_RunwayNumber")
 					{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
 						runwayCheck = true;
 					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchDownZone")
+					else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchdownZone")
 					{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
 						runwayCheck = true;
 					}
@@ -112,9 +116,10 @@ public class CheckManager : MonoBehaviour
 				}
 			}
 		}
-		else if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
-				|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast right and forward
+		else if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))
+				|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))) //raycast right and forward
 		{
+			print("3");
 			if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 			{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
 				runwayCheck = true;
@@ -124,24 +129,25 @@ public class CheckManager : MonoBehaviour
 			{
 				runwayCheck = true;
 			}
-			else if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
+			else if (lvlm.selectedObj.LObject.name == "Runway_RunwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
 			{ //selected object is RunwayNumber and raycast hits ThresholdMarker
-				CheckRunwayNumber();
+				runwayCheck = true;
 			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
+			else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.name == "Runway_RunwayNumber")
 			{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
 				runwayCheck = true;
 			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchDownZone")
+			else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchdownZone")
 			{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
 				runwayCheck = true;
 			}
 			else
 			{
 				runwayCheck = false;
-				if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
-					|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast left and back
+				if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))
+					|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))) //raycast left and back
 				{
+					print("4");
 					if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 					{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
 						runwayCheck = true;
@@ -151,15 +157,15 @@ public class CheckManager : MonoBehaviour
 					{
 						runwayCheck = true;
 					}
-					else if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
+					else if (lvlm.selectedObj.LObject.name == "Runway_RunwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
 					{ //selected object is RunwayNumber and raycast hits ThresholdMarker
-						CheckRunwayNumber();
+						runwayCheck = true;
 					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
+					else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.name == "Runway_RunwayNumber")
 					{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
 						runwayCheck = true;
 					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchDownZone")
+					else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchdownZone")
 					{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
 						runwayCheck = true;
 					}
@@ -172,6 +178,7 @@ public class CheckManager : MonoBehaviour
 		}
 		else
 		{
+			print("wat?");
 			runwayCheck = false;
 		}
 	}
@@ -602,7 +609,6 @@ public class CheckManager : MonoBehaviour
 		}
 	}
 
-
 	void CheckAdjacentTrue() //build if CheckAdjacent passes
 	{
 		if (adjacentCheck == true)
@@ -764,10 +770,6 @@ public class CheckManager : MonoBehaviour
 							print("This can only be built in apron area");
 							lvlm.CancelSelect();
 						}
-						if (lvlm.selectedObj.LObject.tag == "plane")
-						{
-							lvlm.CancelSelect();
-						}
 						else
 						{
 							lvlm.PlaceSucceed();
@@ -836,7 +838,7 @@ public class CheckManager : MonoBehaviour
 			}
 			else if (lvlm.selectedObj.LObjectType == 3 || lvlm.selectedObj.LObjectType == 4) //if object type 3 or 4 is selected
 			{
-				if (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber") //specifically runway
+				if (lvlm.selectedObj.LObject.tag == "runway") //specifically runway
 				{
 					if (lvlm.selectedObj.LObject.name == "Runway_BlastPad" || lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold" ||  lvlm.selectedObj.LObject.name == "Runway_Line")
 					{//BlastPad, DisplacedThreshold or Line selected, no need to CheckRunway

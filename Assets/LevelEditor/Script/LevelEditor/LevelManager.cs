@@ -605,7 +605,6 @@ public class LevelManager : MonoBehaviour
 		}
 	}
 
-
 	public void SelectLevel(string n)
 	{
 		levelSelected = n;

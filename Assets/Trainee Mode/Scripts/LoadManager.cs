@@ -171,19 +171,19 @@ public class LoadManager : MonoBehaviour
                         {
                             Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
                             lObj.LObject = Instantiate(bundle.LoadAsset(lNode.objectIDs[i]), lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
-                            lObj.LObject.transform.transform.eulerAngles = lNode.objectRotations[i];
+                            lObj.LObject.transform.GetChild(0).transform.eulerAngles = lNode.objectRotations[i];
                             lObj.LObject.transform.localScale = levelData.objectScale;
                             lObj.LObject.name = lNode.objectIDs[i];
-                            if (lObj.LObject.name == "RW_RunwayNumber")
-                            {
-                                for (int j = 0; j < lNode.objectIDs.Count; j++)
-                                {
-                                    if (lNode.numberStrings != null) //if there is/are runway number(s) being inputted previously before saving. THIS ALLOWS THE LEVEL TO LOAD EVEN IF THERE IS NO NUMBER.
-                                    {
-                                        lObj.LObject.transform.Find("UICanvas").transform.Find("lane_text").gameObject.GetComponent<Text>().text = lNode.numberStrings[j];
-                                    }
-                                }
-                            }
+                            //if (lObj.LObject.name == "RW_RunwayNumber")
+                            //{
+                            //    for (int j = 0; j < lNode.objectIDs.Count; j++)
+                            //    {
+                            //        if (lNode.numberStrings != null) //if there is/are runway number(s) being inputted previously before saving. THIS ALLOWS THE LEVEL TO LOAD EVEN IF THERE IS NO NUMBER.
+                            //        {
+                            //            lObj.LObject.transform.Find("UICanvas").transform.Find("lane_text").gameObject.GetComponent<Text>().text = lNode.numberStrings[j];
+                            //        }
+                            //    }
+                            //}
                             lObj.LObjectType = lNode.objectTypes[i];
                         }
                     }
@@ -206,15 +206,6 @@ public class LoadManager : MonoBehaviour
         }
     }
 
-
-
-
-
-
-
-
-
-
     //public void LoadSelectedLevel()
     //{
     //    if (levelSelected != null)
@@ -236,10 +227,6 @@ public class LoadManager : MonoBehaviour
     //        }
     //    }
     //}
-
-
-
-
 
     //public IEnumerator DownloadAndCache()
     //{

@@ -2,111 +2,11 @@
 <LevelDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <dbList>
     <LevelNode>
-      <nodePositionX>53</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>53</x>
-          <y>0</y>
-          <z>44</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>180</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>53</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>53</x>
-          <y>0</y>
-          <z>45</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>180</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>53</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>53</x>
-          <y>0</y>
-          <z>46</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>180</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>53</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>53</x>
-          <y>0</y>
-          <z>47</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>180</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>53</nodePositionX>
+      <nodePositionX>44</nodePositionX>
       <nodePositionZ>48</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>53</x>
+          <x>44</x>
           <y>0</y>
           <z>48</z>
         </Vector3>
@@ -114,7 +14,7 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>270</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -122,16 +22,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Curve</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>53</nodePositionX>
+      <nodePositionX>44</nodePositionX>
       <nodePositionZ>49</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>53</x>
+          <x>44</x>
           <y>0</y>
           <z>49</z>
         </Vector3>
@@ -139,7 +39,7 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -147,16 +47,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>53</nodePositionX>
+      <nodePositionX>44</nodePositionX>
       <nodePositionZ>50</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>53</x>
+          <x>44</x>
           <y>0</y>
           <z>50</z>
         </Vector3>
@@ -164,7 +64,7 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -172,24 +72,24 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>54</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
+      <nodePositionX>44</nodePositionX>
+      <nodePositionZ>51</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>54</x>
+          <x>44</x>
           <y>0</y>
-          <z>44</z>
+          <z>51</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -197,24 +97,24 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>54</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
+      <nodePositionX>44</nodePositionX>
+      <nodePositionZ>52</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>54</x>
+          <x>44</x>
           <y>0</y>
-          <z>45</z>
+          <z>52</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -222,24 +122,24 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>54</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
+      <nodePositionX>44</nodePositionX>
+      <nodePositionZ>53</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>54</x>
+          <x>44</x>
           <y>0</y>
-          <z>46</z>
+          <z>53</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -247,24 +147,24 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>54</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
+      <nodePositionX>44</nodePositionX>
+      <nodePositionZ>54</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>54</x>
+          <x>44</x>
           <y>0</y>
-          <z>47</z>
+          <z>54</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -272,16 +172,66 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>54</nodePositionX>
+      <nodePositionX>44</nodePositionX>
+      <nodePositionZ>55</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>44</x>
+          <y>0</y>
+          <z>55</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>90</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>3</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Taxi_Line</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>44</nodePositionX>
+      <nodePositionZ>56</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>44</x>
+          <y>0</y>
+          <z>56</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>3</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Taxi_Curve</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>45</nodePositionX>
       <nodePositionZ>48</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>54</x>
+          <x>45</x>
           <y>0</y>
           <z>48</z>
         </Vector3>
@@ -289,7 +239,7 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -297,16 +247,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>54</nodePositionX>
+      <nodePositionX>45</nodePositionX>
       <nodePositionZ>49</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>54</x>
+          <x>45</x>
           <y>0</y>
           <z>49</z>
         </Vector3>
@@ -314,7 +264,7 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -322,16 +272,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Runway_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>54</nodePositionX>
+      <nodePositionX>45</nodePositionX>
       <nodePositionZ>50</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>54</x>
+          <x>45</x>
           <y>0</y>
           <z>50</z>
         </Vector3>
@@ -339,7 +289,7 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -347,18 +297,68 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Runway_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>55</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
+      <nodePositionX>45</nodePositionX>
+      <nodePositionZ>51</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>55</x>
+          <x>45</x>
           <y>0</y>
-          <z>44</z>
+          <z>51</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>90</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Taxi</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>45</nodePositionX>
+      <nodePositionZ>52</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>45</x>
+          <y>0</y>
+          <z>52</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>45</nodePositionX>
+      <nodePositionZ>53</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>45</x>
+          <y>0</y>
+          <z>53</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
@@ -369,27 +369,27 @@
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Grass_Taxi</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>55</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
+      <nodePositionX>45</nodePositionX>
+      <nodePositionZ>54</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>55</x>
+          <x>45</x>
           <y>0</y>
-          <z>45</z>
+          <z>54</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -397,24 +397,24 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Runway_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>55</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
+      <nodePositionX>45</nodePositionX>
+      <nodePositionZ>55</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>55</x>
+          <x>45</x>
           <y>0</y>
-          <z>46</z>
+          <z>55</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -422,24 +422,24 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Runway_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>55</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
+      <nodePositionX>45</nodePositionX>
+      <nodePositionZ>56</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>55</x>
+          <x>45</x>
           <y>0</y>
-          <z>47</z>
+          <z>56</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -447,16 +447,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>55</nodePositionX>
+      <nodePositionX>46</nodePositionX>
       <nodePositionZ>48</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>55</x>
+          <x>46</x>
           <y>0</y>
           <z>48</z>
         </Vector3>
@@ -464,7 +464,7 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -472,16 +472,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>55</nodePositionX>
+      <nodePositionX>46</nodePositionX>
       <nodePositionZ>49</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>55</x>
+          <x>46</x>
           <y>0</y>
           <z>49</z>
         </Vector3>
@@ -489,7 +489,7 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -497,16 +497,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Runway_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>55</nodePositionX>
+      <nodePositionX>46</nodePositionX>
       <nodePositionZ>50</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>55</x>
+          <x>46</x>
           <y>0</y>
           <z>50</z>
         </Vector3>
@@ -514,26 +514,101 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Grass_Taxi</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>56</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
+      <nodePositionX>46</nodePositionX>
+      <nodePositionZ>51</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>56</x>
+          <x>46</x>
           <y>0</y>
-          <z>44</z>
+          <z>51</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>46</nodePositionX>
+      <nodePositionZ>52</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>46</x>
+          <y>0</y>
+          <z>52</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>46</nodePositionX>
+      <nodePositionZ>53</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>46</x>
+          <y>0</y>
+          <z>53</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>46</nodePositionX>
+      <nodePositionZ>54</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>46</x>
+          <y>0</y>
+          <z>54</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
@@ -544,27 +619,27 @@
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Grass_Taxi</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>56</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
+      <nodePositionX>46</nodePositionX>
+      <nodePositionZ>55</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>56</x>
+          <x>46</x>
           <y>0</y>
-          <z>45</z>
+          <z>55</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -572,24 +647,24 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Runway_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>56</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
+      <nodePositionX>46</nodePositionX>
+      <nodePositionZ>56</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>56</x>
+          <x>46</x>
           <y>0</y>
-          <z>46</z>
+          <z>56</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -597,41 +672,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>56</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>56</x>
-          <y>0</y>
-          <z>47</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>180</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>56</nodePositionX>
+      <nodePositionX>47</nodePositionX>
       <nodePositionZ>48</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>56</x>
+          <x>47</x>
           <y>0</y>
           <z>48</z>
         </Vector3>
@@ -639,7 +689,7 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -647,16 +697,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>56</nodePositionX>
+      <nodePositionX>47</nodePositionX>
       <nodePositionZ>49</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>56</x>
+          <x>47</x>
           <y>0</y>
           <z>49</z>
         </Vector3>
@@ -664,24 +714,24 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Grass_Taxi</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>56</nodePositionX>
+      <nodePositionX>47</nodePositionX>
       <nodePositionZ>50</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>56</x>
+          <x>47</x>
           <y>0</y>
           <z>50</z>
         </Vector3>
@@ -689,26 +739,162 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Grass_Main</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>57</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
+      <nodePositionX>47</nodePositionX>
+      <nodePositionZ>51</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>57</x>
+          <x>47</x>
           <y>0</y>
-          <z>44</z>
+          <z>51</z>
+        </Vector3>
+        <Vector3>
+          <x>47</x>
+          <y>0.9</y>
+          <z>51</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+        <Vector3>
+          <x>0</x>
+          <y>90</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+        <int>1</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+        <string>Plane_A380</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>47</nodePositionX>
+      <nodePositionZ>52</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>47</x>
+          <y>0</y>
+          <z>52</z>
+        </Vector3>
+        <Vector3>
+          <x>47</x>
+          <y>0.9</y>
+          <z>52</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+        <Vector3>
+          <x>0</x>
+          <y>90</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+        <int>1</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+        <string>Plane_B777-300er</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>47</nodePositionX>
+      <nodePositionZ>53</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>47</x>
+          <y>0</y>
+          <z>53</z>
+        </Vector3>
+        <Vector3>
+          <x>47</x>
+          <y>0.9</y>
+          <z>53</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+        <Vector3>
+          <x>0</x>
+          <y>90</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+        <int>1</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+        <string>Plane_A380</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>47</nodePositionX>
+      <nodePositionZ>54</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>47</x>
+          <y>0</y>
+          <z>54</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>47</nodePositionX>
+      <nodePositionZ>55</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>47</x>
+          <y>0</y>
+          <z>55</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
@@ -719,27 +905,27 @@
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Grass_Taxi</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>57</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
+      <nodePositionX>47</nodePositionX>
+      <nodePositionZ>56</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>57</x>
+          <x>47</x>
           <y>0</y>
-          <z>45</z>
+          <z>56</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -747,66 +933,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>57</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>57</x>
-          <y>0</y>
-          <z>46</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>180</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>57</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>57</x>
-          <y>0</y>
-          <z>47</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>180</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>57</nodePositionX>
+      <nodePositionX>48</nodePositionX>
       <nodePositionZ>48</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>57</x>
+          <x>48</x>
           <y>0</y>
           <z>48</z>
         </Vector3>
@@ -814,7 +950,7 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -822,16 +958,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>57</nodePositionX>
+      <nodePositionX>48</nodePositionX>
       <nodePositionZ>49</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>57</x>
+          <x>48</x>
           <y>0</y>
           <z>49</z>
         </Vector3>
@@ -839,24 +975,24 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Grass_Main</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>57</nodePositionX>
+      <nodePositionX>48</nodePositionX>
       <nodePositionZ>50</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>57</x>
+          <x>48</x>
           <y>0</y>
           <z>50</z>
         </Vector3>
@@ -864,26 +1000,187 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Grass_Main</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>58</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
+      <nodePositionX>48</nodePositionX>
+      <nodePositionZ>51</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>58</x>
+          <x>48</x>
           <y>0</y>
-          <z>44</z>
+          <z>51</z>
+        </Vector3>
+        <Vector3>
+          <x>48</x>
+          <y>0.9</y>
+          <z>51</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+        <int>1</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+        <string>Plane_B777-300er</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>48</nodePositionX>
+      <nodePositionZ>52</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>48</x>
+          <y>0</y>
+          <z>52</z>
+        </Vector3>
+        <Vector3>
+          <x>48</x>
+          <y>0.9</y>
+          <z>52</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+        <int>1</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+        <string>Plane_A320</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>48</nodePositionX>
+      <nodePositionZ>53</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>48</x>
+          <y>0</y>
+          <z>53</z>
+        </Vector3>
+        <Vector3>
+          <x>48</x>
+          <y>0.9</y>
+          <z>53</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+        <int>1</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+        <string>Plane_A350</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>48</nodePositionX>
+      <nodePositionZ>54</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>48</x>
+          <y>0</y>
+          <z>54</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>48</nodePositionX>
+      <nodePositionZ>55</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>48</x>
+          <y>0</y>
+          <z>55</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>48</nodePositionX>
+      <nodePositionZ>56</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>48</x>
+          <y>0</y>
+          <z>56</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
@@ -897,91 +1194,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>58</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>58</x>
-          <y>0</y>
-          <z>45</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>180</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>58</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>58</x>
-          <y>0</y>
-          <z>46</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>180</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>58</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>58</x>
-          <y>0</y>
-          <z>47</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>180</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>58</nodePositionX>
+      <nodePositionX>49</nodePositionX>
       <nodePositionZ>48</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>58</x>
+          <x>49</x>
           <y>0</y>
           <z>48</z>
         </Vector3>
@@ -989,7 +1211,7 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -997,16 +1219,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>58</nodePositionX>
+      <nodePositionX>49</nodePositionX>
       <nodePositionZ>49</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>58</x>
+          <x>49</x>
           <y>0</y>
           <z>49</z>
         </Vector3>
@@ -1014,24 +1236,24 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Grass_Taxi</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>58</nodePositionX>
+      <nodePositionX>49</nodePositionX>
       <nodePositionZ>50</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>58</x>
+          <x>49</x>
           <y>0</y>
           <z>50</z>
         </Vector3>
@@ -1039,7 +1261,157 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>180</y>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>49</nodePositionX>
+      <nodePositionZ>51</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>49</x>
+          <y>0</y>
+          <z>51</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>49</nodePositionX>
+      <nodePositionZ>52</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>49</x>
+          <y>0</y>
+          <z>52</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>49</nodePositionX>
+      <nodePositionZ>53</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>49</x>
+          <y>0</y>
+          <z>53</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>49</nodePositionX>
+      <nodePositionZ>54</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>49</x>
+          <y>0</y>
+          <z>54</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>49</nodePositionX>
+      <nodePositionZ>55</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>49</x>
+          <y>0</y>
+          <z>55</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>270</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Taxi</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>49</nodePositionX>
+      <nodePositionZ>56</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>49</x>
+          <y>0</y>
+          <z>56</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -1047,18 +1419,293 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>59</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
+      <nodePositionX>50</nodePositionX>
+      <nodePositionZ>48</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>59</x>
+          <x>50</x>
           <y>0</y>
-          <z>44</z>
+          <z>48</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>3</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Taxi_Line</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>50</nodePositionX>
+      <nodePositionZ>49</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>50</x>
+          <y>0</y>
+          <z>49</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>3</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Runway_Line</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>50</nodePositionX>
+      <nodePositionZ>51</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>50</x>
+          <y>0</y>
+          <z>51</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>50</nodePositionX>
+      <nodePositionZ>52</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>50</x>
+          <y>0</y>
+          <z>52</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>50</nodePositionX>
+      <nodePositionZ>53</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>50</x>
+          <y>0</y>
+          <z>53</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>50</nodePositionX>
+      <nodePositionZ>54</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>50</x>
+          <y>0</y>
+          <z>54</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>270</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Taxi</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>50</nodePositionX>
+      <nodePositionZ>55</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>50</x>
+          <y>0</y>
+          <z>55</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>3</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Runway_Line</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>50</nodePositionX>
+      <nodePositionZ>56</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>50</x>
+          <y>0</y>
+          <z>56</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>3</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Taxi_Line</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>51</nodePositionX>
+      <nodePositionZ>48</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>51</x>
+          <y>0</y>
+          <z>48</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>3</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Taxi_Line</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>51</nodePositionX>
+      <nodePositionZ>49</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>51</x>
+          <y>0</y>
+          <z>49</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>3</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Runway_Line</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>51</nodePositionX>
+      <nodePositionZ>50</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>51</x>
+          <y>0</y>
+          <z>50</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>3</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Runway_Line</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>51</nodePositionX>
+      <nodePositionZ>51</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>51</x>
+          <y>0</y>
+          <z>51</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
@@ -1069,21 +1716,71 @@
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Grass_Taxi</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>59</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
+      <nodePositionX>51</nodePositionX>
+      <nodePositionZ>52</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>59</x>
+          <x>51</x>
           <y>0</y>
-          <z>45</z>
+          <z>52</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>51</nodePositionX>
+      <nodePositionZ>53</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>51</x>
+          <y>0</y>
+          <z>53</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>270</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Grass_Taxi</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>51</nodePositionX>
+      <nodePositionZ>54</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>51</x>
+          <y>0</y>
+          <z>54</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
@@ -1097,18 +1794,18 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Runway_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>59</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
+      <nodePositionX>51</nodePositionX>
+      <nodePositionZ>55</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>59</x>
+          <x>51</x>
           <y>0</y>
-          <z>46</z>
+          <z>55</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
@@ -1122,18 +1819,18 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Runway_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>59</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
+      <nodePositionX>51</nodePositionX>
+      <nodePositionZ>56</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>59</x>
+          <x>51</x>
           <y>0</y>
-          <z>47</z>
+          <z>56</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
@@ -1147,16 +1844,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>59</nodePositionX>
+      <nodePositionX>52</nodePositionX>
       <nodePositionZ>48</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>59</x>
+          <x>52</x>
           <y>0</y>
           <z>48</z>
         </Vector3>
@@ -1164,7 +1861,7 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>0</y>
+          <y>180</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -1172,16 +1869,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Curve</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>59</nodePositionX>
+      <nodePositionX>52</nodePositionX>
       <nodePositionZ>49</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>59</x>
+          <x>52</x>
           <y>0</y>
           <z>49</z>
         </Vector3>
@@ -1189,7 +1886,7 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>0</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -1197,16 +1894,16 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>59</nodePositionX>
+      <nodePositionX>52</nodePositionX>
       <nodePositionZ>50</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>59</x>
+          <x>52</x>
           <y>0</y>
           <z>50</z>
         </Vector3>
@@ -1214,7 +1911,7 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>0</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -1222,24 +1919,24 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>60</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
+      <nodePositionX>52</nodePositionX>
+      <nodePositionZ>51</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>60</x>
+          <x>52</x>
           <y>0</y>
-          <z>44</z>
+          <z>51</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>0</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -1247,24 +1944,24 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>60</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
+      <nodePositionX>52</nodePositionX>
+      <nodePositionZ>52</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>60</x>
+          <x>52</x>
           <y>0</y>
-          <z>45</z>
+          <z>52</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>0</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -1272,24 +1969,24 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>60</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
+      <nodePositionX>52</nodePositionX>
+      <nodePositionZ>53</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>60</x>
+          <x>52</x>
           <y>0</y>
-          <z>46</z>
+          <z>53</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>0</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -1297,24 +1994,24 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>60</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
+      <nodePositionX>52</nodePositionX>
+      <nodePositionZ>54</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>60</x>
+          <x>52</x>
           <y>0</y>
-          <z>47</z>
+          <z>54</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>0</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -1322,24 +2019,24 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>60</nodePositionX>
-      <nodePositionZ>48</nodePositionZ>
+      <nodePositionX>52</nodePositionX>
+      <nodePositionZ>55</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>60</x>
+          <x>52</x>
           <y>0</y>
-          <z>48</z>
+          <z>55</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>0</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -1347,24 +2044,24 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Line</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>60</nodePositionX>
-      <nodePositionZ>49</nodePositionZ>
+      <nodePositionX>52</nodePositionX>
+      <nodePositionZ>56</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>60</x>
+          <x>52</x>
           <y>0</y>
-          <z>49</z>
+          <z>56</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>0</y>
+          <y>90</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
@@ -1372,732 +2069,7 @@
         <int>3</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>60</nodePositionX>
-      <nodePositionZ>50</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>60</x>
-          <y>0</y>
-          <z>50</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>61</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>61</x>
-          <y>0</y>
-          <z>44</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>61</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>61</x>
-          <y>0</y>
-          <z>45</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>61</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>61</x>
-          <y>0</y>
-          <z>46</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>61</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>61</x>
-          <y>0</y>
-          <z>47</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>61</nodePositionX>
-      <nodePositionZ>48</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>61</x>
-          <y>0</y>
-          <z>48</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>61</nodePositionX>
-      <nodePositionZ>49</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>61</x>
-          <y>0</y>
-          <z>49</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>61</nodePositionX>
-      <nodePositionZ>50</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>61</x>
-          <y>0</y>
-          <z>50</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>62</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>62</x>
-          <y>0</y>
-          <z>44</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>62</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>62</x>
-          <y>0</y>
-          <z>45</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>62</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>62</x>
-          <y>0</y>
-          <z>46</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>62</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>62</x>
-          <y>0</y>
-          <z>47</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>62</nodePositionX>
-      <nodePositionZ>48</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>62</x>
-          <y>0</y>
-          <z>48</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>62</nodePositionX>
-      <nodePositionZ>49</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>62</x>
-          <y>0</y>
-          <z>49</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>62</nodePositionX>
-      <nodePositionZ>50</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>62</x>
-          <y>0</y>
-          <z>50</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>63</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>63</x>
-          <y>0</y>
-          <z>44</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>63</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>63</x>
-          <y>0</y>
-          <z>45</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>63</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>63</x>
-          <y>0</y>
-          <z>46</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>63</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>63</x>
-          <y>0</y>
-          <z>47</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>63</nodePositionX>
-      <nodePositionZ>48</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>63</x>
-          <y>0</y>
-          <z>48</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>63</nodePositionX>
-      <nodePositionZ>49</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>63</x>
-          <y>0</y>
-          <z>49</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>63</nodePositionX>
-      <nodePositionZ>50</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>63</x>
-          <y>0</y>
-          <z>50</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>64</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>64</x>
-          <y>0</y>
-          <z>44</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>64</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>64</x>
-          <y>0</y>
-          <z>45</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>64</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>64</x>
-          <y>0</y>
-          <z>46</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>64</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>64</x>
-          <y>0</y>
-          <z>47</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>64</nodePositionX>
-      <nodePositionZ>48</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>64</x>
-          <y>0</y>
-          <z>48</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>64</nodePositionX>
-      <nodePositionZ>49</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>64</x>
-          <y>0</y>
-          <z>49</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>64</nodePositionX>
-      <nodePositionZ>50</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>64</x>
-          <y>0</y>
-          <z>50</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Taxi_Curve</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>

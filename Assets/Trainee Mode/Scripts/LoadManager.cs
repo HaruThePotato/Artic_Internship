@@ -157,14 +157,11 @@ public class LoadManager : MonoBehaviour
                 if (www.error != null)
                     throw new Exception("WWW download had an error:" + www.error);
                 AssetBundle bundle = www.assetBundle;
-
                 foreach (LevelNode lNode in levelData.dbList)
                 {
                     for (int i = 0; i < lNode.objectIDs.Count; i++)
                     {
                         LevelObject lObj = new LevelObject();
-                        //Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
-
                         if (assetName == "")
                         {
                             Instantiate(bundle.mainAsset);
@@ -177,14 +174,22 @@ public class LoadManager : MonoBehaviour
                             lObj.LObject.transform.transform.eulerAngles = lNode.objectRotations[i];
                             lObj.LObject.transform.localScale = levelData.objectScale;
                             lObj.LObject.name = lNode.objectIDs[i];
+                            if (lObj.LObject.name == "RW_RunwayNumber")
+                            {
+                                for (int j = 0; j < lNode.objectIDs.Count; j++)
+                                {
+                                    if (lNode.numberStrings != null) //if there is/are runway number(s) being inputted previously before saving. THIS ALLOWS THE LEVEL TO LOAD EVEN IF THERE IS NO NUMBER.
+                                    {
+                                        lObj.LObject.transform.Find("UICanvas").transform.Find("lane_text").gameObject.GetComponent<Text>().text = lNode.numberStrings[j];
+                                    }
+                                }
+                            }
                             lObj.LObjectType = lNode.objectTypes[i];
                         }
                     }
                 }
-
                 // Unload the AssetBundles compressed contents to conserve memory
                 bundle.Unload(false);
-
             } // memory is freed from the web stream (www.Dispose() gets called implicitly)
         }
     }

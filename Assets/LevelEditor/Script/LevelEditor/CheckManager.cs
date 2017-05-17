@@ -546,6 +546,7 @@ public class CheckManager : MonoBehaviour
 					}
 					else
 					{
+						print(collided.gameObject.name);
 						adjacentCheck = false;
 					}
 				}

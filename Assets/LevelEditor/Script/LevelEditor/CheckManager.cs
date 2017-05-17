@@ -48,65 +48,18 @@ public class CheckManager : MonoBehaviour
 	{
 	}
 
-	void CheckAdjacent() //check the adjacent objects when trying to place a specified object
-	{
-		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
-		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid.
-		foreach (Collider collided in hitColliders)
-		{
-			if (collided.gameObject.transform.position.x == lastPos.x || collided.gameObject.transform.position.z == lastPos.z) //check for same row or column, ignoring diagonal
-			{
-				if (lvlm.selectedObj.LObject.name == "Runway_BlastPad" && collided.gameObject.tag == "taxiway") //if blastpad was selected and taxiway is around
-				{
-					adjacentCheck = false;
-					print("You cannot place that near a taxiway");
-					break;
-				}
-				else if (lvlm.selectedObj.LObject.tag == "taxiway" && collided.gameObject.name == "Runway_BlastPad") //if taxyiway is selected and blastpad is around
-				{
-					adjacentCheck = false;
-					print("You cannot place that near a blastpad");
-					break;
-				}
-				else if (lvlm.selectedObj.LObject.tag == "runway" && (collided.gameObject.tag == "roadway" || collided.gameObject.tag == "apron"))
-				{//if runway is selected and roadway/apron is around
-					adjacentCheck = false;
-					print("You cannot place that near a plane roadway");
-					break;
-				}
-				else if ((lvlm.selectedObj.LObject.tag == "roadway" || lvlm.selectedObj.LObject.tag == "apron") && collided.gameObject.tag == "runway") //if roadway is selected and runway is around
-				{
-					adjacentCheck = false;
-					print("You cannot place that near a runway");
-					break;
-				}
-				else if (lvlm.selectedObj.LObject.name == "HoldingShortLine") //if holding short line is selected and check for taxiway
-				{
-					if (collided.gameObject.tag == "taxiway")
-					{
-						adjacentCheck = true;
-						break;
-					}
-					else
-					{
-						adjacentCheck = false;
-					}
-				}
-				else
-				{
-					adjacentCheck = true;
-				}
-			}
-		}
-	}
+	
+
 
 	void CheckRunway() //check the runway lane for correct order. This is super long because of all the double checking and in opposite order.
 	{
-		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
+		//Vector3 lastPos = new Vector3(gm.selectedNode.nPosX, lvlm.selectedObj.LObject.transform.GetChild(0).transform.position.y, gm.selectedNode.nPosZ);
+		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ+0.5f);
 		RaycastHit hit;
 		if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))
 			|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))) //raycast left and back
 		{
+			print("1");
 			if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 			{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
 				runwayCheck = true;
@@ -134,6 +87,7 @@ public class CheckManager : MonoBehaviour
 				if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))
 					|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))) //raycast right and forward
 				{
+					print("2");
 					if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 					{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
 						runwayCheck = true;
@@ -165,6 +119,7 @@ public class CheckManager : MonoBehaviour
 		else if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))
 				|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))) //raycast right and forward
 		{
+			print("3");
 			if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 			{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
 				runwayCheck = true;
@@ -192,6 +147,7 @@ public class CheckManager : MonoBehaviour
 				if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))
 					|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings"))) //raycast left and back
 				{
+					print("4");
 					if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 					{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
 						runwayCheck = true;
@@ -222,7 +178,434 @@ public class CheckManager : MonoBehaviour
 		}
 		else
 		{
+			print("wat?");
 			runwayCheck = false;
+		}
+	}
+
+	void CheckRunwayNumber()
+	{
+		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
+		RaycastHit hit;
+		if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
+			|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
+		{
+			if (lvlm.selectedObj.LObject.name == "Runway_9" && hit.collider.gameObject.name == "Runway_27")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_9C" && hit.collider.gameObject.name == "Runway_27C")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_9L" && hit.collider.gameObject.name == "Runway_27R")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_9R" && hit.collider.gameObject.name == "Runway_27L")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_18" && hit.collider.gameObject.name == "Runway_36")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_18C" && hit.collider.gameObject.name == "Runway_36C")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_18L" && hit.collider.gameObject.name == "Runway_36R")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_18R" && hit.collider.gameObject.name == "Runway_36L")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_27C" && hit.collider.gameObject.name == "Runway_9C")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_27L" && hit.collider.gameObject.name == "Runway_9R")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_27R" && hit.collider.gameObject.name == "Runway_9L")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_36" && hit.collider.gameObject.name == "Runway_18")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_36C" && hit.collider.gameObject.name == "Runway_18C")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_36L" && hit.collider.gameObject.name == "Runway_18R")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_36R" && hit.collider.gameObject.name == "Runway_18L")
+			{
+				runwayCheck = true;
+			}
+			else
+			{
+				runwayCheck = false;
+				if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
+			|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
+				{
+					if (lvlm.selectedObj.LObject.name == "Runway_9" && hit.collider.gameObject.name == "Runway_27")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_9C" && hit.collider.gameObject.name == "Runway_27C")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_9L" && hit.collider.gameObject.name == "Runway_27R")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_9R" && hit.collider.gameObject.name == "Runway_27L")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_18" && hit.collider.gameObject.name == "Runway_36")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_18C" && hit.collider.gameObject.name == "Runway_36C")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_18L" && hit.collider.gameObject.name == "Runway_36R")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_18R" && hit.collider.gameObject.name == "Runway_36L")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_27C" && hit.collider.gameObject.name == "Runway_9C")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_27L" && hit.collider.gameObject.name == "Runway_9R")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_27R" && hit.collider.gameObject.name == "Runway_9L")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_36" && hit.collider.gameObject.name == "Runway_18")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_36C" && hit.collider.gameObject.name == "Runway_18C")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_36L" && hit.collider.gameObject.name == "Runway_18R")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_36R" && hit.collider.gameObject.name == "Runway_18L")
+					{
+						runwayCheck = true;
+					}
+				}
+				else
+				{
+					runwayCheck = false;
+				}
+			}
+		}
+		else if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
+			|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
+		{
+			if (lvlm.selectedObj.LObject.name == "Runway_9" && hit.collider.gameObject.name == "Runway_27")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_9C" && hit.collider.gameObject.name == "Runway_27C")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_9L" && hit.collider.gameObject.name == "Runway_27R")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_9R" && hit.collider.gameObject.name == "Runway_27L")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_18" && hit.collider.gameObject.name == "Runway_36")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_18C" && hit.collider.gameObject.name == "Runway_36C")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_18L" && hit.collider.gameObject.name == "Runway_36R")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_18R" && hit.collider.gameObject.name == "Runway_36L")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_27C" && hit.collider.gameObject.name == "Runway_9C")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_27L" && hit.collider.gameObject.name == "Runway_9R")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_27R" && hit.collider.gameObject.name == "Runway_9L")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_36" && hit.collider.gameObject.name == "Runway_18")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_36C" && hit.collider.gameObject.name == "Runway_18C")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_36L" && hit.collider.gameObject.name == "Runway_18R")
+			{
+				runwayCheck = true;
+			}
+			else if (lvlm.selectedObj.LObject.name == "Runway_36R" && hit.collider.gameObject.name == "Runway_18L")
+			{
+				runwayCheck = true;
+			}
+			else
+			{
+				runwayCheck = false;
+				if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
+			|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
+				{
+					if (lvlm.selectedObj.LObject.name == "Runway_9" && hit.collider.gameObject.name == "Runway_27")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_9C" && hit.collider.gameObject.name == "Runway_27C")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_9L" && hit.collider.gameObject.name == "Runway_27R")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_9R" && hit.collider.gameObject.name == "Runway_27L")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_18" && hit.collider.gameObject.name == "Runway_36")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_18C" && hit.collider.gameObject.name == "Runway_36C")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_18L" && hit.collider.gameObject.name == "Runway_36R")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_18R" && hit.collider.gameObject.name == "Runway_36L")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_27C" && hit.collider.gameObject.name == "Runway_9C")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_27L" && hit.collider.gameObject.name == "Runway_9R")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_27R" && hit.collider.gameObject.name == "Runway_9L")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_36" && hit.collider.gameObject.name == "Runway_18")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_36C" && hit.collider.gameObject.name == "Runway_18C")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_36L" && hit.collider.gameObject.name == "Runway_18R")
+					{
+						runwayCheck = true;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_36R" && hit.collider.gameObject.name == "Runway_18L")
+					{
+						runwayCheck = true;
+					}
+				}
+				else
+				{
+					runwayCheck = false;
+				}
+			}
+		}
+	}
+
+	void CheckAdjacent() //check the adjacent objects when trying to place a specified object
+	{
+		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
+		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid.
+		foreach (Collider collided in hitColliders)
+		{
+			if (collided.gameObject.transform.position.x == lastPos.x || collided.gameObject.transform.position.z == lastPos.z) //check for same row or column, ignoring diagonal
+			{
+				if (lvlm.selectedObj.LObject.name == "Runway_BlastPad" && collided.gameObject.tag == "taxiway") //if blastpad was selected and taxiway is around
+				{
+					adjacentCheck = false;
+					print("You cannot place that near a taxiway");
+					break;
+				}
+				else if (lvlm.selectedObj.LObject.tag == "taxiway" && collided.gameObject.name == "Runway_BlastPad") //if taxyiway is selected and blastpad is around
+				{
+					adjacentCheck = false;
+					print("You cannot place that near a blastpad");
+					break;
+				}
+				else if (lvlm.selectedObj.LObject.tag == "runway" && (collided.gameObject.tag == "roadway" || collided.gameObject.tag == "apron"))
+				{//if runway is selected and roadway/apron is around
+					adjacentCheck = false;
+					print("You cannot place that near a roadway");
+					break;
+				}
+				else if ((lvlm.selectedObj.LObject.tag == "roadway" || lvlm.selectedObj.LObject.tag == "apron") && collided.gameObject.tag == "runway") //if roadway is selected and runway is around
+				{
+					adjacentCheck = false;
+					print("You cannot place that near a runway");
+					break;
+				}
+				/*else if (lvlm.selectedObj.LObject.name == "Taxiway_HoldingShortLine" || lvlm.selectedObj.LObject.name == "Taxiway_HoldingShortLineDia") //if holding short line is selected and check for taxiway
+				{
+					if (collided.gameObject.tag == "taxiway")
+					{
+						adjacentCheck = true;
+						break;
+					}
+					else
+					{
+						adjacentCheck = false;
+					}
+				}*/
+				else if (lvlm.selectedObj.LObject.name == "Apron_GateBridgeLight")
+				{
+					if (collided.gameObject.name == "Terminal_Corner1" || collided.gameObject.name == "Terminal_Corner2" || collided.gameObject.name == "Terminal_End")
+					{
+						adjacentCheck = true;
+						break;
+					}
+					else
+					{
+						adjacentCheck = false;
+					}
+				}
+				else if (lvlm.selectedObj.LObject.name == "Apron_Taxi")
+				{
+					if ((collided.gameObject.name == "Apron_Main" || collided.gameObject.tag == "taxiway")
+						|| (collided.gameObject.name == "Apron_Taxi" && collided.gameObject.transform.position != lastPos))
+					{
+						adjacentCheck = true;
+						break;
+					}
+					else
+					{
+						adjacentCheck = false;
+					}
+				}
+				else if (lvlm.selectedObj.LObject.name == "Grass_Taxi")
+				{
+					if ((collided.gameObject.name == "Grass_Main" || collided.gameObject.tag == "taxiway")
+						|| (collided.gameObject.name == "Grass_Taxi" && collided.gameObject.transform.position != lastPos))
+					{
+						adjacentCheck = true;
+						break;
+					}
+					else
+					{
+						adjacentCheck = false;
+					}
+				}
+				else if (lvlm.selectedObj.LObject.name == "Grass_Runway")
+				{
+					if ((collided.gameObject.name == "Grass_Main" || collided.gameObject.tag == "runway")
+						|| (collided.gameObject.name == "Grass_Runway" && collided.gameObject.transform.position != lastPos))
+					{
+						adjacentCheck = true;
+						break;
+					}
+					else
+					{
+						adjacentCheck = false;
+					}
+				}
+				else if (lvlm.selectedObj.LObject.name == "Hangar_Front" && collided.gameObject.name == "Hangar_Side")
+				{
+					print("oh well");
+					adjacentCheck = false;
+					print("You can only place the Hangar's gate beside a Hangar's pillar/corner or another gate.");
+					break;
+				}
+				else if (lvlm.selectedObj.LObject.name == "Hangar_Side" && collided.gameObject.name == "Hangar_Front")
+				{
+					adjacentCheck = false;
+					print("You can only place the Hangar's wall beside a Hangar's pillar/corner or another wall.");
+					break;
+				}
+				else
+				{
+					adjacentCheck = true;
+				}
+			}
 		}
 	}
 
@@ -280,7 +663,7 @@ public class CheckManager : MonoBehaviour
 		}
 	}
 
-	public void PlaceObjectClone() //clone and place object
+	/*public void PlaceObjectClone() //clone and place object
 	{
 		if (gm.currentNode.nObjects.Count > 0) //if there is at least an object on the grid
 		{
@@ -370,7 +753,7 @@ public class CheckManager : MonoBehaviour
 				}
 			}
 		}
-	}
+	}*/
 
 	public void PlaceObjectSingle() //place ONE object and no clone
 	{
@@ -394,7 +777,29 @@ public class CheckManager : MonoBehaviour
 					}
 					else //bottom object type is 2 or 3
 					{
-						if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
+						if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag == "apron")
+						{
+							if (lvlm.selectedObj.LObject.name == "Apron_GateBridgeLight")
+							{
+								CheckAdjacent();
+								if(adjacentCheck == false)
+								{
+									print("You need to start building with a Terminal block first.");
+								}
+								CheckAdjacentTrue();
+							}
+							else if (lvlm.selectedObj.LObject.name == "Hangar_Front" || lvlm.selectedObj.LObject.name == "Hangar_Side")
+							{
+								print("lel");
+								CheckAdjacent();
+								CheckAdjacentTrue();
+							}
+							else
+							{
+								lvlm.PlaceSucceed();
+							}
+						}
+						else if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
 						{
 							print("This can only be built in apron area");
 							lvlm.CancelSelect();
@@ -453,6 +858,33 @@ public class CheckManager : MonoBehaviour
 				else if (lvlm.selectedObj.LObject.tag == "roadway") //specifically roadway
 				{
 					CheckAdjacent();
+					CheckAdjacentTrue();
+				}
+				else if (lvlm.selectedObj.LObject.name == "Apron_Taxi")
+				{
+					CheckAdjacent();
+					if (adjacentCheck == false)
+					{
+						print("You can only place this block if there is an Apron or Taxiway block beside it.");
+					}
+					CheckAdjacentTrue();
+				}
+				else if (lvlm.selectedObj.LObject.name == "Grass_Taxi")
+				{
+					CheckAdjacent();
+					if (adjacentCheck == false)
+					{
+						print("You can only place this block if there is an Grass or Taxiway block beside it.");
+					}
+					CheckAdjacentTrue();
+				}
+				else if (lvlm.selectedObj.LObject.name == "Grass_Runway")
+				{
+					CheckAdjacent();
+					if (adjacentCheck == false)
+					{
+						print("You can only place this block if there is an Grass or Runway block beside it.");
+					}
 					CheckAdjacentTrue();
 				}
 				else

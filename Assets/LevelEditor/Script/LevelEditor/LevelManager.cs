@@ -664,7 +664,7 @@ public class LevelManager : MonoBehaviour
     {
         uim.Status.text = "Connecting...";
         Debug.Log("Connecting to AWS S3 Database.");
-        listOfDownloadables = aws.getListOfBucketObjects();
+        listOfDownloadables = aws.getListOfBucketObjects("LoadManager");
     }
 
     public void callDownload()
@@ -723,30 +723,5 @@ public class LevelManager : MonoBehaviour
 			}
 		}
 	}
-
-	/*void ColliderMerge()
-	{
-		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, gm.currentNode.nObjects.Last().LObject.transform.position.y, gm.currentNode.nPosZ);
-		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid.
-		foreach (Collider collided in hitColliders)
-		{
-			if (collided.gameObject.transform.position != gm.currentNode.nObjects.Last().LObject.transform.position)
-			{
-				if (collided.gameObject.name == gm.currentNode.nObjects.Last().LObject.name)
-				{
-
-					if (collided.gameObject.transform.position.y == gm.currentNode.nObjects.Last().LObject.transform.position.y)
-					{
-						if (collided.gameObject.transform.position.x == gm.currentNode.nObjects.Last().LObject.transform.position.x
-							|| collided.gameObject.transform.position.z == gm.currentNode.nObjects.Last().LObject.transform.position.z)
-						{
-							Destroy(collided.gameObject.GetComponent<Collider>());
-							collided.gameObject.transform.parent = gm.currentNode.nObjects.Last().LObject.transform;
-						}
-					}
-				}
-			}
-		}
-	}*/
 
 }

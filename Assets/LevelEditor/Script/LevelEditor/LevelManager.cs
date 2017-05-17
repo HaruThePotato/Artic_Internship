@@ -236,6 +236,9 @@ public class LevelManager : MonoBehaviour
 		if (gm.isHovering && !uim.mouseOverUI && hObject.LObject != null)
 		{
 			hObject.LObject.transform.GetChild(0).transform.eulerAngles += new Vector3(0, rAngle, 0);
+			print("local " + hObject.LObject.transform.GetChild(0).transform.position);
+			print("world " + hObject.LObject.transform.position);
+			print("selected " + selectedObj.LObject.transform.position);
 		}
 	}
 

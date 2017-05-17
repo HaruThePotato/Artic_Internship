@@ -52,11 +52,13 @@ public class CheckManager : MonoBehaviour
 
 	void CheckRunway() //check the runway lane for correct order. This is super long because of all the double checking and in opposite order.
 	{
+		//Vector3 lastPos = new Vector3(gm.selectedNode.nPosX, lvlm.selectedObj.LObject.transform.GetChild(0).transform.position.y, gm.selectedNode.nPosZ);
 		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
 		RaycastHit hit;
 		if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
 			|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast left and back
 		{
+			print("1");
 			if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 			{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
 				runwayCheck = true;
@@ -80,10 +82,10 @@ public class CheckManager : MonoBehaviour
 			}
 			else
 			{
-				runwayCheck = false;
 				if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
 					|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast right and forward
 				{
+					print("2");
 					if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 					{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
 						runwayCheck = true;
@@ -115,6 +117,7 @@ public class CheckManager : MonoBehaviour
 		else if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
 				|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast right and forward
 		{
+			print("3");
 			if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 			{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
 				runwayCheck = true;
@@ -138,10 +141,10 @@ public class CheckManager : MonoBehaviour
 			}
 			else
 			{
-				runwayCheck = false;
 				if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
 					|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast left and back
 				{
+					print("4");
 					if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 					{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
 						runwayCheck = true;
@@ -172,6 +175,7 @@ public class CheckManager : MonoBehaviour
 		}
 		else
 		{
+			print("wat?");
 			runwayCheck = false;
 		}
 	}
@@ -544,7 +548,7 @@ public class CheckManager : MonoBehaviour
 				}
 				else if (lvlm.selectedObj.LObject.name == "Apron_Taxi")
 				{
-					if ((collided.gameObject.name == "Apron_Main" || collided.gameObject.tag == "taxiway") 
+					if ((collided.gameObject.name == "Apron_Main" || collided.gameObject.tag == "taxiway")
 						|| (collided.gameObject.name == "Apron_Taxi" && collided.gameObject.transform.position != lastPos))
 					{
 						adjacentCheck = true;
@@ -581,19 +585,19 @@ public class CheckManager : MonoBehaviour
 						adjacentCheck = false;
 					}
 				}
-				else if (lvlm.selectedObj.LObject.name == "Hangar_Front")
+				else if (lvlm.selectedObj.LObject.name == "Hangar_Front" && collided.gameObject.name == "Hangar_Side")
 				{
-					if (collided.gameObject.name != "Hangar_Corner")
-					{
-						adjacentCheck = false;
-					}
-					else
-					{
-						adjacentCheck = true;
-						break;
-					}
+					print("oh well");
+					adjacentCheck = false;
+					print("You can only place the Hangar's gate beside a Hangar's pillar/corner or another gate.");
+					break;
 				}
-				
+				else if (lvlm.selectedObj.LObject.name == "Hangar_Side" && collided.gameObject.name == "Hangar_Front")
+				{
+					adjacentCheck = false;
+					print("You can only place the Hangar's wall beside a Hangar's pillar/corner or another wall.");
+					break;
+				}
 				else
 				{
 					adjacentCheck = true;
@@ -786,8 +790,9 @@ public class CheckManager : MonoBehaviour
 								}
 								CheckAdjacentTrue();
 							}
-							else if (lvlm.selectedObj.LObject.name == "Hangar_Front" || lvlm.selectedObj.LObject.name == "Hangar_Corner" || lvlm.selectedObj.LObject.name == "Hangar_Side")
+							else if (lvlm.selectedObj.LObject.name == "Hangar_Front" || lvlm.selectedObj.LObject.name == "Hangar_Side")
 							{
+								print("lel");
 								CheckAdjacent();
 								CheckAdjacentTrue();
 							}

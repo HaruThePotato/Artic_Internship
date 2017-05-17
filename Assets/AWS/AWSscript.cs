@@ -19,6 +19,7 @@ using Amazon.CognitoSync;
 using Amazon.CognitoIdentity.Model;
 using Amazon.CognitoSync.SyncManager;
 using System.Text;
+using UnityEngine.SceneManagement;
 #endregion
 
 public class AWSscript : MonoBehaviour
@@ -232,7 +233,14 @@ public class AWSscript : MonoBehaviour
                     File.WriteAllBytes(aeDir + "/Serialization/XML/" + fileName, buffer);
                     downloadedStuff = true;
                 }
-                UIManager.GetInstance().Status.text = "Downloaded.";
+
+                Scene currentScene = SceneManager.GetActiveScene();
+                string sceneName = currentScene.name;
+
+                if (sceneName != "TraineeScene")
+                {
+                    UIManager.GetInstance().Status.text = "Downloaded.";
+                }
                 Debug.Log("The object selected has been downloaded.");
             }
         });

@@ -664,7 +664,7 @@ public class CheckManager : MonoBehaviour
 		}
 	}
 
-	/*public void PlaceObjectClone() //clone and place object
+	public void PlaceObjectClone() //place ONE object and no clone
 	{
 		if (gm.currentNode.nObjects.Count > 0) //if there is at least an object on the grid
 		{
@@ -686,7 +686,28 @@ public class CheckManager : MonoBehaviour
 					}
 					else //bottom object type is 2 or 3
 					{
-						if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
+						if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag == "apron") //selected apronOnly objects and building on apron
+						{
+							if (lvlm.selectedObj.LObject.name == "Apron_GateBridgeLight") //selected GateBridgeLight
+							{
+								CheckAdjacent();
+								if (adjacentCheck == false)
+								{
+									print("You need to start building with a Terminal block first.");
+								}
+								CheckAdjacentTrueClone();
+							}
+							else if (lvlm.selectedObj.LObject.name == "Hangar_Front" || lvlm.selectedObj.LObject.name == "Hangar_Side") //selected Hangar
+							{
+								CheckAdjacent();
+								CheckAdjacentTrueClone();
+							}
+							else
+							{
+								lvlm.CloneSucceed();
+							}
+						}
+						else if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
 						{
 							print("This can only be built in apron area");
 							lvlm.CancelSelect();
@@ -738,13 +759,40 @@ public class CheckManager : MonoBehaviour
 						if (adjacentCheck == true)
 						{
 							CheckRunway();
-							CheckRunwayTrueClone();
+							CheckRunwayTrue();
 						}
 					}
 				}
 				else if (lvlm.selectedObj.LObject.tag == "roadway") //specifically roadway
 				{
 					CheckAdjacent();
+					CheckAdjacentTrueClone();
+				}
+				else if (lvlm.selectedObj.LObject.name == "Apron_Taxi") //specifically ApronTaxi (hybrid block)
+				{
+					CheckAdjacent();
+					if (adjacentCheck == false)
+					{
+						print("You can only place this block if there is an Apron or Taxiway block beside it.");
+					}
+					CheckAdjacentTrueClone();
+				}
+				else if (lvlm.selectedObj.LObject.name == "Grass_Taxi") //specifically GrassTaxi (hybrid block)
+				{
+					CheckAdjacent();
+					if (adjacentCheck == false)
+					{
+						print("You can only place this block if there is an Grass or Taxiway block beside it.");
+					}
+					CheckAdjacentTrueClone();
+				}
+				else if (lvlm.selectedObj.LObject.name == "Grass_Runway")//specifically GrassRunway (hybrid block)
+				{
+					CheckAdjacent();
+					if (adjacentCheck == false)
+					{
+						print("You can only place this block if there is an Grass or Runway block beside it.");
+					}
 					CheckAdjacentTrueClone();
 				}
 				else
@@ -754,7 +802,7 @@ public class CheckManager : MonoBehaviour
 				}
 			}
 		}
-	}*/
+	}
 
 	public void PlaceObjectSingle() //place ONE object and no clone
 	{
@@ -778,9 +826,9 @@ public class CheckManager : MonoBehaviour
 					}
 					else //bottom object type is 2 or 3
 					{
-						if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag == "apron")
+						if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag == "apron") //selected apronOnly objects and building on apron
 						{
-							if (lvlm.selectedObj.LObject.name == "Apron_GateBridgeLight")
+							if (lvlm.selectedObj.LObject.name == "Apron_GateBridgeLight") //selected GateBridgeLight
 							{
 								CheckAdjacent();
 								if(adjacentCheck == false)
@@ -789,9 +837,8 @@ public class CheckManager : MonoBehaviour
 								}
 								CheckAdjacentTrue();
 							}
-							else if (lvlm.selectedObj.LObject.name == "Hangar_Front" || lvlm.selectedObj.LObject.name == "Hangar_Side")
+							else if (lvlm.selectedObj.LObject.name == "Hangar_Front" || lvlm.selectedObj.LObject.name == "Hangar_Side") //selected Hangar
 							{
-								print("lel");
 								CheckAdjacent();
 								CheckAdjacentTrue();
 							}
@@ -861,7 +908,7 @@ public class CheckManager : MonoBehaviour
 					CheckAdjacent();
 					CheckAdjacentTrue();
 				}
-				else if (lvlm.selectedObj.LObject.name == "Apron_Taxi")
+				else if (lvlm.selectedObj.LObject.name == "Apron_Taxi") //specifically ApronTaxi (hybrid block)
 				{
 					CheckAdjacent();
 					if (adjacentCheck == false)
@@ -870,7 +917,7 @@ public class CheckManager : MonoBehaviour
 					}
 					CheckAdjacentTrue();
 				}
-				else if (lvlm.selectedObj.LObject.name == "Grass_Taxi")
+				else if (lvlm.selectedObj.LObject.name == "Grass_Taxi") //specifically GrassTaxi (hybrid block)
 				{
 					CheckAdjacent();
 					if (adjacentCheck == false)
@@ -879,7 +926,7 @@ public class CheckManager : MonoBehaviour
 					}
 					CheckAdjacentTrue();
 				}
-				else if (lvlm.selectedObj.LObject.name == "Grass_Runway")
+				else if (lvlm.selectedObj.LObject.name == "Grass_Runway")//specifically GrassRunway (hybrid block)
 				{
 					CheckAdjacent();
 					if (adjacentCheck == false)

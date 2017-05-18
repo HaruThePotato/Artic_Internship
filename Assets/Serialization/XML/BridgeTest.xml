@@ -3,6 +3,31 @@
   <dbList>
     <LevelNode>
       <nodePositionX>52</nodePositionX>
+      <nodePositionZ>43</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>52</x>
+          <y>0</y>
+          <z>43</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>3</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Apron_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>52</nodePositionX>
       <nodePositionZ>44</nodePositionZ>
       <objectPositions>
         <Vector3>
@@ -84,6 +109,31 @@
           <x>52</x>
           <y>0</y>
           <z>47</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>3</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Apron_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>53</nodePositionX>
+      <nodePositionZ>43</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>53</x>
+          <y>0</y>
+          <z>43</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
@@ -239,6 +289,31 @@
     </LevelNode>
     <LevelNode>
       <nodePositionX>54</nodePositionX>
+      <nodePositionZ>43</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>54</x>
+          <y>0</y>
+          <z>43</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>3</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Apron_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>54</nodePositionX>
       <nodePositionZ>44</nodePositionZ>
       <objectPositions>
         <Vector3>
@@ -375,6 +450,31 @@
     </LevelNode>
     <LevelNode>
       <nodePositionX>55</nodePositionX>
+      <nodePositionZ>43</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>55</x>
+          <y>0</y>
+          <z>43</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>3</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Apron_Main</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>55</nodePositionX>
       <nodePositionZ>44</nodePositionZ>
       <objectPositions>
         <Vector3>
@@ -485,7 +585,7 @@
     <z>1</z>
   </objectScale>
   <objectBundleNames>
-    <string xsi:nil="true" />
     <string />
+    <string xsi:nil="true" />
   </objectBundleNames>
 </LevelDatabase>

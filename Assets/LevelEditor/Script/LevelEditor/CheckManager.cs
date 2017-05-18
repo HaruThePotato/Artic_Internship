@@ -499,6 +499,7 @@ public class CheckManager : MonoBehaviour
 		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid.
 		foreach (Collider collided in hitColliders)
 		{
+			print(collided.gameObject.name);
 			if (collided.gameObject.transform.position.x == lastPos.x || collided.gameObject.transform.position.z == lastPos.z) //check for same row or column, ignoring diagonal
 			{
 				if (lvlm.selectedObj.LObject.name == "Runway_BlastPad" && collided.gameObject.tag == "taxiway") //if blastpad was selected and taxiway is around
@@ -546,7 +547,7 @@ public class CheckManager : MonoBehaviour
 					}
 					else
 					{
-						print(collided.gameObject.name);
+
 						adjacentCheck = false;
 					}
 				}
@@ -771,6 +772,11 @@ public class CheckManager : MonoBehaviour
 							print("This can only be built in apron area");
 							lvlm.CancelSelect();
 						}
+						if (lvlm.selectedObj.LObject.tag == "plane" || lvlm.selectedObj.LObject.tag == "vehicle")
+						{
+							print("This should not be placed here.");
+								lvlm.CancelSelect();
+						}
 						else
 						{
 							lvlm.PlaceSucceed();
@@ -828,6 +834,16 @@ public class CheckManager : MonoBehaviour
 					print("That can only be used at ground level");
 					lvlm.CancelSelect();
 				}
+				else if (lvlm.selectedObj.LObjectType == 4)
+				{
+					lvlm.CancelSelect();
+					print("That can only be used at ground level.");
+				}
+			}
+			else if (lvlm.selectedObj.LObjectType == 4)
+			{
+				lvlm.CancelSelect();
+				print("You cannot placed that there.");
 			}
 		}
 		else //if there is no object on the grid

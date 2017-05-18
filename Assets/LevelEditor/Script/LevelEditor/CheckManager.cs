@@ -53,14 +53,14 @@ public class CheckManager : MonoBehaviour
 
 	void CheckRunway() //check the runway lane for correct order. This is super long because of all the double checking and in opposite order.
 	{
-		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ+0.5f);
+		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ + 0.5f);
 		RaycastHit hit;
 		if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
 			|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast left and back
 		{
 			if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 			{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
 			//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
@@ -87,7 +87,7 @@ public class CheckManager : MonoBehaviour
 				{
 					if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 					{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
 					//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
@@ -118,7 +118,7 @@ public class CheckManager : MonoBehaviour
 		{
 			if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 			{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
 			//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
@@ -145,7 +145,7 @@ public class CheckManager : MonoBehaviour
 				{
 					if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
 					{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
 					//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
@@ -606,7 +606,91 @@ public class CheckManager : MonoBehaviour
 
 	void CheckRot()
 	{
+		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
+		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid.
+		foreach (Collider collided in hitColliders)
+		{
+			if (collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z != lastPos.z)
+			{//check for same row or column, ignoring diagonal
+				print("JA");
+				float difference = collided.gameObject.transform.position.z - lastPos.z;
+				int selectedObjectAngle = (int)lvlm.hObject.LObject.transform.GetChild(0).transform.eulerAngles.y;
+				print(selectedObjectAngle);
+				int collidedObjectAngle = (int)collided.gameObject.transform.GetChild(0).transform.eulerAngles.y;
+				print(collidedObjectAngle);
 
+				if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2")
+				{
+					if (collided.gameObject.name == "Runway_DisplacedThreshold")
+					{
+						
+						if (difference < 0)
+						{
+							if ((selectedObjectAngle == 90 && collidedObjectAngle == 90) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+							{
+								runwayCheck = true;
+							}
+							else
+							{
+								runwayCheck = false;
+							}
+						}
+						else
+						{
+							if ((selectedObjectAngle == 270 && collidedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+							{
+								runwayCheck = true;
+							}
+							else
+							{
+								runwayCheck = false;
+							}
+						}
+					}
+				}
+			}
+			else if (collided.gameObject.transform.position.z == lastPos.z && collided.gameObject.transform.position.x != lastPos.x)
+			{//check for same row or column, ignoring diagonal
+				print("lel");
+				float difference = collided.gameObject.transform.position.x - lastPos.x;
+				int selectedObjectAngle = (int)lvlm.hObject.LObject.transform.GetChild(0).transform.eulerAngles.y;
+				print(selectedObjectAngle);
+				int collidedObjectAngle = (int)collided.gameObject.transform.GetChild(0).transform.eulerAngles.y;
+				print(collidedObjectAngle);
+
+				if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2")
+				{
+					if (collided.gameObject.name == "Runway_DisplacedThreshold")
+					{
+						print(lvlm.hObject.LObject.transform.position.x);
+						print(collided.gameObject.transform.position.x);
+						print(difference);
+						if (difference < 0)
+						{
+							if ((selectedObjectAngle == 180 && collidedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+							{
+								runwayCheck = true;
+							}
+							else
+							{				
+								runwayCheck = false;
+							}
+						}
+						else
+						{
+							if ((selectedObjectAngle == 0 && collidedObjectAngle == 0) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+							{
+								runwayCheck = true;
+							}
+							else
+							{
+								runwayCheck = false;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 	void CheckAdjacentTrue() //build if CheckAdjacent passes
@@ -830,7 +914,7 @@ public class CheckManager : MonoBehaviour
 							if (lvlm.selectedObj.LObject.name == "Apron_GateBridgeLight") //selected GateBridgeLight
 							{
 								CheckAdjacent();
-								if(adjacentCheck == false)
+								if (adjacentCheck == false)
 								{
 									print("You need to start building with a Terminal block first.");
 								}
@@ -887,7 +971,7 @@ public class CheckManager : MonoBehaviour
 			{
 				if (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber") //specifically runway
 				{
-					if (lvlm.selectedObj.LObject.name == "Runway_BlastPad" || lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold" ||  lvlm.selectedObj.LObject.name == "Runway_Line")
+					if (lvlm.selectedObj.LObject.name == "Runway_BlastPad" || lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold" || lvlm.selectedObj.LObject.name == "Runway_Line")
 					{//BlastPad, DisplacedThreshold or Line selected, no need to CheckRunway
 						CheckAdjacent();
 						CheckAdjacentTrue();
@@ -900,7 +984,7 @@ public class CheckManager : MonoBehaviour
 							CheckRunway();
 							CheckRunwayTrue();
 						}
-					}	
+					}
 				}
 				else if (lvlm.selectedObj.LObject.tag == "roadway") //specifically roadway
 				{

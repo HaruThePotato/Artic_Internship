@@ -65,7 +65,7 @@ public class CheckManager : MonoBehaviour
 			else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
 			//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
 			{ //selected object is RunwayNumber and raycast hits ThresholdMarker
@@ -73,11 +73,11 @@ public class CheckManager : MonoBehaviour
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
 			{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchDownZone")
 			{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
-				runwayCheck = true;
+				CheckRot();
 			}
 			else
 			{
@@ -92,7 +92,7 @@ public class CheckManager : MonoBehaviour
 					else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
 					//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
 					{ //selected object is RunwayNumber and raycast hits ThresholdMarker
@@ -100,11 +100,11 @@ public class CheckManager : MonoBehaviour
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
 					{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchDownZone")
 					{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
-						runwayCheck = true;
+						CheckRot();
 					}
 				}
 				else
@@ -123,7 +123,7 @@ public class CheckManager : MonoBehaviour
 			else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
 			//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
 			{ //selected object is RunwayNumber and raycast hits ThresholdMarker
@@ -131,11 +131,11 @@ public class CheckManager : MonoBehaviour
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
 			{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchDownZone")
 			{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
-				runwayCheck = true;
+				CheckRot();
 			}
 			else
 			{
@@ -150,7 +150,7 @@ public class CheckManager : MonoBehaviour
 					else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
 					//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
 					{ //selected object is RunwayNumber and raycast hits ThresholdMarker
@@ -158,11 +158,11 @@ public class CheckManager : MonoBehaviour
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
 					{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchDownZone")
 					{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
-						runwayCheck = true;
+						CheckRot();
 					}
 				}
 				else
@@ -179,78 +179,79 @@ public class CheckManager : MonoBehaviour
 
 	void CheckRunwayNumber()
 	{
-		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
+		print("checkrunwaynumber"); 
+		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ+0.5f);
 		RaycastHit hit;
 		if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
 			|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
 		{
 			if (lvlm.selectedObj.LObject.name == "Runway_9" && hit.collider.gameObject.name == "Runway_27")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_9C" && hit.collider.gameObject.name == "Runway_27C")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_9L" && hit.collider.gameObject.name == "Runway_27R")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_9R" && hit.collider.gameObject.name == "Runway_27L")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_18" && hit.collider.gameObject.name == "Runway_36")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_18C" && hit.collider.gameObject.name == "Runway_36C")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_18L" && hit.collider.gameObject.name == "Runway_36R")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_18R" && hit.collider.gameObject.name == "Runway_36L")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_27C" && hit.collider.gameObject.name == "Runway_9C")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_27L" && hit.collider.gameObject.name == "Runway_9R")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_27R" && hit.collider.gameObject.name == "Runway_9L")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_36" && hit.collider.gameObject.name == "Runway_18")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_36C" && hit.collider.gameObject.name == "Runway_18C")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_36L" && hit.collider.gameObject.name == "Runway_18R")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_36R" && hit.collider.gameObject.name == "Runway_18L")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else
 			{
@@ -260,76 +261,76 @@ public class CheckManager : MonoBehaviour
 				{
 					if (lvlm.selectedObj.LObject.name == "Runway_9" && hit.collider.gameObject.name == "Runway_27")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_9C" && hit.collider.gameObject.name == "Runway_27C")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_9L" && hit.collider.gameObject.name == "Runway_27R")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_9R" && hit.collider.gameObject.name == "Runway_27L")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_18" && hit.collider.gameObject.name == "Runway_36")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_18C" && hit.collider.gameObject.name == "Runway_36C")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_18L" && hit.collider.gameObject.name == "Runway_36R")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_18R" && hit.collider.gameObject.name == "Runway_36L")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_27C" && hit.collider.gameObject.name == "Runway_9C")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_27L" && hit.collider.gameObject.name == "Runway_9R")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_27R" && hit.collider.gameObject.name == "Runway_9L")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_36" && hit.collider.gameObject.name == "Runway_18")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_36C" && hit.collider.gameObject.name == "Runway_18C")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_36L" && hit.collider.gameObject.name == "Runway_18R")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_36R" && hit.collider.gameObject.name == "Runway_18L")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 				}
 				else
 				{
-					runwayCheck = false;
+					CheckRot();
 				}
 			}
 		}
@@ -338,71 +339,71 @@ public class CheckManager : MonoBehaviour
 		{
 			if (lvlm.selectedObj.LObject.name == "Runway_9" && hit.collider.gameObject.name == "Runway_27")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_9C" && hit.collider.gameObject.name == "Runway_27C")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_9L" && hit.collider.gameObject.name == "Runway_27R")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_9R" && hit.collider.gameObject.name == "Runway_27L")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_18" && hit.collider.gameObject.name == "Runway_36")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_18C" && hit.collider.gameObject.name == "Runway_36C")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_18L" && hit.collider.gameObject.name == "Runway_36R")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_18R" && hit.collider.gameObject.name == "Runway_36L")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_27C" && hit.collider.gameObject.name == "Runway_9C")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_27L" && hit.collider.gameObject.name == "Runway_9R")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_27R" && hit.collider.gameObject.name == "Runway_9L")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_36" && hit.collider.gameObject.name == "Runway_18")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_36C" && hit.collider.gameObject.name == "Runway_18C")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_36L" && hit.collider.gameObject.name == "Runway_18R")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else if (lvlm.selectedObj.LObject.name == "Runway_36R" && hit.collider.gameObject.name == "Runway_18L")
 			{
-				runwayCheck = true;
+				CheckRot();
 			}
 			else
 			{
@@ -412,81 +413,85 @@ public class CheckManager : MonoBehaviour
 				{
 					if (lvlm.selectedObj.LObject.name == "Runway_9" && hit.collider.gameObject.name == "Runway_27")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_9C" && hit.collider.gameObject.name == "Runway_27C")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_9L" && hit.collider.gameObject.name == "Runway_27R")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_9R" && hit.collider.gameObject.name == "Runway_27L")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_18" && hit.collider.gameObject.name == "Runway_36")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_18C" && hit.collider.gameObject.name == "Runway_36C")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_18L" && hit.collider.gameObject.name == "Runway_36R")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_18R" && hit.collider.gameObject.name == "Runway_36L")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_27C" && hit.collider.gameObject.name == "Runway_9C")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_27L" && hit.collider.gameObject.name == "Runway_9R")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_27R" && hit.collider.gameObject.name == "Runway_9L")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_36" && hit.collider.gameObject.name == "Runway_18")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_36C" && hit.collider.gameObject.name == "Runway_18C")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_36L" && hit.collider.gameObject.name == "Runway_18R")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_36R" && hit.collider.gameObject.name == "Runway_18L")
 					{
-						runwayCheck = true;
+						CheckRot();
 					}
 				}
 				else
 				{
-					runwayCheck = false;
+					CheckRot();
 				}
 			}
 		}
+		else
+		{
+			CheckRot();
+		}
 	}
-
+	
 	void CheckAdjacent() //check the adjacent objects when trying to place a specified object
 	{
 		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
@@ -585,7 +590,6 @@ public class CheckManager : MonoBehaviour
 				}
 				else if (lvlm.selectedObj.LObject.name == "Hangar_Front" && collided.gameObject.name == "Hangar_Side")
 				{
-					print("oh well");
 					adjacentCheck = false;
 					print("You can only place the Hangar's gate beside a Hangar's pillar/corner or another gate.");
 					break;
@@ -606,6 +610,7 @@ public class CheckManager : MonoBehaviour
 
 	void CheckRot()
 	{
+		print("checkrot");
 		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
 		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid.
 		foreach (Collider collided in hitColliders)
@@ -614,12 +619,11 @@ public class CheckManager : MonoBehaviour
 			{//check for same row or column, ignoring diagonal
 				float difference = collided.gameObject.transform.position.z - lastPos.z;
 				int selectedObjectAngle = (int)lvlm.hObject.LObject.transform.GetChild(0).transform.eulerAngles.y;
-				int collidedObjectAngle = (int)collided.gameObject.transform.GetChild(0).transform.eulerAngles.y;
-				print(collided.gameObject.name);
+				int collidedObjectAngle = (int)collided.gameObject.transform.GetChild(0).transform.eulerAngles.y;;
 
-				if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2")
+				if (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber")
 				{
-					if (collided.gameObject.name == "Runway_DisplacedThreshold")
+					if (collided.gameObject.tag == "runway" || collided.gameObject.tag == "runwayNumber")
 					{
 						if (difference < 0)
 						{
@@ -651,9 +655,9 @@ public class CheckManager : MonoBehaviour
 				float difference = collided.gameObject.transform.position.x - lastPos.x;
 				int selectedObjectAngle = (int)lvlm.hObject.LObject.transform.GetChild(0).transform.eulerAngles.y;
 				int collidedObjectAngle = (int)collided.gameObject.transform.GetChild(0).transform.eulerAngles.y;
-				if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2")
+				if (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber")
 				{
-					if (collided.gameObject.name == "Runway_DisplacedThreshold")
+					if (collided.gameObject.tag == "runway" || collided.gameObject.tag == "runwayNumber")
 					{
 						if (difference < 0)
 						{

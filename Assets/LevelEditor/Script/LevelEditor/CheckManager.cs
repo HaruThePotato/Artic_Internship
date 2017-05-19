@@ -610,20 +610,17 @@ public class CheckManager : MonoBehaviour
 		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid.
 		foreach (Collider collided in hitColliders)
 		{
-			if (collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z != lastPos.z)
+			if (collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z != lastPos.z && collided.gameObject.transform.position.y == lastPos.y)
 			{//check for same row or column, ignoring diagonal
-				print("JA");
 				float difference = collided.gameObject.transform.position.z - lastPos.z;
 				int selectedObjectAngle = (int)lvlm.hObject.LObject.transform.GetChild(0).transform.eulerAngles.y;
-				print(selectedObjectAngle);
 				int collidedObjectAngle = (int)collided.gameObject.transform.GetChild(0).transform.eulerAngles.y;
-				print(collidedObjectAngle);
+				print(collided.gameObject.name);
 
 				if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2")
 				{
 					if (collided.gameObject.name == "Runway_DisplacedThreshold")
 					{
-						
 						if (difference < 0)
 						{
 							if ((selectedObjectAngle == 90 && collidedObjectAngle == 90) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
@@ -649,22 +646,15 @@ public class CheckManager : MonoBehaviour
 					}
 				}
 			}
-			else if (collided.gameObject.transform.position.z == lastPos.z && collided.gameObject.transform.position.x != lastPos.x)
+			else if (collided.gameObject.transform.position.z == lastPos.z && collided.gameObject.transform.position.x != lastPos.x && collided.gameObject.transform.position.y == lastPos.y)
 			{//check for same row or column, ignoring diagonal
-				print("lel");
 				float difference = collided.gameObject.transform.position.x - lastPos.x;
 				int selectedObjectAngle = (int)lvlm.hObject.LObject.transform.GetChild(0).transform.eulerAngles.y;
-				print(selectedObjectAngle);
 				int collidedObjectAngle = (int)collided.gameObject.transform.GetChild(0).transform.eulerAngles.y;
-				print(collidedObjectAngle);
-
 				if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2")
 				{
 					if (collided.gameObject.name == "Runway_DisplacedThreshold")
 					{
-						print(lvlm.hObject.LObject.transform.position.x);
-						print(collided.gameObject.transform.position.x);
-						print(difference);
 						if (difference < 0)
 						{
 							if ((selectedObjectAngle == 180 && collidedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
@@ -672,7 +662,7 @@ public class CheckManager : MonoBehaviour
 								runwayCheck = true;
 							}
 							else
-							{				
+							{
 								runwayCheck = false;
 							}
 						}
@@ -692,6 +682,31 @@ public class CheckManager : MonoBehaviour
 			}
 		}
 	}
+
+	/*void CheckRot1()
+	{
+		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
+		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid.
+		foreach (Collider collided in hitColliders)
+		{
+			print(collided.gameObject.name);
+			if (collided.gameObject.transform.position.x == lastPos.x || collided.gameObject.transform.position.z == lastPos.z && collided.gameObject.transform.position.y == lastPos.y)
+			{
+				if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2")
+				{
+					if (collided.gameObject.name == "Runway_DisplacedThreshold")
+					{
+						lvlm.gameObject.transform.GetChild(0).transform.RotateAround(lastPos, Vector3.up, 90);
+						collided.gameObject.transform.GetChild(0).transform.RotateAround(lastPos, Vector3.up, 90);
+					}
+				}
+			}
+			else
+			{
+				runwayCheck = false;
+			}
+		}
+	}*/
 
 	void CheckAdjacentTrue() //build if CheckAdjacent passes
 	{

@@ -495,26 +495,35 @@ public class CheckManager : MonoBehaviour
 
 	void CheckAdjacent() //check the adjacent objects when trying to place a specified object
 	{
-		print("checkadjacent");
 		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ + 0.5f);
 		if (gm.currentNode.nObjects.Count > 0)
 		{
 			lastPos.y += lvlm.selectedObj.LObject.transform.GetComponentInChildren<MeshRenderer>().bounds.size.y;
 		}
-		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1.5 grid. Extra 0.5f for correction of 0.5 in Rot and Collider
+		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid
 		foreach (Collider collided in hitColliders)
 		{
 			if (collided.gameObject.name != "GridCollider")
 			{
-				if ((collided.gameObject.transform.position.x == lastPos.x || collided.gameObject.transform.position.z == lastPos.z - 0.5f)
-					//&& (collided.gameObject.transform.position.x != lastPos.x && collided.gameObject.transform.position.z != lastPos.z)) 
-					)//check for same row or column, ignoring diagonal
+				if (collided.gameObject.transform.position.x == lastPos.x || collided.gameObject.transform.position.z == lastPos.z - 0.5f)//check for same row or column, ignoring diagonal
 				{
-					if (lvlm.selectedObj.LObject.name == "Runway_BlastPad" && collided.gameObject.tag == "taxiway") //if blastpad was selected and taxiway is around
+					if (lvlm.selectedObj.LObject.name == "Runway_BlastPad") //if blastpad was selected and taxiway is around
 					{
-						adjacentCheck = false;
-						print("You cannot place that near a taxiway");
-						break;
+						if (collided.gameObject.tag == "taxiway")
+						{
+							adjacentCheck = false;
+							print("You cannot place that near a taxiway");
+							break;
+						}
+						else if (collided.gameObject.name == "Runway_BlastPad")
+						{
+							CheckRot();
+							break;
+						}
+						else
+						{
+							adjacentCheck = true;
+						}
 					}
 					else if (lvlm.selectedObj.LObject.tag == "taxiway" && collided.gameObject.name == "Runway_BlastPad") //if taxyiway is selected and blastpad is around
 					{
@@ -534,30 +543,6 @@ public class CheckManager : MonoBehaviour
 						print("You cannot place that near a runway");
 						break;
 					}
-					/*else if (lvlm.selectedObj.LObject.name == "Taxiway_HoldingShortLine" || lvlm.selectedObj.LObject.name == "Taxiway_HoldingShortLineDia") //if holding short line is selected and check for taxiway
-					{
-						if (collided.gameObject.tag == "taxiway")
-						{
-							adjacentCheck = true;
-							break;
-						}
-						else
-						{
-							adjacentCheck = false;
-						}
-					}*/
-					/*else if (lvlm.selectedObj.LObject.name == "Apron_GateBridgeLight")
-					{
-						if (collided.gameObject.name == "Terminal_Corner1" || collided.gameObject.name == "Terminal_Corner2" || collided.gameObject.name == "Terminal_End")
-						{
-							adjacentCheck = true;
-							break;
-						}
-						else
-						{
-							adjacentCheck = false;
-						}
-					}*/
 					else if (lvlm.selectedObj.LObject.tag == "apronOnly")
 					{
 						if (lvlm.selectedObj.LObject.name == "Apron_GateBridgeLight" && (collided.gameObject.name == "Terminal_Corner1" || collided.gameObject.name == "Terminal_Corner2" || collided.gameObject.name == "Terminal_End"))
@@ -567,7 +552,6 @@ public class CheckManager : MonoBehaviour
 						}
 						else if (lvlm.selectedObj.LObject.name != "Terminal_Middle" && lvlm.selectedObj.LObject.name != "Apron_GateBridgeLight")
 						{
-							print(collided.gameObject.name);
 							if (collided.gameObject.name != "Apron_Main")
 							{
 								if ((collided.gameObject.transform.position.x != lastPos.x) || (collided.gameObject.transform.position.z != lastPos.z - 0.5f))
@@ -584,6 +568,46 @@ public class CheckManager : MonoBehaviour
 							{
 								adjacentCheck = true;
 							}
+						}
+						else if (lvlm.selectedObj.LObject.name == "Terminal_Middle")
+						{
+							if (collided.gameObject.name == "Terminal_Corner1" || collided.gameObject.name == "Terminal_Corner2")
+							{
+								adjacentCheck = false;
+								break;
+							}
+							else if (collided.gameObject.name == "Terminal_End")
+							{
+								CheckRot();
+								break;
+							}
+							else if (collided.gameObject.name == "Terminal_Middle")
+							{
+								print("YATA");
+								adjacentCheck = true;
+								break;
+							}
+							else
+							{
+								adjacentCheck = false;
+								print("Start building with another Terminal block first");
+							}
+						}
+						else if (lvlm.selectedObj.LObject.name == "Terminal_MiddleEnd")
+						{
+							if (collided.gameObject.name == "Terminal_Corner1" || collided.gameObject.name == "Terminal_Corner2")
+							{
+								CheckRot();
+								break;
+							}
+							else
+							{
+								adjacentCheck = false;
+							}
+						}
+						else if ((lvlm.selectedObj.LObject.name == "Terminal_Corner1" || lvlm.selectedObj.LObject.name == "Terminal_Corner2") && collided.gameObject.name == "Terminal_Middle")
+						{
+							adjacentCheck = false;
 						}
 						else
 						{
@@ -629,18 +653,6 @@ public class CheckManager : MonoBehaviour
 							adjacentCheck = false;
 						}
 					}
-					else if (lvlm.selectedObj.LObject.name == "Hangar_Front" && collided.gameObject.name == "Hangar_Side")
-					{
-						adjacentCheck = false;
-						print("You can only place the Hangar's gate beside a Hangar's pillar/corner or another gate.");
-						break;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Hangar_Side" && collided.gameObject.name == "Hangar_Front")
-					{
-						adjacentCheck = false;
-						print("You can only place the Hangar's wall beside a Hangar's pillar/corner or another wall.");
-						break;
-					}
 					else
 					{
 						adjacentCheck = true;
@@ -652,7 +664,7 @@ public class CheckManager : MonoBehaviour
 
 	void CheckRot()
 	{
-		print("checkrot");
+		print("CheckRot");
 		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ + 0.5f);
 		if (gm.currentNode.nObjects.Count > 0)
 		{
@@ -663,7 +675,7 @@ public class CheckManager : MonoBehaviour
 		{
 			if (collided.gameObject.name != "GridCollider")
 			{
-				if (collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z != lastPos.z-0.5f)
+				if (collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z != lastPos.z - 0.5f)
 				{//check for same row or column, ignoring diagonal
 					float difference = collided.gameObject.transform.position.z - (lastPos.z - 0.5f);
 					int selectedObjectAngle = (int)lvlm.hObject.LObject.transform.GetChild(0).transform.eulerAngles.y;
@@ -702,42 +714,180 @@ public class CheckManager : MonoBehaviour
 					{
 						if (collided.gameObject.tag == "apronOnly" && collided.gameObject.name != "Apron_Main")
 						{
-							if (difference < 0)
+							if (lvlm.selectedObj.LObject.name == "Terminal_Middle")
 							{
-								print("1");
-								if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
-									&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+								if (difference < 0)
 								{
-									adjacentCheck = true;
-									break;
+									if (collidedObjectAngle == 0 && lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1)
+									{
+										adjacentCheck = true;
+										break;
+									}
+									else
+									{
+										adjacentCheck = false;
+									}
+								}
+								else if (difference > 0)
+								{
+									if (collidedObjectAngle == 180 && lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1)
+									{
+										adjacentCheck = true;
+										break;
+									}
+									else
+									{
+										adjacentCheck = false;
+									}
+								}
+							}
+							else if (lvlm.selectedObj.LObject.name == "Terminal_MiddleEnd")
+							{
+								if (collided.gameObject.name == "Terminal_Corner1")
+								{
+									if (difference < 0)
+									{
+										if ((collidedObjectAngle == 0 && selectedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+										{
+											adjacentCheck = true;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if ((collidedObjectAngle == 180 && selectedObjectAngle == 90) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+										{
+											adjacentCheck = true;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+								else if (collided.gameObject.name == "Terminal_Corner2")
+								{
+									if (difference < 0)
+									{
+										if ((collidedObjectAngle == 0 && selectedObjectAngle == 90) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+										{
+											adjacentCheck = true;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if ((collidedObjectAngle == 180 && selectedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+										{
+											adjacentCheck = true;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+							}
+							else if (lvlm.selectedObj.LObject.name == "Terminal_End")
+							{
+								if (collided.gameObject.name == "Terminal_Middle")
+								{
+									if (difference < 0)
+									{
+										if (selectedObjectAngle == 180 && lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1)
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (selectedObjectAngle == 0 && lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1)
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
 								}
 								else
 								{
-									adjacentCheck = false;
+									if (difference < 0)
+									{
+										if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+											&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+											&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
 								}
 							}
-							else if (difference > 0)
+							else if (lvlm.selectedObj.LObject.name == "Apron_GateBridgeLight")
 							{
-								print("2");
-								if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
-									&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+								if (collided.gameObject.name == "Terminal_End" || collided.gameObject.name == "Terminal_Corner1" || collided.gameObject.name == "Terminal_Corner2")
 								{
-									adjacentCheck = true;
-									break;
+									
+									if (difference < 0)
+									{
+										if ((selectedObjectAngle == 180 && collidedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if ((selectedObjectAngle == 0 && collidedObjectAngle == 0) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
 								}
-								else
-								{
-									adjacentCheck = false;
-								}
-							}
-							else
-							{
-								adjacentCheck = true;
 							}
 						}
 					}
 				}
-				else if (collided.gameObject.transform.position.z == lastPos.z-0.5f && collided.gameObject.transform.position.x != lastPos.x)
+				else if (collided.gameObject.transform.position.z == lastPos.z - 0.5f && collided.gameObject.transform.position.x != lastPos.x)
 				{//check for same row or column, ignoring diagonal
 					float difference = collided.gameObject.transform.position.x - lastPos.x;
 					int selectedObjectAngle = (int)lvlm.hObject.LObject.transform.GetChild(0).transform.eulerAngles.y;
@@ -758,7 +908,7 @@ public class CheckManager : MonoBehaviour
 									runwayCheck = false;
 								}
 							}
-							else
+							else if (difference > 0)
 							{
 								if ((selectedObjectAngle == 0 && collidedObjectAngle == 0) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
 								{
@@ -774,40 +924,176 @@ public class CheckManager : MonoBehaviour
 					}
 					else if (lvlm.selectedObj.LObject.tag == "apronOnly")
 					{
-
 						if (collided.gameObject.tag == "apronOnly" && collided.gameObject.name != "Apron_Main")
 						{
-							if (difference < 0)
+							if (lvlm.selectedObj.LObject.name == "Terminal_Middle")
 							{
-								print("3");
-								if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
-									&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+								if (difference < 0)
 								{
-									adjacentCheck = true;
-									break;
+									if (collidedObjectAngle == 90 && lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1)
+									{
+										adjacentCheck = true;
+										break;
+									}
+									else
+									{
+										adjacentCheck = false;
+									}
+								}
+								else if (difference > 0)
+								{
+									if (collidedObjectAngle == 270 && lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1)
+									{
+										adjacentCheck = true;
+										break;
+									}
+									else
+									{
+										adjacentCheck = false;
+									}
+								}
+							}
+							else if (lvlm.selectedObj.LObject.name == "Terminal_MiddleEnd")
+							{
+								if (collided.gameObject.name == "Terminal_Corner1")
+								{
+									if (difference < 0)
+									{
+										if ((collidedObjectAngle == 90 && selectedObjectAngle == 0) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+										{
+											adjacentCheck = true;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if ((collidedObjectAngle == 270 && selectedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+										{
+											adjacentCheck = true;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+								else if (collided.gameObject.name == "Terminal_Corner2")
+								{
+									if (difference < 0)
+									{
+										if ((collidedObjectAngle == 90 && selectedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+										{
+											adjacentCheck = true;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if ((collidedObjectAngle == 270 && selectedObjectAngle == 0) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+										{
+											adjacentCheck = true;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+							}
+							else if (lvlm.selectedObj.LObject.name == "Terminal_End")
+							{
+								if (collided.gameObject.name == "Terminal_Middle")
+								{
+									if (difference < 0)
+									{
+										if (selectedObjectAngle == 270 && lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1)
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (selectedObjectAngle == 90 && lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1)
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
 								}
 								else
 								{
-									adjacentCheck = false;
+									if (difference < 0)
+									{
+										if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
 								}
 							}
-							else if (difference > 0)
+							else if (lvlm.selectedObj.LObject.name == "Apron_GateBridgeLight")
 							{
-								print("4");
-								if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
-									&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+								if (collided.gameObject.name == "Terminal_End" || collided.gameObject.name == "Terminal_Corner1" || collided.gameObject.name == "Terminal_Corner2")
 								{
-									adjacentCheck = true;
-									break;
+									if (difference < 0)
+									{
+										if ((selectedObjectAngle == 270 && collidedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if ((selectedObjectAngle == 90 && collidedObjectAngle == 90) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
 								}
-								else
-								{
-									adjacentCheck = false;
-								}
-							}
-							else
-							{
-								adjacentCheck = true;
 							}
 						}
 					}
@@ -928,11 +1214,6 @@ public class CheckManager : MonoBehaviour
 								}
 								CheckAdjacentTrueClone();
 							}
-							else if (lvlm.selectedObj.LObject.name == "Hangar_Front" || lvlm.selectedObj.LObject.name == "Hangar_Side") //selected Hangar
-							{
-								CheckAdjacent();
-								CheckAdjacentTrueClone();
-							}
 							else
 							{
 								lvlm.CloneSucceed();
@@ -1045,7 +1326,7 @@ public class CheckManager : MonoBehaviour
 				{
 					if (gm.currentNode.nObjects.Last().LObjectType == 4) //bottom object is BaseOnlyNonStackable
 					{
-						if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
+						if ((lvlm.selectedObj.LObject.tag == "apronOnly" || lvlm.selectedObj.LObject.tag == "hangar") && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
 						{
 							print("This can only be built in apron area");
 							lvlm.CancelSelect();
@@ -1062,17 +1343,11 @@ public class CheckManager : MonoBehaviour
 						{
 							if (lvlm.selectedObj.LObject.name == "Apron_GateBridgeLight") //selected GateBridgeLight
 							{
-								print("lol");
 								CheckAdjacent();
 								if (adjacentCheck == false)
 								{
-									print("You need to start building with a Terminal block first.");
+									print("You need to start building with a Terminal block first and make sure it is connected to the terminal properly.");
 								}
-								CheckAdjacentTrue();
-							}
-							else if (lvlm.selectedObj.LObject.name == "Hangar_Front" || lvlm.selectedObj.LObject.name == "Hangar_Side") //selected Hangar
-							{
-								CheckAdjacent();
 								CheckAdjacentTrue();
 							}
 							else
@@ -1081,7 +1356,12 @@ public class CheckManager : MonoBehaviour
 								CheckAdjacentTrue();
 							}
 						}
-						else if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
+						else if (lvlm.selectedObj.LObject.tag == "hangar" && gm.currentNode.nObjects.Last().LObject.tag == "apron")
+						{
+							print("yata");
+							lvlm.PlaceSucceed();
+						}
+						else if ((lvlm.selectedObj.LObject.tag == "apronOnly" || lvlm.selectedObj.LObject.tag == "hangar") && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
 						{
 							print("This can only be built in apron area");
 							lvlm.CancelSelect();

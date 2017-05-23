@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 3101969774
+CRC: 206371014
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: highpoly
+      Name: texture
       Dependencies: {}

@@ -19,7 +19,6 @@ using Amazon.CognitoSync;
 using Amazon.CognitoIdentity.Model;
 using Amazon.CognitoSync.SyncManager;
 using System.Text;
-using UnityEngine.SceneManagement;
 #endregion
 
 public class AWSscript : MonoBehaviour
@@ -212,7 +211,7 @@ public class AWSscript : MonoBehaviour
         #endregion
 
     #region Gets the objects from AWS S3
-    public void GetObject(string fileName)
+    public void GetObject(string fileName, string redirect)
     {
         Client.GetObjectAsync(S3BucketName, levelFolderName + "/" + fileName, (responseObj) =>
         {
@@ -234,13 +233,10 @@ public class AWSscript : MonoBehaviour
                     downloadedStuff = true;
                 }
 
-                Scene currentScene = SceneManager.GetActiveScene();
-                string sceneName = currentScene.name;
-
-                if (sceneName != "TraineeScene")
-                {
+                if (redirect == "LevelManager")
                     UIManager.GetInstance().Status.text = "Downloaded.";
-                }
+
+                LoadManager.GetInstance().loadDownloadsInContainer();
                 Debug.Log("The object selected has been downloaded.");
             }
         });

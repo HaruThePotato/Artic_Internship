@@ -166,7 +166,7 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    IEnumerator FadeCanvas(Canvas c, bool r)
+    public IEnumerator FadeCanvas(Canvas c, bool r)
     {
         if (!r)
         {

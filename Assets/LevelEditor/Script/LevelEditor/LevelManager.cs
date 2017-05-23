@@ -676,7 +676,7 @@ public class LevelManager : MonoBehaviour
         else
         {
             uim.Status.text = "Downloading...";
-            aws.GetObject(downloadSelected + ".xml");
+            aws.GetObject(downloadSelected + ".xml", "LevelManager");
         }
     }
 

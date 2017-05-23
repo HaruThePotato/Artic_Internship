@@ -495,6 +495,7 @@ public class CheckManager : MonoBehaviour
 
 	void CheckAdjacent() //check the adjacent objects when trying to place a specified object
 	{
+		print("CheckAdjacent");
 		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ + 0.5f);
 		if (gm.currentNode.nObjects.Count > 0)
 		{
@@ -537,19 +538,16 @@ public class CheckManager : MonoBehaviour
 						{
 							if (collided.gameObject.name == "Runway_DisplacedThreshold")
 							{
-								print("YATA");
 								adjacentCheck = false;
 								break;
 							}
 							else
 							{
-								print("good");
 								CheckRot();
 							}
 						}
 						else
 						{
-							print("YES");
 							adjacentCheck = true;
 						}
 					}
@@ -559,7 +557,7 @@ public class CheckManager : MonoBehaviour
 						print("You cannot place that near a blastpad");
 						break;
 					}
-					
+
 					else if ((lvlm.selectedObj.LObject.tag == "roadway" || lvlm.selectedObj.LObject.tag == "apron") && collided.gameObject.tag == "runway") //if roadway is selected and runway is around
 					{
 						adjacentCheck = false;
@@ -586,7 +584,7 @@ public class CheckManager : MonoBehaviour
 								{
 									adjacentCheck = true;
 								}
-							}		
+							}
 						}
 						else if (lvlm.selectedObj.LObject.name != "Terminal_Middle" && lvlm.selectedObj.LObject.name != "Apron_GateBridgeLight" && lvlm.selectedObj.LObject.name != "Radio_Tower")
 						{
@@ -667,6 +665,37 @@ public class CheckManager : MonoBehaviour
 							adjacentCheck = false;
 						}
 					}
+					else if (lvlm.selectedObj.LObject.tag == "hangar")
+					{
+						if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f))
+						{
+							if (lvlm.selectedObj.LObject.name != "Hangar_Roof" || lvlm.selectedObj.LObject.name != "Hangar_Front")
+							{
+								if (collided.gameObject.name != "Apron_Main")
+								{
+									if (lvlm.selectedObj.LObject.name == "Hangar_Corner")
+									{
+										if (collided.gameObject.transform.position.x != lastPos.x || collided.gameObject.transform.position.z != lastPos.z - 0.5f)
+										{
+											if (collided.gameObject.name == "Hangar_Side" || collided.gameObject.name == "Hangar_Front")
+											{
+												CheckRot();
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+								}
+								else
+								{
+									adjacentCheck = true;
+								}
+							}
+						}
+					}
 					else if (lvlm.selectedObj.LObject.name == "Apron_Taxi")
 					{
 						if ((collided.gameObject.name == "Apron_Main" || collided.gameObject.tag == "taxiway")
@@ -708,14 +737,9 @@ public class CheckManager : MonoBehaviour
 					}
 					else
 					{
-						print("no1");
 						adjacentCheck = true;
 					}
 				}
-			}
-			else
-			{
-				adjacentCheck = false;
 			}
 		}
 	}
@@ -1438,7 +1462,7 @@ public class CheckManager : MonoBehaviour
 					}
 					else //bottom object type is 2 or 3
 					{
-						if (lvlm.selectedObj.LObject.tag == "apronOnly" && gm.currentNode.nObjects.Last().LObject.tag == "apron") //selected apronOnly objects and building on apron
+						if (lvlm.selectedObj.LObject.tag == "apronOnly" || lvlm.selectedObj.LObject.tag == "hangar" && gm.currentNode.nObjects.Last().LObject.tag == "apron") //selected apronOnly objects and building on apron
 						{
 							if (lvlm.selectedObj.LObject.name == "Apron_GateBridgeLight") //selected GateBridgeLight
 							{
@@ -1454,10 +1478,6 @@ public class CheckManager : MonoBehaviour
 								CheckAdjacent();
 								CheckAdjacentTrue();
 							}
-						}
-						else if (lvlm.selectedObj.LObject.tag == "hangar" && gm.currentNode.nObjects.Last().LObject.tag == "apron")
-						{
-							lvlm.PlaceSucceed();
 						}
 						else if ((lvlm.selectedObj.LObject.tag == "apronOnly" || lvlm.selectedObj.LObject.tag == "hangar") && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron
 						{

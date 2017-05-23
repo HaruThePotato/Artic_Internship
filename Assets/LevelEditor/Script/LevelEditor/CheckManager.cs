@@ -495,7 +495,6 @@ public class CheckManager : MonoBehaviour
 
 	void CheckAdjacent() //check the adjacent objects when trying to place a specified object
 	{
-		print("CheckAdjacent");
 		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ + 0.5f);
 		if (gm.currentNode.nObjects.Count > 0)
 		{
@@ -656,7 +655,7 @@ public class CheckManager : MonoBehaviour
 								adjacentCheck = false;
 							}
 						}
-						else if ((lvlm.selectedObj.LObject.name == "Terminal_Corner1" || lvlm.selectedObj.LObject.name == "Terminal_Corner2") && (collided.gameObject.name == "Terminal_Middle" || collided.gameObject.name != "Radio_Tower"))
+						else if ((lvlm.selectedObj.LObject.name == "Terminal_Corner1" || lvlm.selectedObj.LObject.name == "Terminal_Corner2") && (collided.gameObject.name == "Terminal_Middle" || collided.gameObject.name == "Radio_Tower"))
 						{
 							adjacentCheck = false;
 						}
@@ -669,29 +668,87 @@ public class CheckManager : MonoBehaviour
 					{
 						if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f))
 						{
-							if (lvlm.selectedObj.LObject.name != "Hangar_Roof" || lvlm.selectedObj.LObject.name != "Hangar_Front")
+							if (!(lvlm.selectedObj.LObject.name == "Hangar_Front" || lvlm.selectedObj.LObject.name == "Hangar_Roof"))
 							{
 								if (collided.gameObject.name != "Apron_Main")
 								{
-									if (lvlm.selectedObj.LObject.name == "Hangar_Corner")
+									if (collided.gameObject.transform.position.x != lastPos.x || collided.gameObject.transform.position.z != lastPos.z - 0.5f)
 									{
-										if (collided.gameObject.transform.position.x != lastPos.x || collided.gameObject.transform.position.z != lastPos.z - 0.5f)
+										if (lvlm.selectedObj.LObject.name == "Hangar_Corner")
 										{
 											if (collided.gameObject.name == "Hangar_Side" || collided.gameObject.name == "Hangar_Front")
 											{
 												CheckRot();
 												break;
 											}
-											else
+											else if (collided.gameObject.name == "Hangar_Corner")
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
+										else if (lvlm.selectedObj.LObject.name == "Hangar_Side")
+										{
+											if (collided.gameObject.name == "Hangar_Side" || collided.gameObject.name == "Hangar_Corner")
+											{
+												CheckRot();
+												break;
+											}
+											else if (collided.gameObject.name == "Hangar_Front")
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else
+									{
+										adjacentCheck = false;
 									}
 								}
 								else
 								{
 									adjacentCheck = true;
+								}
+							}
+							else
+							{
+								if (collided.gameObject.transform.position.x != lastPos.x || collided.gameObject.transform.position.z != lastPos.z - 0.5f)
+								{
+									if (lvlm.selectedObj.LObject.name == "Hangar_Front")
+									{
+										if (collided.gameObject.name == "Hangar_Side")
+										{
+											adjacentCheck = false;
+											break;
+										}
+										else if (collided.gameObject.tag == "hangar" && collided.gameObject.name != "Hangar_Side")
+										{
+											CheckRot();
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (lvlm.selectedObj.LObject.name == "Hangar_Roof")
+									{
+										if (collided.gameObject.name == "Hangar_Corner")
+										{
+											adjacentCheck = false;
+											break;
+										}
+										else if (collided.gameObject.tag == "hangar" && collided.gameObject.name != "Hangar_Corner")
+										{
+											CheckRot();
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
 								}
 							}
 						}
@@ -746,7 +803,6 @@ public class CheckManager : MonoBehaviour
 
 	void CheckRot()
 	{
-		print("CheckRot");
 		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ + 0.5f);
 		if (gm.currentNode.nObjects.Count > 0)
 		{
@@ -762,6 +818,7 @@ public class CheckManager : MonoBehaviour
 					float difference = collided.gameObject.transform.position.z - (lastPos.z - 0.5f);
 					int selectedObjectAngle = (int)lvlm.hObject.LObject.transform.GetChild(0).transform.eulerAngles.y;
 					int collidedObjectAngle = (int)collided.gameObject.transform.GetChild(0).transform.eulerAngles.y;
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 					if (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber")
 					{
 						if (collided.gameObject.tag == "runway" || collided.gameObject.tag == "runwayNumber")
@@ -792,6 +849,7 @@ public class CheckManager : MonoBehaviour
 							}
 						}
 					}
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 					else if (lvlm.selectedObj.LObject.tag == "apronOnly")
 					{
 						if (collided.gameObject.tag == "apronOnly" && collided.gameObject.name != "Apron_Main")
@@ -1001,12 +1059,245 @@ public class CheckManager : MonoBehaviour
 							}
 						}
 					}
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					else if (lvlm.selectedObj.LObject.tag == "hangar")
+					{
+						if (collided.gameObject.tag == "hangar" && collided.gameObject.name != "Apron_Main")
+						{
+							if (lvlm.selectedObj.LObject.name == "Hangar_Front")
+							{
+								if (collided.gameObject.name == "Hangar_Front")
+								{
+									if (difference < 0)
+									{
+										if ((selectedObjectAngle == 90 && collidedObjectAngle == 90 || selectedObjectAngle == 90 && collidedObjectAngle == 90)
+											&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if ((selectedObjectAngle == 270 && collidedObjectAngle == 270 || selectedObjectAngle == 270 && collidedObjectAngle == 270)
+											&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+								else if (collided.gameObject.name == "Hangar_Corner")
+								{
+									if (difference < 0)
+									{
+										if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 90 && collidedObjectAngle == 90))
+											&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (((selectedObjectAngle == 90 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+											&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+							}
+							else if (lvlm.selectedObj.LObject.name == "Hangar_Side")
+							{
+								if (collided.gameObject.name == "Hangar_Corner")
+								{
+									if (difference < 0)
+									{
+										if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 90))
+											&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (((selectedObjectAngle == 0 && collidedObjectAngle == 270) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+											&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+								else if (collided.gameObject.name == "Hangar_Side")
+								{
+									if (difference < 0)
+									{
+										if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+											&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+											&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+							}
+							else if (lvlm.selectedObj.LObject.name == "Hangar_Corner")
+							{
+								if (collided.gameObject.name == "Hangar_Side")
+								{
+									if (difference < 0)
+									{
+										if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+											&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 90 && collidedObjectAngle == 180))
+
+											&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+								else
+								{
+									if (collided.gameObject.name == "Hangar_Front")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 180 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 0 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+								}
+							}
+							else if (lvlm.selectedObj.LObject.name == "Hangar_Roof")
+							{
+								if (collided.gameObject.name == "Hangar_Side")
+								{
+									if (difference < 0)
+									{
+										if (collidedObjectAngle == 90
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (collidedObjectAngle == 270
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+								else if (collided.gameObject.name == "Hangar_Roof")
+								{
+									adjacentCheck = true;
+									break;
+								}
+							}
+						}
+					}
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				}
 				else if (collided.gameObject.transform.position.z == lastPos.z - 0.5f && collided.gameObject.transform.position.x != lastPos.x)
 				{//check for same row or column, ignoring diagonal
 					float difference = collided.gameObject.transform.position.x - lastPos.x;
 					int selectedObjectAngle = (int)lvlm.hObject.LObject.transform.GetChild(0).transform.eulerAngles.y;
 					int collidedObjectAngle = (int)collided.gameObject.transform.GetChild(0).transform.eulerAngles.y;
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 					if (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber")
 					{
 						if (collided.gameObject.tag == "runway" || collided.gameObject.tag == "runwayNumber")
@@ -1037,6 +1328,7 @@ public class CheckManager : MonoBehaviour
 							}
 						}
 					}
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 					else if (lvlm.selectedObj.LObject.tag == "apronOnly")
 					{
 						if (collided.gameObject.tag == "apronOnly" && collided.gameObject.name != "Apron_Main")
@@ -1245,6 +1537,238 @@ public class CheckManager : MonoBehaviour
 							}
 						}
 					}
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					else if (lvlm.selectedObj.LObject.tag == "hangar")
+					{
+						if (collided.gameObject.tag == "hangar" && collided.gameObject.name != "Apron_Main")
+						{
+							if (lvlm.selectedObj.LObject.name == "Hangar_Front")
+							{
+								if (collided.gameObject.name == "Hangar_Front")
+								{
+									if (difference < 0)
+									{
+										if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+								else if (collided.gameObject.name == "Hangar_Corner")
+								{
+									if (difference < 0)
+									{
+										if (((selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+							}
+							else if (lvlm.selectedObj.LObject.name == "Hangar_Side")
+							{
+								if (collided.gameObject.name == "Hangar_Corner")
+								{
+									if (difference < 0)
+									{
+										if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+								else if (collided.gameObject.name == "Hangar_Side")
+								{
+									if (difference < 0)
+									{
+										if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+							}
+							else if (lvlm.selectedObj.LObject.name == "Hangar_Corner")
+							{
+								if (collided.gameObject.name == "Hangar_Side")
+								{
+									if (difference < 0)
+									{
+										if (((selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+								else
+								{
+									if (collided.gameObject.name == "Hangar_Front")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+								}
+							}
+							else if (lvlm.selectedObj.LObject.name == "Hangar_Roof")
+							{
+								if (collided.gameObject.name == "Hangar_Side")
+								{
+									if (difference < 0)
+									{
+										if (collidedObjectAngle == 180
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+									else if (difference > 0)
+									{
+										if (collidedObjectAngle == 0
+											&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+										{
+											adjacentCheck = true;
+											break;
+										}
+										else
+										{
+											adjacentCheck = false;
+										}
+									}
+								}
+								else if (collided.gameObject.name == "Hangar_Roof")
+								{
+									adjacentCheck = true;
+									break;
+								}
+							}
+						}
+					}
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				}
 			}
 		}

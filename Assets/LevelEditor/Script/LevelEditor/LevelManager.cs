@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour
 	CheckManager cm;
     AWSscript aws;
 
-    LevelObject hObject;
+    public LevelObject hObject;
 
 	[Header("LevelManager References")]
 	[Tooltip("The prefab for each \"LEVELBUTTON\"")]
@@ -207,7 +207,7 @@ public class LevelManager : MonoBehaviour
 		{
 			if (gm.isHovering && !uim.mouseOverUI && hObject.LObject != null && gm.currentNode.bFree) //cursor on grid not on UI, level object selected, camera not on selected grid 
 			{
-				//cm.PlaceObjectClone();
+				cm.PlaceObjectClone();
 			}
 		}
 		else if (!cloneOrPlace) //if not cloning object

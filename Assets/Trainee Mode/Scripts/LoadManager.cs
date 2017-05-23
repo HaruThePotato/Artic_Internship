@@ -11,17 +11,22 @@ using System.Text.RegularExpressions;
 
 public class LoadManager : MonoBehaviour
 {
-
     AWSscript aws;
     XMLManager xmlm;
     GridManager gm;
     ObjectManager objm;
+    UIManager uim;
+
+    public GameObject floorPrefab;
+    Dictionary<string, float> floorPosition;
 
     public GameObject localButtonPrefab;
     public GameObject remoteButtonPrefab;
 
     public Canvas UILoad;
     public Canvas UIDownload;
+    public Canvas UILoadLevel;
+    public GameObject loadingUI;
 
     string levelSelected;
     string downloadSelected;
@@ -31,6 +36,7 @@ public class LoadManager : MonoBehaviour
     public string BundleURL;
     public int version;
     public string assetName;
+
 
     private static LoadManager instance = null;
 
@@ -46,17 +52,23 @@ public class LoadManager : MonoBehaviour
 
     void Start()
     {
+        floorPosition = new Dictionary<string, float>();
         aws = AWSscript.GetInstance();
         xmlm = XMLManager.GetInstance();
         gm = GridManager.GetInstance();
         objm = ObjectManager.GetInstance();
+        uim = UIManager.GetInstance();
+
+        floorPosition.Add("Lesser X", 0);
+        floorPosition.Add("More X", 0);
+        floorPosition.Add("Lesser Z", 0);
+        floorPosition.Add("More Z", 0);
 
         LoadLevelScreenButton();
         Invoke("loadDownloads", 0.1f);
 
         assetName = "CompleteTank";
-        //BundleURL = "https://s3-us-west-2.amazonaws.com/articsp/AssetBundle/updatedmodels";
-        BundleURL = "https://s3-us-west-2.amazonaws.com/articsp/AssetBundle/highpoly";
+        BundleURL = "https://s3-us-west-2.amazonaws.com/articsp/AssetBundle/texture";
         version = 1;
     }
 
@@ -106,7 +118,7 @@ public class LoadManager : MonoBehaviour
         else
         {
             //uim.Status.text = "Downloading...";
-            aws.GetObject(downloadSelected + ".xml");
+            aws.GetObject(downloadSelected + ".xml", "LoadManager");
         }
         loadDownloadsInContainer();
     }
@@ -138,11 +150,13 @@ public class LoadManager : MonoBehaviour
 
     public void callLoadSelectedLevel()
     {
+        loadingUI.SetActive(true);
         StartCoroutine(LoadSelectedLevel());
     }
 
     public IEnumerator LoadSelectedLevel()
     {
+        bool firstRun = true;
         if (levelSelected != null)
         {
             LevelDatabase levelData = xmlm.LoadLevel(levelSelected);
@@ -169,11 +183,40 @@ public class LoadManager : MonoBehaviour
                         }
                         else
                         {
-                            Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
-                            lObj.LObject = Instantiate(bundle.LoadAsset(lNode.objectIDs[i]), lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
+
+                            //Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
+                            lObj.LObject = Instantiate(bundle.LoadAsset(lNode.objectIDs[i]), lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;                            //lObj.LObject = Instantiate(bundle.LoadAsset(lNode.objectIDs[i]), lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
+                            //lObj.LObject = Instantiate(objm.GetLevelObject(lNode.objectIDs[i]).LObject, lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
                             lObj.LObject.transform.GetChild(0).transform.eulerAngles = lNode.objectRotations[i];
                             lObj.LObject.transform.localScale = levelData.objectScale;
                             lObj.LObject.name = lNode.objectIDs[i];
+
+                            if (firstRun)
+                            {
+                                firstRun = false;
+                                floorPosition["More X"] = 0;
+                                floorPosition["More Z"] = 0;
+                                floorPosition["Lesser X"] = lObj.LObject.transform.position.x;
+                                floorPosition["Lesser Z"] = lObj.LObject.transform.position.z;
+
+                            }
+
+                            if (lObj.LObject.transform.position.x < floorPosition["Lesser X"]) // lesser of x
+                            {
+                                floorPosition["Lesser X"] = (lObj.LObject.transform.position.x);
+                            }
+                            if (lObj.LObject.transform.position.x > floorPosition["More X"]) // higher of x
+                            {
+                                floorPosition["More X"] = (lObj.LObject.transform.position.x);
+                            }
+                            if (lObj.LObject.transform.position.z < floorPosition["Lesser Z"]) // lesser of z
+                            {
+                                floorPosition["Lesser Z"] = (lObj.LObject.transform.position.z);
+                            }
+                            if (lObj.LObject.transform.position.z > floorPosition["More Z"]) // higher of z
+                            {
+                                floorPosition["More Z"] = (lObj.LObject.transform.position.z);
+                            }
                             //if (lObj.LObject.name == "RW_RunwayNumber")
                             //{
                             //    for (int j = 0; j < lNode.objectIDs.Count; j++)
@@ -190,8 +233,14 @@ public class LoadManager : MonoBehaviour
                 }
                 // Unload the AssetBundles compressed contents to conserve memory
                 bundle.Unload(false);
+                CancelLoadScreen();
+                Debug.Log(floorPosition["Lesser X"]);
+                Debug.Log(floorPosition["More X"]);
+                Debug.Log(floorPosition["Lesser Z"]);
+                Debug.Log(floorPosition["More Z"]);
             } // memory is freed from the web stream (www.Dispose() gets called implicitly)
         }
+        createFloor();
     }
 
     public void CleanCache()
@@ -204,6 +253,52 @@ public class LoadManager : MonoBehaviour
         {
             Debug.Log("Cache is being used.");
         }
+    }
+
+    public void CancelLoadScreen()
+    {
+        StartCoroutine(FadeCanvas(UILoadLevel, false));
+        UILoadLevel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        //cc.cAllowCameraControls = true;
+    }
+
+    IEnumerator FadeCanvas(Canvas c, bool r)
+    {
+        if (!r)
+        {
+            while (c.GetComponent<CanvasGroup>().alpha > 0)
+            {
+                c.GetComponent<CanvasGroup>().alpha -= Time.deltaTime * 2;
+                yield return null;
+            }
+        }
+        else
+        {
+            while (c.GetComponent<CanvasGroup>().alpha < 1)
+            {
+                c.GetComponent<CanvasGroup>().alpha += Time.deltaTime * 2;
+                yield return null;
+            }
+        }
+        yield return null;
+    }
+
+    public void createFloor()
+    {
+        Dictionary<string, float> lengthOfFloor = new Dictionary<string, float>();
+        lengthOfFloor.Add("X", floorPosition["More X"] - floorPosition["Lesser X"] + 1);
+        lengthOfFloor.Add("Z", floorPosition["More Z"] - floorPosition["Lesser Z"] + 1);
+
+        Dictionary<string, float> CenterOfFloor = new Dictionary<string, float>();
+        CenterOfFloor.Add("XCenter", floorPosition["More X"] - (lengthOfFloor["X"] / 2));
+        CenterOfFloor.Add("ZCenter", floorPosition["More Z"] - (lengthOfFloor["Z"] / 2));
+
+        Debug.Log(CenterOfFloor["XCenter"] + "XCenter");
+        Debug.Log(CenterOfFloor["ZCenter"] + "ZCenter");
+
+        floorPrefab.GetComponent<Transform>().position = new Vector3(CenterOfFloor["XCenter"], 0, CenterOfFloor["ZCenter"]);
+        floorPrefab.GetComponent<BoxCollider>().center = new Vector3(0.5f, 0.5f, 1);
+        floorPrefab.GetComponent<BoxCollider>().size = new Vector3(lengthOfFloor["X"], 1, lengthOfFloor["Z"]);
     }
 
     //public void LoadSelectedLevel()

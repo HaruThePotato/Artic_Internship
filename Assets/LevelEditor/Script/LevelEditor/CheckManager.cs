@@ -550,47 +550,84 @@ public class CheckManager : MonoBehaviour
 							CheckRot();
 							break;
 						}
-						else if (lvlm.selectedObj.LObject.name != "Terminal_Middle" && lvlm.selectedObj.LObject.name != "Apron_GateBridgeLight")
+						else if (lvlm.selectedObj.LObject.name == "Radio_Tower")
 						{
-							if (collided.gameObject.name != "Apron_Main")
+							if ((collided.gameObject.transform.position.x != lastPos.x && collided.gameObject.transform.position.z != lastPos.z - 0.5f))
 							{
-								if ((collided.gameObject.transform.position.x != lastPos.x) || (collided.gameObject.transform.position.z != lastPos.z - 0.5f))
+								print(collided.gameObject.transform.position + collided.gameObject.tag);
+								print(lastPos);
+								if ((collided.gameObject.tag != "apron" || collided.gameObject.tag != "grass" || collided.gameObject.tag != "taxiway" || collided.gameObject.tag != "runway" || collided.gameObject.tag != "roadway")
+									)
+								{
+									print("lol");
+									adjacentCheck = false;
+									break;
+								}
+								else
+								{
+									print("madamada");
+									adjacentCheck = true;
+								}
+							}
+
+						}
+						else if (lvlm.selectedObj.LObject.name != "Terminal_Middle" && lvlm.selectedObj.LObject.name != "Apron_GateBridgeLight" && lvlm.selectedObj.LObject.name != "Radio_Tower")
+						{
+							if (collided.gameObject.name != "Radio_Tower")
+							{
+								if (collided.gameObject.name != "Apron_Main")
+								{
+									if ((collided.gameObject.transform.position.x != lastPos.x) || (collided.gameObject.transform.position.z != lastPos.z - 0.5f))
+									{
+										CheckRot();
+										break;
+									}
+									else
+									{
+										adjacentCheck = false;
+									}
+								}
+								else
+								{
+									adjacentCheck = true;
+								}
+							}
+							else
+							{
+								adjacentCheck = false;
+								break;
+							}
+						}
+						else if (lvlm.selectedObj.LObject.name == "Terminal_Middle")
+						{
+							if (collided.gameObject.name != "Radio_Tower")
+							{
+								if (collided.gameObject.name == "Terminal_Corner1" || collided.gameObject.name == "Terminal_Corner2")
+								{
+									adjacentCheck = false;
+									break;
+								}
+								else if (collided.gameObject.name == "Terminal_End")
 								{
 									CheckRot();
+									break;
+								}
+								else if (collided.gameObject.name == "Terminal_Middle")
+								{
+									print("YATA");
+									adjacentCheck = true;
 									break;
 								}
 								else
 								{
 									adjacentCheck = false;
+									print("Start building with another Terminal block first");
 								}
 							}
 							else
 							{
-								adjacentCheck = true;
-							}
-						}
-						else if (lvlm.selectedObj.LObject.name == "Terminal_Middle")
-						{
-							if (collided.gameObject.name == "Terminal_Corner1" || collided.gameObject.name == "Terminal_Corner2")
-							{
 								adjacentCheck = false;
 								break;
-							}
-							else if (collided.gameObject.name == "Terminal_End")
-							{
-								CheckRot();
-								break;
-							}
-							else if (collided.gameObject.name == "Terminal_Middle")
-							{
-								print("YATA");
-								adjacentCheck = true;
-								break;
-							}
-							else
-							{
-								adjacentCheck = false;
-								print("Start building with another Terminal block first");
 							}
 						}
 						else if (lvlm.selectedObj.LObject.name == "Terminal_MiddleEnd")
@@ -605,7 +642,7 @@ public class CheckManager : MonoBehaviour
 								adjacentCheck = false;
 							}
 						}
-						else if ((lvlm.selectedObj.LObject.name == "Terminal_Corner1" || lvlm.selectedObj.LObject.name == "Terminal_Corner2") && collided.gameObject.name == "Terminal_Middle")
+						else if ((lvlm.selectedObj.LObject.name == "Terminal_Corner1" || lvlm.selectedObj.LObject.name == "Terminal_Corner2") && (collided.gameObject.name == "Terminal_Middle" || collided.gameObject.name != "Radio_Tower"))
 						{
 							adjacentCheck = false;
 						}
@@ -658,6 +695,10 @@ public class CheckManager : MonoBehaviour
 						adjacentCheck = true;
 					}
 				}
+			}
+			else
+			{
+				adjacentCheck = false;
 			}
 		}
 	}
@@ -750,6 +791,7 @@ public class CheckManager : MonoBehaviour
 										if ((collidedObjectAngle == 0 && selectedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
 										{
 											adjacentCheck = true;
+											break;
 										}
 										else
 										{
@@ -761,6 +803,7 @@ public class CheckManager : MonoBehaviour
 										if ((collidedObjectAngle == 180 && selectedObjectAngle == 90) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
 										{
 											adjacentCheck = true;
+											break;
 										}
 										else
 										{
@@ -775,6 +818,7 @@ public class CheckManager : MonoBehaviour
 										if ((collidedObjectAngle == 0 && selectedObjectAngle == 90) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
 										{
 											adjacentCheck = true;
+											break;
 										}
 										else
 										{
@@ -786,6 +830,7 @@ public class CheckManager : MonoBehaviour
 										if ((collidedObjectAngle == 180 && selectedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
 										{
 											adjacentCheck = true;
+											break;
 										}
 										else
 										{
@@ -857,7 +902,7 @@ public class CheckManager : MonoBehaviour
 							{
 								if (collided.gameObject.name == "Terminal_End" || collided.gameObject.name == "Terminal_Corner1" || collided.gameObject.name == "Terminal_Corner2")
 								{
-									
+
 									if (difference < 0)
 									{
 										if ((selectedObjectAngle == 180 && collidedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
@@ -881,6 +926,35 @@ public class CheckManager : MonoBehaviour
 										{
 											adjacentCheck = false;
 										}
+									}
+								}
+							}
+							else
+							{
+								if (difference < 0)
+								{
+									if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+										&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+									{
+										adjacentCheck = true;
+										break;
+									}
+									else
+									{
+										adjacentCheck = false;
+									}
+								}
+								else if (difference > 0)
+								{
+									if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+										&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+									{
+										adjacentCheck = true;
+										break;
+									}
+									else
+									{
+										adjacentCheck = false;
 									}
 								}
 							}
@@ -962,6 +1036,7 @@ public class CheckManager : MonoBehaviour
 										if ((collidedObjectAngle == 90 && selectedObjectAngle == 0) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
 										{
 											adjacentCheck = true;
+											break;
 										}
 										else
 										{
@@ -973,6 +1048,7 @@ public class CheckManager : MonoBehaviour
 										if ((collidedObjectAngle == 270 && selectedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
 										{
 											adjacentCheck = true;
+											break;
 										}
 										else
 										{
@@ -987,6 +1063,7 @@ public class CheckManager : MonoBehaviour
 										if ((collidedObjectAngle == 90 && selectedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
 										{
 											adjacentCheck = true;
+											break;
 										}
 										else
 										{
@@ -998,6 +1075,7 @@ public class CheckManager : MonoBehaviour
 										if ((collidedObjectAngle == 270 && selectedObjectAngle == 0) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
 										{
 											adjacentCheck = true;
+											break;
 										}
 										else
 										{
@@ -1095,37 +1173,41 @@ public class CheckManager : MonoBehaviour
 									}
 								}
 							}
+							else
+							{
+								if (difference < 0)
+								{
+									if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+										&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+									{
+										adjacentCheck = true;
+										break;
+									}
+									else
+									{
+										adjacentCheck = false;
+									}
+								}
+								else if (difference > 0)
+								{
+									if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+										&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+									{
+										adjacentCheck = true;
+										break;
+									}
+									else
+									{
+										adjacentCheck = false;
+									}
+								}
+							}
 						}
 					}
 				}
 			}
 		}
 	}
-
-	/*void CheckRot1()
-	{
-		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
-		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid.
-		foreach (Collider collided in hitColliders)
-		{
-			print(collided.gameObject.name);
-			if (collided.gameObject.transform.position.x == lastPos.x || collided.gameObject.transform.position.z == lastPos.z && collided.gameObject.transform.position.y == lastPos.y)
-			{
-				if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2")
-				{
-					if (collided.gameObject.name == "Runway_DisplacedThreshold")
-					{
-						lvlm.gameObject.transform.GetChild(0).transform.RotateAround(lastPos, Vector3.up, 90);
-						collided.gameObject.transform.GetChild(0).transform.RotateAround(lastPos, Vector3.up, 90);
-					}
-				}
-			}
-			else
-			{
-				runwayCheck = false;
-			}
-		}
-	}*/
 
 	void CheckAdjacentTrue() //build if CheckAdjacent passes
 	{
@@ -1358,7 +1440,6 @@ public class CheckManager : MonoBehaviour
 						}
 						else if (lvlm.selectedObj.LObject.tag == "hangar" && gm.currentNode.nObjects.Last().LObject.tag == "apron")
 						{
-							print("yata");
 							lvlm.PlaceSucceed();
 						}
 						else if ((lvlm.selectedObj.LObject.tag == "apronOnly" || lvlm.selectedObj.LObject.tag == "hangar") && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects but not building on apron

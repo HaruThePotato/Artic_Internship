@@ -507,7 +507,13 @@ public class CheckManager : MonoBehaviour
 			{
 				if (collided.gameObject.transform.position.x == lastPos.x || collided.gameObject.transform.position.z == lastPos.z - 0.5f)//check for same row or column, ignoring diagonal
 				{
-					if (lvlm.selectedObj.LObject.name == "Runway_BlastPad") //if blastpad was selected and taxiway is around
+					if (lvlm.selectedObj.LObject.tag == "runway" && (collided.gameObject.tag == "roadway" || collided.gameObject.tag == "apron"))
+					{//if runway is selected and roadway/apron is around
+						adjacentCheck = false;
+						print("You cannot place that near a roadway");
+						break;
+					}
+					else if (lvlm.selectedObj.LObject.name == "Runway_BlastPad") //if blastpad was selected and taxiway is around
 					{
 						if (collided.gameObject.tag == "taxiway")
 						{
@@ -525,18 +531,35 @@ public class CheckManager : MonoBehaviour
 							adjacentCheck = true;
 						}
 					}
+					else if (lvlm.selectedObj.LObject.gameObject.name == "Runway_DisplacedThreshold")
+					{
+						if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f))
+						{
+							if (collided.gameObject.name == "Runway_DisplacedThreshold")
+							{
+								print("YATA");
+								adjacentCheck = false;
+								break;
+							}
+							else
+							{
+								print("good");
+								CheckRot();
+							}
+						}
+						else
+						{
+							print("YES");
+							adjacentCheck = true;
+						}
+					}
 					else if (lvlm.selectedObj.LObject.tag == "taxiway" && collided.gameObject.name == "Runway_BlastPad") //if taxyiway is selected and blastpad is around
 					{
 						adjacentCheck = false;
 						print("You cannot place that near a blastpad");
 						break;
 					}
-					else if (lvlm.selectedObj.LObject.tag == "runway" && (collided.gameObject.tag == "roadway" || collided.gameObject.tag == "apron"))
-					{//if runway is selected and roadway/apron is around
-						adjacentCheck = false;
-						print("You cannot place that near a roadway");
-						break;
-					}
+					
 					else if ((lvlm.selectedObj.LObject.tag == "roadway" || lvlm.selectedObj.LObject.tag == "apron") && collided.gameObject.tag == "runway") //if roadway is selected and runway is around
 					{
 						adjacentCheck = false;
@@ -552,24 +575,18 @@ public class CheckManager : MonoBehaviour
 						}
 						else if (lvlm.selectedObj.LObject.name == "Radio_Tower")
 						{
-							if ((collided.gameObject.transform.position.x != lastPos.x && collided.gameObject.transform.position.z != lastPos.z - 0.5f))
+							if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f))
 							{
-								print(collided.gameObject.transform.position + collided.gameObject.tag);
-								print(lastPos);
-								if ((collided.gameObject.tag != "apron" || collided.gameObject.tag != "grass" || collided.gameObject.tag != "taxiway" || collided.gameObject.tag != "runway" || collided.gameObject.tag != "roadway")
-									)
+								if (collided.gameObject.tag == "apronOnly" || collided.gameObject.tag == "hangar")
 								{
-									print("lol");
 									adjacentCheck = false;
 									break;
 								}
 								else
 								{
-									print("madamada");
 									adjacentCheck = true;
 								}
-							}
-
+							}		
 						}
 						else if (lvlm.selectedObj.LObject.name != "Terminal_Middle" && lvlm.selectedObj.LObject.name != "Apron_GateBridgeLight" && lvlm.selectedObj.LObject.name != "Radio_Tower")
 						{
@@ -612,9 +629,8 @@ public class CheckManager : MonoBehaviour
 									CheckRot();
 									break;
 								}
-								else if (collided.gameObject.name == "Terminal_Middle")
+								else if (collided.gameObject.name == "Terminal_Middle" && !(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f))
 								{
-									print("YATA");
 									adjacentCheck = true;
 									break;
 								}
@@ -692,6 +708,7 @@ public class CheckManager : MonoBehaviour
 					}
 					else
 					{
+						print("no1");
 						adjacentCheck = true;
 					}
 				}

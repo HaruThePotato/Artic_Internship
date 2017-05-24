@@ -12,8 +12,21 @@ public class LogitechSteeringWheel : MonoBehaviour {
     private string forcesLabel;
     string[] activeForceAndEffect;
 
-	// Use this for initialization
-	void Start () {
+    int acceleration;
+    public int returnAcceleration()
+    {
+        return acceleration;
+    }
+
+    private static LogitechSteeringWheel instance = null;
+
+    public static LogitechSteeringWheel GetInstance()
+    {
+        return instance;
+    }
+
+    // Use this for initialization
+    void Start () {
         activeForces = "";
         propertiesEdit = "";
         actualState = "";
@@ -75,6 +88,7 @@ public class LogitechSteeringWheel : MonoBehaviour {
             rec = LogitechGSDK.LogiGetStateUnity(0);
             actualState += "x-axis position :" + rec.lX + "\n";
             actualState += "y-axis position :" + rec.lY + "\n";
+            acceleration = rec.lY;
             actualState += "z-axis position :" + rec.lZ + "\n";
             actualState += "x-axis rotation :" + rec.lRx + "\n";
             actualState += "y-axis rotation :" + rec.lRy + "\n";
@@ -332,7 +346,5 @@ public class LogitechSteeringWheel : MonoBehaviour {
 			actualState = "THIS WINDOW NEEDS TO BE IN FOREGROUND IN ORDER FOR THE SDK TO WORK PROPERLY";
 		}
 	}
-
-    
-
 }
+

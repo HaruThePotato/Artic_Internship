@@ -11,6 +11,8 @@ using System.Text.RegularExpressions;
 
 public class LoadManager : MonoBehaviour
 {
+    Shader standardShader;
+
     AWSscript aws;
     XMLManager xmlm;
     GridManager gm;
@@ -52,6 +54,7 @@ public class LoadManager : MonoBehaviour
 
     void Start()
     {
+        standardShader = Shader.Find("Standard");
         floorPosition = new Dictionary<string, float>();
         aws = AWSscript.GetInstance();
         xmlm = XMLManager.GetInstance();
@@ -183,7 +186,6 @@ public class LoadManager : MonoBehaviour
                         }
                         else
                         {
-
                             //Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
                             lObj.LObject = Instantiate(bundle.LoadAsset(lNode.objectIDs[i]), lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;                            //lObj.LObject = Instantiate(bundle.LoadAsset(lNode.objectIDs[i]), lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
                             //lObj.LObject = Instantiate(objm.GetLevelObject(lNode.objectIDs[i]).LObject, lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
@@ -241,6 +243,7 @@ public class LoadManager : MonoBehaviour
             } // memory is freed from the web stream (www.Dispose() gets called implicitly)
         }
         createFloor();
+        changeShader();
     }
 
     public void CleanCache()
@@ -301,49 +304,58 @@ public class LoadManager : MonoBehaviour
         floorPrefab.GetComponent<BoxCollider>().size = new Vector3(lengthOfFloor["X"], 1, lengthOfFloor["Z"]);
     }
 
-    //public void LoadSelectedLevel()
-    //{
-    //    if (levelSelected != null)
-    //    {
-    //        LevelDatabase levelData = xmlm.LoadLevel(levelSelected);
+    void changeShader() // because shadow for assetbundle is cucked.
+    {
+        var renderers = FindObjectsOfType<Renderer>() as Renderer[];
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            renderers[i].material.shader = standardShader;
+        }
+    }
 
-    //        foreach (LevelNode lNode in levelData.dbList)
-    //        {
-    //            for (int i = 0; i < lNode.objectIDs.Count; i++)
-    //            {
-    //                LevelObject lObj = new LevelObject();
-    //                Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
-    //                lObj.LObject = Instantiate(objm.GetLevelObject(lNode.objectIDs[i]).LObject, lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
-    //                lObj.LObject.transform.transform.eulerAngles = lNode.objectRotations[i];
-    //                lObj.LObject.transform.localScale = levelData.objectScale;
-    //                lObj.LObject.name = lNode.objectIDs[i];
-    //                lObj.LObjectType = lNode.objectTypes[i];
-    //            }
-    //        }
-    //    }
-    //}
+        //public void LoadSelectedLevel()
+        //{
+        //    if (levelSelected != null)
+        //    {
+        //        LevelDatabase levelData = xmlm.LoadLevel(levelSelected);
 
-    //public IEnumerator DownloadAndCache()
-    //{
-    //    // Wait for the Caching system to be ready
-    //    while (!Caching.ready)
-    //        yield return null;
+        //        foreach (LevelNode lNode in levelData.dbList)
+        //        {
+        //            for (int i = 0; i < lNode.objectIDs.Count; i++)
+        //            {
+        //                LevelObject lObj = new LevelObject();
+        //                Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
+        //                lObj.LObject = Instantiate(objm.GetLevelObject(lNode.objectIDs[i]).LObject, lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
+        //                lObj.LObject.transform.transform.eulerAngles = lNode.objectRotations[i];
+        //                lObj.LObject.transform.localScale = levelData.objectScale;
+        //                lObj.LObject.name = lNode.objectIDs[i];
+        //                lObj.LObjectType = lNode.objectTypes[i];
+        //            }
+        //        }
+        //    }
+        //}
 
-    //    // Load the AssetBundle file from Cache if it exists with the same version or download and store it in the cache
-    //    using (WWW www = WWW.LoadFromCacheOrDownload(BundleURL, version))
-    //    {
-    //        Debug.Log("DownloadAndCache");
-    //        yield return www;
-    //        if (www.error != null)
-    //            throw new Exception("WWW download had an error:" + www.error);
-    //        AssetBundle bundle = www.assetBundle;
-    //        if (assetName == "")
-    //            Instantiate(bundle.mainAsset);
-    //        else
-    //            Instantiate(bundle.LoadAsset(assetName));
-    //        // Unload the AssetBundles compressed contents to conserve memory
-    //        bundle.Unload(false);
+        //public IEnumerator DownloadAndCache()
+        //{
+        //    // Wait for the Caching system to be ready
+        //    while (!Caching.ready)
+        //        yield return null;
 
-    //    } // memory is freed from the web stream (www.Dispose() gets called implicitly)
-    //}
-}
+        //    // Load the AssetBundle file from Cache if it exists with the same version or download and store it in the cache
+        //    using (WWW www = WWW.LoadFromCacheOrDownload(BundleURL, version))
+        //    {
+        //        Debug.Log("DownloadAndCache");
+        //        yield return www;
+        //        if (www.error != null)
+        //            throw new Exception("WWW download had an error:" + www.error);
+        //        AssetBundle bundle = www.assetBundle;
+        //        if (assetName == "")
+        //            Instantiate(bundle.mainAsset);
+        //        else
+        //            Instantiate(bundle.LoadAsset(assetName));
+        //        // Unload the AssetBundles compressed contents to conserve memory
+        //        bundle.Unload(false);
+
+        //    } // memory is freed from the web stream (www.Dispose() gets called implicitly)
+        //}
+    }

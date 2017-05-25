@@ -557,11 +557,33 @@ public class CheckManager : MonoBehaviour
 						break;
 					}
 
-					else if ((lvlm.selectedObj.LObject.tag == "roadway" || lvlm.selectedObj.LObject.tag == "apron") && collided.gameObject.tag == "runway") //if roadway is selected and runway is around
+					/*else if ((lvlm.selectedObj.LObject.tag == "roadway" || lvlm.selectedObj.LObject.tag == "apron") && collided.gameObject.tag == "runway") //if roadway is selected and runway is around
 					{
 						adjacentCheck = false;
 						print("You cannot place that near a runway");
 						break;
+					}*/
+					else if (lvlm.selectedObj.LObject.tag == "roadway" || lvlm.selectedObj.LObject.tag == "apron")
+					{
+						if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f))
+						{
+							if (collided.gameObject.tag == "runway")
+							{
+								adjacentCheck = false;
+								print("You cannot place that near a runway");
+								break;
+							}
+							else if (collided.gameObject.tag == "roadway" && lvlm.selectedObj.LObject.tag == "roadway")
+							{
+								print("YATA");
+								CheckRotRoad();
+								break;
+							}
+						}
+						else
+						{
+							adjacentCheck = true;
+						}
 					}
 					else if (lvlm.selectedObj.LObject.tag == "apronOnly")
 					{
@@ -796,6 +818,1278 @@ public class CheckManager : MonoBehaviour
 					{
 						adjacentCheck = true;
 					}
+				}
+			}
+		}
+	}
+
+	void CheckRotRoad()
+	{
+		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ + 0.5f);
+		if (gm.currentNode.nObjects.Count > 0)
+		{
+			lastPos.y += lvlm.selectedObj.LObject.transform.GetComponentInChildren<MeshRenderer>().bounds.size.y;
+		}
+		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid.
+		foreach (Collider collided in hitColliders)
+		{
+			if (collided.gameObject.name != "GridCollider")
+			{
+				if (collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z != lastPos.z - 0.5f)
+				{//check for same row or column, ignoring diagonal
+					float difference = collided.gameObject.transform.position.z - (lastPos.z - 0.5f);
+					int selectedObjectAngle = (int)lvlm.hObject.LObject.transform.GetChild(0).transform.eulerAngles.y;
+					int collidedObjectAngle = (int)collided.gameObject.transform.GetChild(0).transform.eulerAngles.y;
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					if (lvlm.selectedObj.LObject.tag == "roadway")
+					{
+						if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f))
+						{
+							if (collided.gameObject.tag == "roadway" && collided.gameObject.name != "Apron_Main")
+							{
+								if (lvlm.selectedObj.LObject.name == "Vehicle_Straight")
+								{
+									if (collided.gameObject.name == "Vehicle_Straight")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_BigCurve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 90 && collidedObjectAngle == 90))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 180) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+
+
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_SmallCurve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+												   && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_T")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+													  && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 180) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_TFlip")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+
+													  && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 180) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_Towline")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+
+
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+								}
+								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								else if (lvlm.selectedObj.LObject.name == "Vehicle_BigCurve")
+								{
+									if (collided.gameObject.name == "Vehicle_Straight")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 180 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 0 && collidedObjectAngle == 270))
+
+
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_BigCurve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 90))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 180) || (selectedObjectAngle == 0 && collidedObjectAngle == 270))
+
+
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_SmallCurve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 180 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 270))
+
+
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_T")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 180) || (selectedObjectAngle == 0 && collidedObjectAngle == 270))
+
+
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_TFlip")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 0 && collidedObjectAngle == 270))
+
+
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_Towline")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 180 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 0 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								}
+								else if (lvlm.selectedObj.LObject.name == "Vehicle_SmallCurve")
+								{
+									if (collided.gameObject.name == "Vehicle_Straight")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_BigCurve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 90))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_SmallCurve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_T")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_TFlip")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_Towline")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+								}
+								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								else if (lvlm.selectedObj.LObject.name == "Vehicle_T")
+								{
+									if (collided.gameObject.name == "Vehicle_Straight")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270) || (selectedObjectAngle == 180 && collidedObjectAngle == 90))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270) || (selectedObjectAngle == 0 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_BigCurve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 90))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 180) || (selectedObjectAngle == 0 && collidedObjectAngle == 270) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				}
+				else if (collided.gameObject.transform.position.z == lastPos.z - 0.5f && collided.gameObject.transform.position.x != lastPos.x)
+				{//check for same row or column, ignoring diagonal
+					float difference = collided.gameObject.transform.position.x - lastPos.x;
+					int selectedObjectAngle = (int)lvlm.hObject.LObject.transform.GetChild(0).transform.eulerAngles.y;
+					int collidedObjectAngle = (int)collided.gameObject.transform.GetChild(0).transform.eulerAngles.y;
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					if (lvlm.selectedObj.LObject.tag == "roadway")
+					{
+						if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f))
+						{
+							if (collided.gameObject.tag == "roadway" && collided.gameObject.name != "Apron_Main")
+							{
+								if (lvlm.selectedObj.LObject.name == "Vehicle_Straight")
+								{
+									if (collided.gameObject.name == "Vehicle_Straight")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_BigCurve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_SmallCurve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 180 && collidedObjectAngle == 180) || (selectedObjectAngle == 0 && collidedObjectAngle == 270))
+												   && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 90))
+
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_T")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180) || (selectedObjectAngle == 0 && collidedObjectAngle == 90))
+												   && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_TFlip")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180) || (selectedObjectAngle == 0 && collidedObjectAngle == 270))
+
+
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_Towline")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+								}
+								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								else if (lvlm.selectedObj.LObject.name == "Vehicle_BigCurve")
+								{
+									if (collided.gameObject.name == "Vehicle_Straight")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+
+
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_BigCurve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+
+
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_SmallCurve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 180) || (selectedObjectAngle == 0 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 90))
+
+
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_T")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+
+
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_TFlip")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 270 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180) || (selectedObjectAngle == 90 && collidedObjectAngle == 270))
+
+
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_Towline")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+								}
+								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								else if (lvlm.selectedObj.LObject.name == "Vehicle_SmallCurve")
+								{
+									if (collided.gameObject.name == "Vehicle_Straight")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 90 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_BigCurve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_SmallCurve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 270) || (selectedObjectAngle == 90 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 90))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_T")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_TFlip")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_Towline")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 90 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+								}
+								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								else if (lvlm.selectedObj.LObject.name == "Vehicle_T")
+								{
+									if (collided.gameObject.name == "Vehicle_Straight")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180  && collidedObjectAngle == 180) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180) || (selectedObjectAngle == 90 && collidedObjectAngle == 0))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Vehicle_BigCurve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 180) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 270) || (selectedObjectAngle == 90 && collidedObjectAngle == 0))
+												 && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				}
 			}
 		}
@@ -1773,6 +3067,7 @@ public class CheckManager : MonoBehaviour
 			}
 		}
 	}
+
 
 	void CheckAdjacentTrue() //build if CheckAdjacent passes
 	{

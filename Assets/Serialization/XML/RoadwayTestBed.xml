@@ -2,6 +2,181 @@
 <LevelDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <dbList>
     <LevelNode>
+      <nodePositionX>46</nodePositionX>
+      <nodePositionZ>29</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>46</x>
+          <y>0</y>
+          <z>29</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_Towline</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>46</nodePositionX>
+      <nodePositionZ>32</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>46</x>
+          <y>0</y>
+          <z>32</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_TFlip</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>46</nodePositionX>
+      <nodePositionZ>35</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>46</x>
+          <y>0</y>
+          <z>35</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_T</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>46</nodePositionX>
+      <nodePositionZ>38</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>46</x>
+          <y>0</y>
+          <z>38</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>1.00179122E-05</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_SmallCurve</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>46</nodePositionX>
+      <nodePositionZ>41</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>46</x>
+          <y>0</y>
+          <z>41</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_BigCurve</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>46</nodePositionX>
+      <nodePositionZ>44</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>46</x>
+          <y>0</y>
+          <z>44</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_Straight</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>49</nodePositionX>
+      <nodePositionZ>29</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>49</x>
+          <y>0</y>
+          <z>29</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>90</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_Towline</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
       <nodePositionX>49</nodePositionX>
       <nodePositionZ>32</nodePositionZ>
       <objectPositions>
@@ -14,24 +189,149 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
+          <y>90</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_TFlip</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>49</nodePositionX>
+      <nodePositionZ>35</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>49</x>
+          <y>0</y>
+          <z>35</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>90</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_T</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>49</nodePositionX>
+      <nodePositionZ>38</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>49</x>
+          <y>0</y>
+          <z>38</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>90</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_SmallCurve</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>49</nodePositionX>
+      <nodePositionZ>41</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>49</x>
+          <y>0</y>
+          <z>41</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>90</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_BigCurve</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>49</nodePositionX>
+      <nodePositionZ>44</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>49</x>
+          <y>0</y>
+          <z>44</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>90</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_Straight</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>52</nodePositionX>
+      <nodePositionZ>29</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>52</x>
+          <y>0</y>
+          <z>29</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
           <y>180</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Vehicle_Towline</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>50</nodePositionX>
+      <nodePositionX>52</nodePositionX>
       <nodePositionZ>32</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>50</x>
+          <x>52</x>
           <y>0</y>
           <z>32</z>
         </Vector3>
@@ -44,21 +344,21 @@
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold2</string>
+        <string>Vehicle_TFlip</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>51</nodePositionX>
-      <nodePositionZ>32</nodePositionZ>
+      <nodePositionX>52</nodePositionX>
+      <nodePositionZ>35</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>51</x>
+          <x>52</x>
           <y>0</y>
-          <z>32</z>
+          <z>35</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
@@ -69,10 +369,60 @@
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_Threshold</string>
+        <string>Vehicle_T</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>52</nodePositionX>
+      <nodePositionZ>38</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>52</x>
+          <y>0</y>
+          <z>38</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>180</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_SmallCurve</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>52</nodePositionX>
+      <nodePositionZ>41</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>52</x>
+          <y>0</y>
+          <z>41</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>180</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_BigCurve</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
@@ -89,399 +439,49 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>0</y>
+          <y>180</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Apron_Main</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>52</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>52</x>
-          <y>0</y>
-          <z>45</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Apron_Main</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>52</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>52</x>
-          <y>0</y>
-          <z>46</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Apron_Main</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>52</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>52</x>
-          <y>0</y>
-          <z>47</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Apron_Main</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>53</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>53</x>
-          <y>0</y>
-          <z>44</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Apron_Main</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>53</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>53</x>
-          <y>0</y>
-          <z>45</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Apron_Main</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>53</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>53</x>
-          <y>0</y>
-          <z>46</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Apron_Main</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>53</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>53</x>
-          <y>0</y>
-          <z>47</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Apron_Main</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>54</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>54</x>
-          <y>0</y>
-          <z>44</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Apron_Main</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>54</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>54</x>
-          <y>0</y>
-          <z>45</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Apron_Main</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>54</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>54</x>
-          <y>0</y>
-          <z>46</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Apron_Main</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>54</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>54</x>
-          <y>0</y>
-          <z>47</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Apron_Main</string>
+        <string>Vehicle_Straight</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
       <nodePositionX>55</nodePositionX>
-      <nodePositionZ>44</nodePositionZ>
+      <nodePositionZ>29</nodePositionZ>
       <objectPositions>
         <Vector3>
           <x>55</x>
           <y>0</y>
-          <z>44</z>
+          <z>29</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>0</y>
+          <y>270</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Apron_Main</string>
+        <string>Vehicle_Towline</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
       <nodePositionX>55</nodePositionX>
-      <nodePositionZ>45</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>55</x>
-          <y>0</y>
-          <z>45</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Apron_Main</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>55</nodePositionX>
-      <nodePositionZ>46</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>55</x>
-          <y>0</y>
-          <z>46</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Apron_Main</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>55</nodePositionX>
-      <nodePositionZ>47</nodePositionZ>
-      <objectPositions>
-        <Vector3>
-          <x>55</x>
-          <y>0</y>
-          <z>47</z>
-        </Vector3>
-      </objectPositions>
-      <objectRotations>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </objectRotations>
-      <objectTypes>
-        <int>3</int>
-      </objectTypes>
-      <objectIDs>
-        <string>Apron_Main</string>
-      </objectIDs>
-      <numberStrings />
-    </LevelNode>
-    <LevelNode>
-      <nodePositionX>60</nodePositionX>
       <nodePositionZ>32</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>60</x>
+          <x>55</x>
           <y>0</y>
           <z>32</z>
         </Vector3>
@@ -489,65 +489,115 @@
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>0</y>
+          <y>270</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_Threshold</string>
+        <string>Vehicle_TFlip</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>61</nodePositionX>
-      <nodePositionZ>32</nodePositionZ>
+      <nodePositionX>55</nodePositionX>
+      <nodePositionZ>35</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>61</x>
+          <x>55</x>
           <y>0</y>
-          <z>32</z>
+          <z>35</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>0</y>
+          <y>270</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold2</string>
+        <string>Vehicle_T</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
     <LevelNode>
-      <nodePositionX>62</nodePositionX>
-      <nodePositionZ>32</nodePositionZ>
+      <nodePositionX>55</nodePositionX>
+      <nodePositionZ>38</nodePositionZ>
       <objectPositions>
         <Vector3>
-          <x>62</x>
+          <x>55</x>
           <y>0</y>
-          <z>32</z>
+          <z>38</z>
         </Vector3>
       </objectPositions>
       <objectRotations>
         <Vector3>
           <x>0</x>
-          <y>0</y>
+          <y>270</y>
           <z>0</z>
         </Vector3>
       </objectRotations>
       <objectTypes>
-        <int>3</int>
+        <int>4</int>
       </objectTypes>
       <objectIDs>
-        <string>Runway_DisplacedThreshold</string>
+        <string>Vehicle_SmallCurve</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>55</nodePositionX>
+      <nodePositionZ>41</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>55</x>
+          <y>0</y>
+          <z>41</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>270</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_BigCurve</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+    <LevelNode>
+      <nodePositionX>55</nodePositionX>
+      <nodePositionZ>44</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>55</x>
+          <y>0</y>
+          <z>44</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>270</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>4</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Vehicle_Straight</string>
       </objectIDs>
       <numberStrings />
     </LevelNode>
@@ -564,6 +614,5 @@
   </objectScale>
   <objectBundleNames>
     <string />
-    <string xsi:nil="true" />
   </objectBundleNames>
 </LevelDatabase>

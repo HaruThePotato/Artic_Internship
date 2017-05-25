@@ -515,19 +515,23 @@ public class CheckManager : MonoBehaviour
 					}
 					else if (lvlm.selectedObj.LObject.name == "Runway_BlastPad") //if blastpad was selected and taxiway is around
 					{
-						if (collided.gameObject.tag == "taxiway")
+						if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f))
 						{
-							adjacentCheck = false;
-							print("You cannot place that near a taxiway");
-							break;
-						}
-						else if (collided.gameObject.name == "Runway_BlastPad")
-						{
-							CheckRot();
-							break;
+							if (collided.gameObject.tag == "taxiway")
+							{
+								adjacentCheck = false;
+								print("You cannot place that near a taxiway");
+								break;
+							}
+							else if (collided.gameObject.name == "Runway_BlastPad")
+							{
+								CheckRot();
+								break;
+							}
 						}
 						else
 						{
+							print("lan");
 							adjacentCheck = true;
 						}
 					}
@@ -550,13 +554,34 @@ public class CheckManager : MonoBehaviour
 							adjacentCheck = true;
 						}
 					}
-					else if (lvlm.selectedObj.LObject.tag == "taxiway" && collided.gameObject.name == "Runway_BlastPad") //if taxyiway is selected and blastpad is around
+					/*else if (lvlm.selectedObj.LObject.tag == "taxiway" && collided.gameObject.name == "Runway_BlastPad") //if taxyiway is selected and blastpad is around
 					{
 						adjacentCheck = false;
 						print("You cannot place that near a blastpad");
 						break;
+					}*/
+					else if (lvlm.selectedObj.LObject.tag == "taxiway") //if taxyiway is selected and blastpad is around
+					{
+						if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f))
+						{
+							if (collided.gameObject.name == "Runway_BlastPad")
+							{
+								adjacentCheck = false;
+								print("You cannot place that near a blastpad");
+								break;
+							}
+							else
+							{
+								print("checktaxi");
+								CheckRotTaxi();
+								break;
+							}
+						}
+						else
+						{
+							adjacentCheck = true;
+						}
 					}
-
 					/*else if ((lvlm.selectedObj.LObject.tag == "roadway" || lvlm.selectedObj.LObject.tag == "apron") && collided.gameObject.tag == "runway") //if roadway is selected and runway is around
 					{
 						adjacentCheck = false;
@@ -575,7 +600,6 @@ public class CheckManager : MonoBehaviour
 							}
 							else if (collided.gameObject.tag == "roadway" && lvlm.selectedObj.LObject.tag == "roadway")
 							{
-								print("YATA");
 								CheckRotRoad();
 								break;
 							}
@@ -845,19 +869,818 @@ public class CheckManager : MonoBehaviour
 					{
 						if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f))
 						{
-							if (collided.gameObject.tag == "taxiway" && collided.gameObject.name != "Apron_Main")
+							if (collided.gameObject.tag == "taxiway")
 							{
 								if (lvlm.selectedObj.LObject.name == "Taxi_Line")
 								{
 									if (collided.gameObject.name == "Taxi_Line")
 									{
-
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Cross")
+									{
+										if (difference < 0)
+										{
+											if ((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Curve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 180) || (selectedObjectAngle == 270 && collidedObjectAngle == 180) || (selectedObjectAngle == 90 && collidedObjectAngle == 270) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 90))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonal")
+									{
+										adjacentCheck = false;
+										break;
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonal2")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 270) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 90))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonalflip")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 90))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 270) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Merge")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 270) || (selectedObjectAngle == 270 && collidedObjectAngle == 270)
+												|| (selectedObjectAngle == 90 && collidedObjectAngle == 180) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 270) || (selectedObjectAngle == 90 && collidedObjectAngle == 270)
+												|| (selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_MergeLine")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 270) || (selectedObjectAngle == 270 && collidedObjectAngle == 270)
+												|| (selectedObjectAngle == 90 && collidedObjectAngle == 180) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 270) || (selectedObjectAngle == 90 && collidedObjectAngle == 270)
+												|| (selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_RunwayBorder")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_RunwayBorderDia")
+									{
+										adjacentCheck = false;
+										break;
+									}
+									else if (collided.gameObject.name == "Taxi_StraightDia")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_StraightDiaFlip")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_TLine")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 270) || (selectedObjectAngle == 270 && collidedObjectAngle == 270)
+												|| (selectedObjectAngle == 90 && collidedObjectAngle == 180) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 270) || (selectedObjectAngle == 90 && collidedObjectAngle == 270)
+												|| (selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									if (collided.gameObject.name == "Taxi_X")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									if (collided.gameObject.name == "Taxi_XFlip")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
 									}
 								}
-								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+							}
+							////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+						}
+					}
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+				}
+				else if (collided.gameObject.transform.position.z == lastPos.z - 0.5f && collided.gameObject.transform.position.x != lastPos.x)
+				{//check for same row or column, ignoring diagonal
+					float difference = collided.gameObject.transform.position.x - lastPos.x;
+					int selectedObjectAngle = (int)lvlm.hObject.LObject.transform.GetChild(0).transform.eulerAngles.y;
+					int collidedObjectAngle = (int)collided.gameObject.transform.GetChild(0).transform.eulerAngles.y;
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					if (lvlm.selectedObj.LObject.tag == "taxiway")
+					{
+						if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f))
+						{
+							if (collided.gameObject.tag == "taxiway")
+							{
+								if (lvlm.selectedObj.LObject.name == "Taxi_Line")
+								{
+									if (collided.gameObject.name == "Taxi_Line")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Cross")
+									{
+										if (difference < 0)
+										{
+											if ((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Curve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 270) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 90) || (selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonal")
+									{
+										adjacentCheck = false;
+										break;
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonal2")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonalflip")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Merge")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 180)
+												|| (selectedObjectAngle == 0 && collidedObjectAngle == 270) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 180)
+												|| (selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 90))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_MergeLine")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 180)
+												|| (selectedObjectAngle == 0 && collidedObjectAngle == 270) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 180)
+												|| (selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 90))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_RunwayBorder")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_RunwayBorderDia")
+									{
+										adjacentCheck = false;
+										break;
+									}
+									else if (collided.gameObject.name == "Taxi_StraightDia")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_StraightDiaFlip")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_TLine")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 180)
+												|| (selectedObjectAngle == 0 && collidedObjectAngle == 270) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 180)
+												|| (selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 90))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_X")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_XFlip")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+											}
+										}
+									}
+								}
 							}
 						}
 					}
+					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 				}
 			}
 		}
@@ -2759,6 +3582,7 @@ public class CheckManager : MonoBehaviour
 
 	void CheckRot()
 	{
+
 		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ + 0.5f);
 		if (gm.currentNode.nObjects.Count > 0)
 		{
@@ -2779,15 +3603,18 @@ public class CheckManager : MonoBehaviour
 					{
 						if (collided.gameObject.tag == "runway" || collided.gameObject.tag == "runwayNumber")
 						{
+							print("checkrot");
 							if (difference < 0)
 							{
 								if ((selectedObjectAngle == 90 && collidedObjectAngle == 90) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
 								{
+									adjacentCheck = true;
 									runwayCheck = true;
 									break;
 								}
 								else
 								{
+									adjacentCheck = false;
 									runwayCheck = false;
 								}
 							}
@@ -2795,11 +3622,13 @@ public class CheckManager : MonoBehaviour
 							{
 								if ((selectedObjectAngle == 270 && collidedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
 								{
+									adjacentCheck = true;
 									runwayCheck = true;
 									break;
 								}
 								else
 								{
+									adjacentCheck = false;
 									runwayCheck = false;
 								}
 							}
@@ -3262,11 +4091,13 @@ public class CheckManager : MonoBehaviour
 							{
 								if ((selectedObjectAngle == 180 && collidedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
 								{
+									adjacentCheck = true;
 									runwayCheck = true;
 									break;
 								}
 								else
 								{
+									adjacentCheck = false;
 									runwayCheck = false;
 								}
 							}
@@ -3274,11 +4105,13 @@ public class CheckManager : MonoBehaviour
 							{
 								if ((selectedObjectAngle == 0 && collidedObjectAngle == 0) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
 								{
+									adjacentCheck = true;
 									runwayCheck = true;
 									break;
 								}
 								else
 								{
+									adjacentCheck = false;
 									runwayCheck = false;
 								}
 							}

@@ -201,7 +201,7 @@ public class LevelManager : MonoBehaviour
 		selectedObj = new LevelObject();
 	}
 
-	void PlaceObject(bool cloneOrPlace)
+	/*void PlaceObject(bool cloneOrPlace)
 	{
 		if (cloneOrPlace) //if PlaceObject is true
 		{
@@ -215,6 +215,53 @@ public class LevelManager : MonoBehaviour
 			if (gm.isHovering && !uim.mouseOverUI && hObject.LObject != null && gm.currentNode.bFree) //cursor on grid not on UI, level object selected, camera not on selected grid 
 			{
 				cm.PlaceObjectSingle();
+			}
+		}
+	}*/
+
+	void PlaceObject(bool cloneOrPlace)
+	{
+		if (cloneOrPlace) //if PlaceObject is true
+		{
+			if (gm.isHovering && !uim.mouseOverUI && hObject.LObject != null && gm.currentNode.bFree) //cursor on grid not on UI, level object selected, camera not on selected grid 
+			{
+				if (gm.currentNode.nObjects.Count > 0) //if there is at least an object on the grid
+				{
+					if (gm.currentNode.nObjects.Last().LObjectType != 1&& gm.currentNode.nObjects.Last().LObjectType != 4) //if the top object is stackable
+					{
+						CloneSucceed(); //add the selected object on the selected grid
+					}
+					else
+					{
+						CancelSelect();
+					}
+				}
+				else
+				{
+
+					CloneSucceed(); //add the selected object on the selected grid
+				}
+			}
+		}
+		else if (!cloneOrPlace) //if PlaceObject is false;
+		{
+			if (gm.isHovering && !uim.mouseOverUI && hObject.LObject != null && gm.currentNode.bFree) //cursor on grid not on UI, level object selected, camera not on selected grid 
+			{
+				if (gm.currentNode.nObjects.Count > 0) //if there is at least an object on the grid
+				{
+					if (gm.currentNode.nObjects.Last().LObjectType != 1 && gm.currentNode.nObjects.Last().LObjectType != 4) //if the top object is stackable
+					{
+						PlaceSucceed(); ////add the selected object on the selected grid
+					}
+					else
+					{
+						CancelSelect();
+					}
+				}
+				else
+				{
+					PlaceSucceed(); //add the selected object on the selected grid
+				}
 			}
 		}
 	}

@@ -873,7 +873,8 @@ public class CheckManager : MonoBehaviour
 							{
 								if (lvlm.selectedObj.LObject.name == "Taxi_Line")
 								{
-									if (collided.gameObject.name == "Taxi_Line")
+									if (collided.gameObject.name == "Taxi_Line" || collided.gameObject.name == "Taxi_RunwayBorder" || collided.gameObject.name == "Taxi_StraightDia" || collided.gameObject.name == "Taxi_StraightDiaFlip"
+										|| collided.gameObject.name == "Taxi_X" || collided.gameObject.name == "Taxi_XFlip")
 									{
 										if (difference < 0)
 										{
@@ -886,6 +887,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -899,6 +901,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -914,6 +917,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -926,6 +930,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -942,6 +947,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -955,10 +961,11 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
-									else if (collided.gameObject.name == "Taxi_Diagonal")
+									else if (collided.gameObject.name == "Taxi_Diagonal" || collided.gameObject.name == "Taxi_RunwayBorderDia")
 									{
 										adjacentCheck = false;
 										break;
@@ -976,6 +983,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -989,6 +997,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -1005,6 +1014,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1018,10 +1028,11 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
-									else if (collided.gameObject.name == "Taxi_Merge")
+									else if (collided.gameObject.name == "Taxi_Merge" || collided.gameObject.name == "Taxi_MergeLine" || collided.gameObject.name == "Taxi_Tline")
 									{
 										if (difference < 0)
 										{
@@ -1035,6 +1046,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1049,16 +1061,20 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
-									else if (collided.gameObject.name == "Taxi_MergeLine")
+								}
+								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								else if (lvlm.selectedObj.LObject.name == "Taxi_Cross")
+								{
+									if (collided.gameObject.name == "Taxi_Line" || collided.gameObject.name == "Taxi_RunwayBorder" || collided.gameObject.name == "Taxi_StraightDia" || collided.gameObject.name == "Taxi_StraightDiaFlip"
+										|| collided.gameObject.name == "Taxi_X" || collided.gameObject.name == "Taxi_XFlip")
 									{
 										if (difference < 0)
 										{
-											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 270) || (selectedObjectAngle == 270 && collidedObjectAngle == 270)
-												|| (selectedObjectAngle == 90 && collidedObjectAngle == 180) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
-												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											if ((collidedObjectAngle == 90 || collidedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
 											{
 												adjacentCheck = true;
 												break;
@@ -1066,13 +1082,12 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
 										{
-											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 270) || (selectedObjectAngle == 90 && collidedObjectAngle == 270)
-												|| (selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0))
-												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											if ((collidedObjectAngle == 90 || collidedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
 											{
 												adjacentCheck = true;
 												break;
@@ -1080,15 +1095,15 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
-									else if (collided.gameObject.name == "Taxi_RunwayBorder")
+									else if (collided.gameObject.name == "Taxi_Cross")
 									{
 										if (difference < 0)
 										{
-											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
-												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											if (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1)
 											{
 												adjacentCheck = true;
 												break;
@@ -1096,12 +1111,12 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
 										{
-											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
-												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											if (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1)
 											{
 												adjacentCheck = true;
 												break;
@@ -1109,20 +1124,326 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
-									else if (collided.gameObject.name == "Taxi_RunwayBorderDia")
+									else if (collided.gameObject.name == "Taxi_Curve")
+									{
+										if (difference < 0)
+										{
+											if ((collidedObjectAngle == 180 || collidedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((collidedObjectAngle == 0 || collidedObjectAngle == 90) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonal" || collided.gameObject.name == "Taxi_RunwayBorderDia")
 									{
 										adjacentCheck = false;
 										break;
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonal2")
+									{
+										if (difference < 0)
+										{
+											if ((collidedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((collidedObjectAngle == 90) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonalflip")
+									{
+										if (difference < 0)
+										{
+											if ((collidedObjectAngle == 90) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((collidedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (collided.gameObject.name == "Taxi_Merge" || collided.gameObject.name == "Taxi_MergeLine" || collided.gameObject.name == "Taxi_Tline")
+										{
+											if (difference < 0)
+											{
+												if ((collidedObjectAngle == 90 || collidedObjectAngle == 180 || collidedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+												{
+													adjacentCheck = true;
+													break;
+												}
+												else
+												{
+													adjacentCheck = false;
+													break;
+												}
+											}
+											else if (difference > 0)
+											{
+												if ((collidedObjectAngle == 0 || collidedObjectAngle == 90 || collidedObjectAngle == 270 )	&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+												{
+													adjacentCheck = true;
+													break;
+												}
+												else
+												{
+													adjacentCheck = false;
+													break;
+												}
+											}
+										}
+									}
+								}
+								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								else if (lvlm.selectedObj.LObject.name == "Taxi_Curve")
+								{
+									if (collided.gameObject.name == "Taxi_Line" || collided.gameObject.name == "Taxi_RunwayBorder")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 90) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 180 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Cross")
+									{
+										if (difference < 0)
+										{
+											if ((selectedObjectAngle == 00 || selectedObjectAngle == 90) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((selectedObjectAngle == 180 || selectedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Curve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 90) && (collidedObjectAngle == 180 || collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 180 || selectedObjectAngle == 270) && (collidedObjectAngle == 0 || collidedObjectAngle == 90))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonal" || collided.gameObject.name == "Taxi_RunwayBorderDia")
+									{
+										adjacentCheck = false;
+										break;
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonal2")
+									{
+										if (difference < 0)
+										{
+											if ((selectedObjectAngle == 0 && collidedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((selectedObjectAngle == 90 && collidedObjectAngle == 90) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonalflip")
+									{
+										if (difference < 0)
+										{
+											if ((selectedObjectAngle == 90 && collidedObjectAngle == 90) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((selectedObjectAngle == 270 && collidedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Merge" || collided.gameObject.name == "Taxi_MergeLine" || collided.gameObject.name == "Taxi_Tline")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 90) && (collidedObjectAngle == 90 || collidedObjectAngle == 180 || collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 180 || selectedObjectAngle == 270) && (collidedObjectAngle == 0 || collidedObjectAngle == 90 || collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
 									}
 									else if (collided.gameObject.name == "Taxi_StraightDia")
 									{
 										if (difference < 0)
 										{
-											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
-												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
 											{
 												adjacentCheck = true;
 												break;
@@ -1130,12 +1451,13 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
 										{
-											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
-												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 270) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
 											{
 												adjacentCheck = true;
 												break;
@@ -1143,6 +1465,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -1150,37 +1473,7 @@ public class CheckManager : MonoBehaviour
 									{
 										if (difference < 0)
 										{
-											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
-												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
-											{
-												adjacentCheck = true;
-												break;
-											}
-											else
-											{
-												adjacentCheck = false;
-											}
-										}
-										else if (difference > 0)
-										{
-											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
-												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
-											{
-												adjacentCheck = true;
-												break;
-											}
-											else
-											{
-												adjacentCheck = false;
-											}
-										}
-									}
-									else if (collided.gameObject.name == "Taxi_TLine")
-									{
-										if (difference < 0)
-										{
-											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 270) || (selectedObjectAngle == 270 && collidedObjectAngle == 270)
-												|| (selectedObjectAngle == 90 && collidedObjectAngle == 180) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 0 && collidedObjectAngle == 270) || (selectedObjectAngle == 90 && collidedObjectAngle == 270))
 												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
 											{
 												adjacentCheck = true;
@@ -1189,12 +1482,12 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
 										{
-											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 270) || (selectedObjectAngle == 90 && collidedObjectAngle == 270)
-												|| (selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0))
+											if (((selectedObjectAngle == 180 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
 												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
 											{
 												adjacentCheck = true;
@@ -1203,14 +1496,15 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
-									if (collided.gameObject.name == "Taxi_X")
+									else if (collided.gameObject.name == "Taxi_X")
 									{
 										if (difference < 0)
 										{
-											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 0 && collidedObjectAngle == 270))
 												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
 											{
 												adjacentCheck = true;
@@ -1219,11 +1513,12 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
 										{
-											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
+											if (((selectedObjectAngle == 180 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
 												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
 											{
 												adjacentCheck = true;
@@ -1232,14 +1527,15 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
-									if (collided.gameObject.name == "Taxi_XFlip")
+									else if (collided.gameObject.name == "Taxi_XFlip")
 									{
 										if (difference < 0)
 										{
-											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 90 && collidedObjectAngle == 270))
 												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z + 1))
 											{
 												adjacentCheck = true;
@@ -1248,11 +1544,12 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
 										{
-											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 270))
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
 												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
 											{
 												adjacentCheck = true;
@@ -1261,12 +1558,22 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
 								}
+								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								else if (lvlm.selectedObj.LObject.name == "Taxi_Diagonal" || lvlm.selectedObj.LObject.name == "Taxi_RunwayBorderDia")
+								{
+									if (collided.gameObject.name == "Taxi_Cross" || collided.gameObject.name == "Taxi_Diagonal" || collided.gameObject.name == "Taxi_Diagonal2" || collided.gameObject.name == "Taxi_Diagonalflip" || collided.gameObject.name == "Taxi_RunwayBorderDia"
+										|| collided.gameObject.name == "Taxi_X" || collided.gameObject.name == "Taxi_XFlip")
+									{
+										adjacentCheck = false;
+									}
+								}
+								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 							}
-							////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 						}
 					}
 					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1285,7 +1592,8 @@ public class CheckManager : MonoBehaviour
 							{
 								if (lvlm.selectedObj.LObject.name == "Taxi_Line")
 								{
-									if (collided.gameObject.name == "Taxi_Line")
+									if (collided.gameObject.name == "Taxi_Line" || collided.gameObject.name == "Taxi_RunwayBorder" || collided.gameObject.name == "Taxi_StraightDia" || collided.gameObject.name == "Taxi_StraightDiaFlip" 
+										|| collided.gameObject.name == "Taxi_X" || collided.gameObject.name == "Taxi_XFlip")
 									{
 										if (difference < 0)
 										{
@@ -1298,6 +1606,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1311,6 +1620,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -1326,6 +1636,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1338,6 +1649,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -1354,6 +1666,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1367,10 +1680,11 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
-									else if (collided.gameObject.name == "Taxi_Diagonal")
+									else if (collided.gameObject.name == "Taxi_Diagonal" || collided.gameObject.name == "Taxi_RunwayBorderDia")
 									{
 										adjacentCheck = false;
 										break;
@@ -1388,6 +1702,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1401,6 +1716,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -1417,6 +1733,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1430,10 +1747,11 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
-									else if (collided.gameObject.name == "Taxi_Merge")
+									else if (collided.gameObject.name == "Taxi_Merge" || collided.gameObject.name == "Taxi_MergeLine" || collided.gameObject.name == "Taxi_Tline")
 									{
 										if (difference < 0)
 										{
@@ -1447,6 +1765,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1461,16 +1780,20 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
-									else if (collided.gameObject.name == "Taxi_MergeLine")
+								}
+								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								else if (lvlm.selectedObj.LObject.name == "Taxi_Cross")
+								{
+									if (collided.gameObject.name == "Taxi_Line" || collided.gameObject.name == "Taxi_RunwayBorder" || collided.gameObject.name == "Taxi_StraightDia" || collided.gameObject.name == "Taxi_StraightDiaFlip"
+										|| collided.gameObject.name == "Taxi_X" || collided.gameObject.name == "Taxi_XFlip")
 									{
 										if (difference < 0)
 										{
-											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 180)
-												|| (selectedObjectAngle == 0 && collidedObjectAngle == 270) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
-												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											if ((collidedObjectAngle == 0 || collidedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
 											{
 												adjacentCheck = true;
 												break;
@@ -1478,13 +1801,12 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
 										{
-											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 180)
-												|| (selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 90))
-												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											if ((collidedObjectAngle == 0 || collidedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
 											{
 												adjacentCheck = true;
 												break;
@@ -1492,15 +1814,15 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
-									else if (collided.gameObject.name == "Taxi_RunwayBorder")
+									else if (collided.gameObject.name == "Taxi_Cross")
 									{
 										if (difference < 0)
 										{
-											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
-												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											if (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1)
 											{
 												adjacentCheck = true;
 												break;
@@ -1508,12 +1830,12 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
 										{
-											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
-												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											if (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1)
 											{
 												adjacentCheck = true;
 												break;
@@ -1521,19 +1843,325 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
-									else if (collided.gameObject.name == "Taxi_RunwayBorderDia")
+									else if (collided.gameObject.name == "Taxi_Curve")
+									{
+										if (difference < 0)
+										{
+											if ((collidedObjectAngle == 0 || collidedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((collidedObjectAngle == 90 || collidedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonal" || collided.gameObject.name == "Taxi_RunwayBorderDia")
 									{
 										adjacentCheck = false;
 										break;
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonal2")
+									{
+										if (difference < 0)
+										{
+											if ((collidedObjectAngle == 0) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((collidedObjectAngle== 180)	&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonalflip")
+									{
+										if (difference < 0)
+										{
+											if ((collidedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((collidedObjectAngle == 0) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Merge" || collided.gameObject.name == "Taxi_MergeLine" || collided.gameObject.name == "Taxi_Tline")
+									{
+										if (difference < 0)
+										{
+											if ((collidedObjectAngle == 0 || collidedObjectAngle == 180 || collidedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((collidedObjectAngle == 0 || collidedObjectAngle == 90 || collidedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+								}
+								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								else if (lvlm.selectedObj.LObject.name == "Taxi_Curve")
+								{
+									if (collided.gameObject.name == "Taxi_Line" || collided.gameObject.name == "Taxi_RunwayBorder" )
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 270) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Cross")
+									{
+										if (difference < 0)
+										{
+											if ((selectedObjectAngle == 90 || selectedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((selectedObjectAngle == 0 || selectedObjectAngle == 270) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Curve")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 270)) 
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 270) && (collidedObjectAngle == 90 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonal" || collided.gameObject.name == "Taxi_RunwayBorderDia")
+									{
+										adjacentCheck = false;
+										break;
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonal2")
+									{
+										if (difference < 0)
+										{
+											if ((selectedObjectAngle == 90 && collidedObjectAngle == 0) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((selectedObjectAngle == 270 && collidedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Diagonalflip")
+									{
+										if (difference < 0)
+										{
+											if ((selectedObjectAngle == 180 && collidedObjectAngle == 180) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if ((selectedObjectAngle == 0 && collidedObjectAngle == 0) && (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+									else if (collided.gameObject.name == "Taxi_Merge" || collided.gameObject.name == "Taxi_MergeLine" || collided.gameObject.name == "Taxi_Tline")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 90 || selectedObjectAngle == 270) && (collidedObjectAngle == 0 || collidedObjectAngle == 180 || collidedObjectAngle == 270))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 || selectedObjectAngle == 270) && (collidedObjectAngle == 0 || collidedObjectAngle == 90 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
 									}
 									else if (collided.gameObject.name == "Taxi_StraightDia")
 									{
 										if (difference < 0)
 										{
-											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+											if (((selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 90 && collidedObjectAngle == 270) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
 												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
 											{
 												adjacentCheck = true;
@@ -1542,11 +2170,12 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
 										{
-											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 180))
 												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
 											{
 												adjacentCheck = true;
@@ -1555,6 +2184,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -1562,7 +2192,7 @@ public class CheckManager : MonoBehaviour
 									{
 										if (difference < 0)
 										{
-											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 90 && collidedObjectAngle == 180))
 												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
 											{
 												adjacentCheck = true;
@@ -1571,11 +2201,12 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
 										{
-											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
 												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
 											{
 												adjacentCheck = true;
@@ -1584,37 +2215,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
-											}
-										}
-									}
-									else if (collided.gameObject.name == "Taxi_TLine")
-									{
-										if (difference < 0)
-										{
-											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 180)
-												|| (selectedObjectAngle == 0 && collidedObjectAngle == 270) || (selectedObjectAngle == 180 && collidedObjectAngle == 270))
-												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
-											{
-												adjacentCheck = true;
 												break;
-											}
-											else
-											{
-												adjacentCheck = false;
-											}
-										}
-										else if (difference > 0)
-										{
-											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 180) || (selectedObjectAngle == 180 && collidedObjectAngle == 180)
-												|| (selectedObjectAngle == 0 && collidedObjectAngle == 90) || (selectedObjectAngle == 180 && collidedObjectAngle == 90))
-												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
-											{
-												adjacentCheck = true;
-												break;
-											}
-											else
-											{
-												adjacentCheck = false;
 											}
 										}
 									}
@@ -1622,7 +2223,7 @@ public class CheckManager : MonoBehaviour
 									{
 										if (difference < 0)
 										{
-											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+											if (((selectedObjectAngle == 90 && collidedObjectAngle == 0) || (selectedObjectAngle == 90 && collidedObjectAngle == 180))
 												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
 											{
 												adjacentCheck = true;
@@ -1631,11 +2232,12 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
 										{
-											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+											if (((selectedObjectAngle == 270 && collidedObjectAngle == 0) || (selectedObjectAngle == 270 && collidedObjectAngle == 180))
 												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
 											{
 												adjacentCheck = true;
@@ -1644,6 +2246,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -1651,7 +2254,7 @@ public class CheckManager : MonoBehaviour
 									{
 										if (difference < 0)
 										{
-											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+											if (((selectedObjectAngle == 180 && collidedObjectAngle == 0) || (selectedObjectAngle == 180 && collidedObjectAngle == 180))
 												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
 											{
 												adjacentCheck = true;
@@ -1660,11 +2263,12 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
 										{
-											if (((selectedObjectAngle == 0 || selectedObjectAngle == 180) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+											if (((selectedObjectAngle == 0 && collidedObjectAngle == 0) || (selectedObjectAngle == 0 && collidedObjectAngle == 180))
 												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
 											{
 												adjacentCheck = true;
@@ -1673,14 +2277,66 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
 								}
+								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								else if (lvlm.selectedObj.LObject.name == "Taxi_Diagonal" || lvlm.selectedObj.LObject.name == "Taxi_RunwayBorderDia")
+								{
+									if (collided.gameObject.name == "Taxi_Cross" || collided.gameObject.name == "Taxi_Diagonal" || collided.gameObject.name == "Taxi_Diagonal2" || collided.gameObject.name == "Taxi_Diagonalflip" || collided.gameObject.name == "Taxi_RunwayBorderDia"
+										|| collided.gameObject.name == "Taxi_X" || collided.gameObject.name == "Taxi_XFlip")
+									{
+										adjacentCheck = false;
+									}
+								}
+								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+								if (lvlm.selectedObj.LObject.name == "Taxi_Diagonal2")
+								{
+									if (collided.gameObject.name == "Taxi_Diagonal" || collided.gameObject.name == "Taxi_Diagonal2" || collided.gameObject.name == "Taxi_Diagonalflip" || collided.gameObject.name == "Taxi_RunwayBorderDia"
+										|| collided.gameObject.name == "Taxi_X" || collided.gameObject.name == "Taxi_XFlip")
+									{
+										adjacentCheck = false;
+									}
+									else if (collided.gameObject.name == "Taxi_Line")
+									{
+										if (difference < 0)
+										{
+											if (((selectedObjectAngle == 180) && (collidedObjectAngle == 0|| collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x + 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+										else if (difference > 0)
+										{
+											if (((selectedObjectAngle == 0 ) && (collidedObjectAngle == 0 || collidedObjectAngle == 180))
+												&& (lvlm.hObject.LObject.transform.position.x == collided.gameObject.transform.position.x - 1))
+											{
+												adjacentCheck = true;
+												break;
+											}
+											else
+											{
+												adjacentCheck = false;
+												break;
+											}
+										}
+									}
+								}
+								////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 							}
 						}
 					}
 					////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+					
 				}
 			}
 		}
@@ -1726,6 +2382,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1739,6 +2396,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -1755,6 +2413,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1770,6 +2429,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -1786,6 +2446,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1816,6 +2477,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1830,6 +2492,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -1847,6 +2510,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1860,6 +2524,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -1876,13 +2541,12 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
 										{
 											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 270 && collidedObjectAngle == 270))
-
-
 												 && (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
 											{
 												adjacentCheck = true;
@@ -1891,6 +2555,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -1911,13 +2576,12 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
 										{
 											if (((selectedObjectAngle == 90 && collidedObjectAngle == 90) || (selectedObjectAngle == 0 && collidedObjectAngle == 270))
-
-
 												&& (lvlm.hObject.LObject.transform.position.z == collided.gameObject.transform.position.z - 1))
 											{
 												adjacentCheck = true;
@@ -1926,6 +2590,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -1942,6 +2607,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1957,6 +2623,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -1973,6 +2640,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -1988,6 +2656,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2004,6 +2673,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2019,6 +2689,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2035,6 +2706,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2050,6 +2722,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2066,6 +2739,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2079,6 +2753,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2099,6 +2774,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2112,6 +2788,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2128,6 +2805,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2141,6 +2819,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2157,6 +2836,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2170,6 +2850,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2186,6 +2867,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2199,6 +2881,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2215,6 +2898,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2228,6 +2912,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2244,6 +2929,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2257,6 +2943,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2277,6 +2964,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2290,6 +2978,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2306,6 +2995,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2319,6 +3009,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2335,6 +3026,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2348,6 +3040,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2364,6 +3057,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2377,6 +3071,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2393,6 +3088,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2406,6 +3102,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2422,6 +3119,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2435,6 +3133,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2455,6 +3154,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2468,6 +3168,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2484,6 +3185,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2497,6 +3199,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2513,6 +3216,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2526,6 +3230,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2542,6 +3247,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2555,6 +3261,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2571,6 +3278,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2584,6 +3292,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2600,6 +3309,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2613,6 +3323,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2650,6 +3361,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2663,6 +3375,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2679,6 +3392,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2692,6 +3406,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2708,6 +3423,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2722,6 +3438,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2738,6 +3455,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2752,6 +3470,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2768,6 +3487,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2783,6 +3503,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2799,6 +3520,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2812,6 +3534,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2832,6 +3555,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2847,6 +3571,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2863,6 +3588,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2878,6 +3604,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2894,6 +3621,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2909,6 +3637,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2925,6 +3654,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2940,6 +3670,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2956,6 +3687,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -2971,6 +3703,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -2987,6 +3720,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3000,6 +3734,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3020,6 +3755,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3033,6 +3769,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3049,6 +3786,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3062,6 +3800,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3078,6 +3817,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3091,6 +3831,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3107,6 +3848,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3120,6 +3862,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3136,6 +3879,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3149,6 +3893,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3165,6 +3910,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3178,6 +3924,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3198,6 +3945,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3211,6 +3959,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3227,6 +3976,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3240,6 +3990,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3256,6 +4007,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3269,6 +4021,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3285,6 +4038,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3298,6 +4052,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3314,6 +4069,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3327,6 +4083,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3343,6 +4100,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3356,6 +4114,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3376,6 +4135,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3389,6 +4149,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3405,6 +4166,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3418,6 +4180,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3434,6 +4197,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3447,6 +4211,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3463,6 +4228,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3476,6 +4242,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3492,6 +4259,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3505,6 +4273,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3521,6 +4290,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -3534,6 +4304,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -3616,6 +4387,7 @@ public class CheckManager : MonoBehaviour
 								{
 									adjacentCheck = false;
 									runwayCheck = false;
+									break;
 								}
 							}
 							else
@@ -3630,6 +4402,7 @@ public class CheckManager : MonoBehaviour
 								{
 									adjacentCheck = false;
 									runwayCheck = false;
+									break;
 								}
 							}
 						}
@@ -3651,6 +4424,7 @@ public class CheckManager : MonoBehaviour
 									else
 									{
 										adjacentCheck = false;
+										break;
 									}
 								}
 								else if (difference > 0)
@@ -3663,6 +4437,7 @@ public class CheckManager : MonoBehaviour
 									else
 									{
 										adjacentCheck = false;
+										break;
 									}
 								}
 							}
@@ -3680,6 +4455,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -3692,6 +4468,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -3707,6 +4484,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -3719,6 +4497,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -3737,6 +4516,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -3749,6 +4529,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -3765,6 +4546,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -3778,6 +4560,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -3797,6 +4580,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -3809,6 +4593,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -3826,6 +4611,7 @@ public class CheckManager : MonoBehaviour
 									else
 									{
 										adjacentCheck = false;
+										break;
 									}
 								}
 								else if (difference > 0)
@@ -3839,6 +4625,7 @@ public class CheckManager : MonoBehaviour
 									else
 									{
 										adjacentCheck = false;
+										break;
 									}
 								}
 							}
@@ -3864,6 +4651,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -3877,6 +4665,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -3893,6 +4682,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -3906,6 +4696,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -3925,6 +4716,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -3938,6 +4730,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -3954,6 +4747,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -3967,6 +4761,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -3986,6 +4781,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -4000,6 +4796,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -4018,6 +4815,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -4031,6 +4829,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -4051,6 +4850,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -4064,6 +4864,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -4099,6 +4900,7 @@ public class CheckManager : MonoBehaviour
 								{
 									adjacentCheck = false;
 									runwayCheck = false;
+									break;
 								}
 							}
 							else if (difference > 0)
@@ -4113,6 +4915,7 @@ public class CheckManager : MonoBehaviour
 								{
 									adjacentCheck = false;
 									runwayCheck = false;
+									break;
 								}
 							}
 						}
@@ -4134,6 +4937,7 @@ public class CheckManager : MonoBehaviour
 									else
 									{
 										adjacentCheck = false;
+										break;
 									}
 								}
 								else if (difference > 0)
@@ -4146,6 +4950,7 @@ public class CheckManager : MonoBehaviour
 									else
 									{
 										adjacentCheck = false;
+										break;
 									}
 								}
 							}
@@ -4163,6 +4968,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -4175,6 +4981,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -4190,6 +4997,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -4202,6 +5010,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -4220,6 +5029,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -4232,6 +5042,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -4248,6 +5059,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -4261,6 +5073,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -4279,6 +5092,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -4291,6 +5105,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -4308,6 +5123,7 @@ public class CheckManager : MonoBehaviour
 									else
 									{
 										adjacentCheck = false;
+										break;
 									}
 								}
 								else if (difference > 0)
@@ -4321,6 +5137,7 @@ public class CheckManager : MonoBehaviour
 									else
 									{
 										adjacentCheck = false;
+										break;
 									}
 								}
 							}
@@ -4346,6 +5163,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -4359,6 +5177,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -4375,6 +5194,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -4388,6 +5208,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -4407,6 +5228,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -4420,6 +5242,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -4436,6 +5259,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -4449,6 +5273,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -4468,6 +5293,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -4482,6 +5308,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}
@@ -4500,6 +5327,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 										else if (difference > 0)
@@ -4513,6 +5341,7 @@ public class CheckManager : MonoBehaviour
 											else
 											{
 												adjacentCheck = false;
+												break;
 											}
 										}
 									}
@@ -4533,6 +5362,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 									else if (difference > 0)
@@ -4546,6 +5376,7 @@ public class CheckManager : MonoBehaviour
 										else
 										{
 											adjacentCheck = false;
+											break;
 										}
 									}
 								}

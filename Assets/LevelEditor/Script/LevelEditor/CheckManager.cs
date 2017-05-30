@@ -20,8 +20,17 @@ public class CheckManager : MonoBehaviour
 	//bool runwayCheck = false;
 	//bool rangeCheck = false;
 
-	string[] selectedObject = new string[] { "Taxi_Line" };
-	string[] hitObject = new string[] { "Runway_BlastPad" };
+	string[] selectedObject = new string[] { "Runway_BlastPad", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_TouchDownZone", "Runway_AimingPoint", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower" };
+	string[] hitObject = new string[] { "Runway_DisplacedThreshold", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_TouchDownZone", "Runway_AimingPoint", "Radio_Tower", "Terminal_Corner1", "Terminal_Corner2", "Terminal_End", "Terminal_Middle", "Terminal_MiddleEnd" };
+
+	string[] selectedObjectTag = new string[] { "runway", "runway", "runwayNumber", "runwayNumber", "runwayNumber" };
+	string[] hitObjectTag = new string[] { "roadway", "apron", "roadway", "apron", "runwayNumber" };
+
+	string[] selectedRunway = new string[] { "Runway_BlastPad", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_Threshold", "Runway_Line", "Runway_Line", "Runway_AimingPoint" };
+	string[] hitRunway = new string[] { "Runway_BlastPad", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_BlastPad", "Runway_TouchDownZone", "Runway_Line", "Runway_Line" };
+
+	string[] selectedNumber = new string[] { "Runway_9", "Runway_9C", "Runway_9L", "Runway_9R", "Runway_18", "Runway_18C", "Runway_18L", "Runway_18R" };
+	string[] hitNumber = new string[] { "Runway_27", "Runway_27C", "Runway_27R", "Runway_27L", "Runway_36", "Runway_36C", "Runway_36R", "Runway_36L" };
 
 	private static CheckManager instance = null;
 
@@ -50,64 +59,64 @@ public class CheckManager : MonoBehaviour
 	{
 	}
 
-
-
-
-	/*void CheckRunway() //check the runway lane for correct order. This is super long because of all the double checking and in opposite order.
+	bool CheckRunway() //check the runway lane for correct order. This is super long because of all the double checking and in opposite order.
 	{
+		bool runwayCheck = true;
 		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ + 0.5f); //Extra 0.5f for correction of 0.5 in Rot and Collider
 		RaycastHit hit;
-		if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
-			|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast left and back
+		if (Physics.Raycast(lastPos, -transform.right, out hit, 1, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
+			|| Physics.Raycast(lastPos, -transform.forward, out hit, 1, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast left and back
 		{
-			if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
-			{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
-			//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
+			for (int i = 0; i < selectedRunway.Length; i++)
 			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
-			{ //selected object is RunwayNumber and raycast hits ThresholdMarker
-				CheckRunwayNumber();
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
-			{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchDownZone")
-			{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
-				runwayCheck = true;
-			}
-			else
-			{
-				runwayCheck = false;
-				if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
-					|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast right and forward
+				if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
 				{
-					if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
-					{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
-					//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
+					RaycastHit hitTwo;
+					if (Physics.Raycast(lastPos, -transform.right, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
+						|| Physics.Raycast(lastPos, -transform.forward, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
 					{
-						runwayCheck = true;
+						for (int j = 0; j < selectedRunway.Length; j++)
+						{
+							if ((lvlm.selectedObj.LObject.name == selectedNumber[j] && hitTwo.collider.gameObject.name == hitNumber[j])
+								|| (lvlm.selectedObj.LObject.name == hitNumber[j] && hitTwo.collider.gameObject.name == selectedNumber[j]))
+							{
+								runwayCheck = true;
+								break;
+							}
+							else
+							{
+								runwayCheck = false;
+							}
+						}
 					}
-					else if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
-					{ //selected object is RunwayNumber and raycast hits ThresholdMarker
-						CheckRunwayNumber();
+					else if (Physics.Raycast(lastPos, transform.right, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
+						|| Physics.Raycast(lastPos, transform.forward, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
+					{
+						for (int j = 0; j < selectedRunway.Length; j++)
+						{
+							if ((lvlm.selectedObj.LObject.name == selectedNumber[j] && hitTwo.collider.gameObject.name == hitNumber[j])
+								|| (lvlm.selectedObj.LObject.name == hitNumber[j] && hitTwo.collider.gameObject.name == selectedNumber[j]))
+							{
+								runwayCheck = true;
+								break;
+							}
+							else
+							{
+								runwayCheck = false;
+							}
+						}
 					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
-					{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchDownZone")
-					{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
-						runwayCheck = true;
-					}
+				}
+				else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
+				{
+					runwayCheck = true;
+					break;
+				}
+				else if ((lvlm.selectedObj.LObject.name == selectedRunway[i] && hit.collider.gameObject.name == hitRunway[i])
+					|| (lvlm.selectedObj.LObject.name == hitRunway[i] && hit.collider.gameObject.name == selectedRunway[i]))
+				{
+					runwayCheck = true;
+					break;
 				}
 				else
 				{
@@ -115,390 +124,81 @@ public class CheckManager : MonoBehaviour
 				}
 			}
 		}
-		else if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
-				|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast right and forward
+		else if (Physics.Raycast(lastPos, transform.right, out hit, 1, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
+				|| Physics.Raycast(lastPos, transform.forward, out hit, 1, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast right and forward
 		{
-			if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
-			{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
-			//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
+			for (int i = 0; i < selectedRunway.Length; i++)
 			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
-			{ //selected object is RunwayNumber and raycast hits ThresholdMarker
-				CheckRunwayNumber();
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
-			{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchDownZone")
-			{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
-				runwayCheck = true;
-			}
-			else
-			{
-				runwayCheck = false;
-				if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
-					|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast left and back
+				if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
 				{
-					if (lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold2" && hit.collider.gameObject.name == "Runway_DisplacedThreshold")
-					{//selected object is DisplacedThreshold2 and raycast hits DisplacedThreshold
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_Threshold" && (hit.collider.gameObject.name == "Runway_BlastPad" || hit.collider.gameObject.name == "Runway_DisplacedThreshold2"))
-					//selected object is ThresholdMarker and raycast hits BlastPad/DisplacedThreshold 
+					RaycastHit hitTwo;
+					if (Physics.Raycast(lastPos, -transform.right, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
+						|| Physics.Raycast(lastPos, -transform.forward, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
 					{
-						runwayCheck = true;
+						for (int j = 0; j < selectedRunway.Length; j++)
+						{
+							if ((lvlm.selectedObj.LObject.name == selectedNumber[j] && hitTwo.collider.gameObject.name == hitNumber[j])
+								|| (lvlm.selectedObj.LObject.name == hitNumber[j] && hitTwo.collider.gameObject.name == selectedNumber[j]))
+							{
+								runwayCheck = true;
+								break;
+							}
+							else
+							{
+								runwayCheck = false;
+							}
+						}
 					}
-					else if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
-					{ //selected object is RunwayNumber and raycast hits ThresholdMarker
-						CheckRunwayNumber();
+					else if (Physics.Raycast(lastPos, transform.right, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
+						|| Physics.Raycast(lastPos, transform.forward, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
+					{
+						for (int j = 0; j < selectedRunway.Length; j++)
+						{
+							if ((lvlm.selectedObj.LObject.name == selectedNumber[j] && hitTwo.collider.gameObject.name == hitNumber[j])
+								|| (lvlm.selectedObj.LObject.name == hitNumber[j] && hitTwo.collider.gameObject.name == selectedNumber[j]))
+							{
+								runwayCheck = true;
+								break;
+							}
+							else
+							{
+								runwayCheck = false;
+							}
+						}
 					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
-					{ //selected object is TouchdownZoneMarker and raycast hits RunwayNumber
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_AimingPoint" && hit.collider.gameObject.name == "Runway_TouchDownZone")
-					{ //selected object is AimingPointMarker and raycast hits TouchdownZoneMarker
-						runwayCheck = true;
-					}
+				}
+				else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
+				{
+					runwayCheck = true;
+					break;
+				}
+				else if ((lvlm.selectedObj.LObject.name == selectedRunway[i] && hit.collider.gameObject.name == hitRunway[i])
+					|| (lvlm.selectedObj.LObject.name == hitRunway[i] && hit.collider.gameObject.name == selectedRunway[i]))
+				{
+					runwayCheck = true;
+					break;
 				}
 				else
 				{
 					runwayCheck = false;
 				}
 			}
+		}
+		else if (lvlm.selectedObj.LObject.name == "Runway_BlastPad" || lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold")
+		{
+			runwayCheck = true;
 		}
 		else
 		{
 			runwayCheck = false;
 		}
+		return runwayCheck;
 	}
-
-	void CheckRunwayNumber()
-	{
-		print("checkrunwaynumber");
-		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ + 0.5f); //Extra 0.5f for correction of 0.5 in Rot and Collider
-
-		RaycastHit hit;
-		if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
-			|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
-		{
-			if (lvlm.selectedObj.LObject.name == "Runway_9" && hit.collider.gameObject.name == "Runway_27")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_9C" && hit.collider.gameObject.name == "Runway_27C")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_9L" && hit.collider.gameObject.name == "Runway_27R")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_9R" && hit.collider.gameObject.name == "Runway_27L")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_18" && hit.collider.gameObject.name == "Runway_36")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_18C" && hit.collider.gameObject.name == "Runway_36C")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_18L" && hit.collider.gameObject.name == "Runway_36R")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_18R" && hit.collider.gameObject.name == "Runway_36L")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_27C" && hit.collider.gameObject.name == "Runway_9C")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_27L" && hit.collider.gameObject.name == "Runway_9R")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_27R" && hit.collider.gameObject.name == "Runway_9L")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_36" && hit.collider.gameObject.name == "Runway_18")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_36C" && hit.collider.gameObject.name == "Runway_18C")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_36L" && hit.collider.gameObject.name == "Runway_18R")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_36R" && hit.collider.gameObject.name == "Runway_18L")
-			{
-				runwayCheck = true;
-			}
-			else
-			{
-				runwayCheck = false;
-				if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
-			|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
-				{
-					if (lvlm.selectedObj.LObject.name == "Runway_9" && hit.collider.gameObject.name == "Runway_27")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_9C" && hit.collider.gameObject.name == "Runway_27C")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_9L" && hit.collider.gameObject.name == "Runway_27R")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_9R" && hit.collider.gameObject.name == "Runway_27L")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_18" && hit.collider.gameObject.name == "Runway_36")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_18C" && hit.collider.gameObject.name == "Runway_36C")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_18L" && hit.collider.gameObject.name == "Runway_36R")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_18R" && hit.collider.gameObject.name == "Runway_36L")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_27C" && hit.collider.gameObject.name == "Runway_9C")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_27L" && hit.collider.gameObject.name == "Runway_9R")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_27R" && hit.collider.gameObject.name == "Runway_9L")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_36" && hit.collider.gameObject.name == "Runway_18")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_36C" && hit.collider.gameObject.name == "Runway_18C")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_36L" && hit.collider.gameObject.name == "Runway_18R")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_36R" && hit.collider.gameObject.name == "Runway_18L")
-					{
-						runwayCheck = true;
-					}
-				}
-				else
-				{
-					runwayCheck = false;
-				}
-			}
-		}
-		else if (Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
-			|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
-		{
-			if (lvlm.selectedObj.LObject.name == "Runway_9" && hit.collider.gameObject.name == "Runway_27")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_9C" && hit.collider.gameObject.name == "Runway_27C")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_9L" && hit.collider.gameObject.name == "Runway_27R")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_9R" && hit.collider.gameObject.name == "Runway_27L")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_18" && hit.collider.gameObject.name == "Runway_36")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_18C" && hit.collider.gameObject.name == "Runway_36C")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_18L" && hit.collider.gameObject.name == "Runway_36R")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_18R" && hit.collider.gameObject.name == "Runway_36L")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_27C" && hit.collider.gameObject.name == "Runway_9C")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_27L" && hit.collider.gameObject.name == "Runway_9R")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_27R" && hit.collider.gameObject.name == "Runway_9L")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_36" && hit.collider.gameObject.name == "Runway_18")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_36C" && hit.collider.gameObject.name == "Runway_18C")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_36L" && hit.collider.gameObject.name == "Runway_18R")
-			{
-				runwayCheck = true;
-			}
-			else if (lvlm.selectedObj.LObject.name == "Runway_36R" && hit.collider.gameObject.name == "Runway_18L")
-			{
-				runwayCheck = true;
-			}
-			else
-			{
-				runwayCheck = false;
-				if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
-			|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
-				{
-					if (lvlm.selectedObj.LObject.name == "Runway_9" && hit.collider.gameObject.name == "Runway_27")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_9C" && hit.collider.gameObject.name == "Runway_27C")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_9L" && hit.collider.gameObject.name == "Runway_27R")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_9R" && hit.collider.gameObject.name == "Runway_27L")
-					{
-						runwayCheck = true; ;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_18" && hit.collider.gameObject.name == "Runway_36")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_18C" && hit.collider.gameObject.name == "Runway_36C")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_18L" && hit.collider.gameObject.name == "Runway_36R")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_18R" && hit.collider.gameObject.name == "Runway_36L")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_27" && hit.collider.gameObject.name == "Runway_9")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_27C" && hit.collider.gameObject.name == "Runway_9C")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_27L" && hit.collider.gameObject.name == "Runway_9R")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_27R" && hit.collider.gameObject.name == "Runway_9L")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_36" && hit.collider.gameObject.name == "Runway_18")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_36C" && hit.collider.gameObject.name == "Runway_18C")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_36L" && hit.collider.gameObject.name == "Runway_18R")
-					{
-						runwayCheck = true;
-					}
-					else if (lvlm.selectedObj.LObject.name == "Runway_36R" && hit.collider.gameObject.name == "Runway_18L")
-					{
-						runwayCheck = true;
-					}
-				}
-				else
-				{
-					runwayCheck = false;
-				}
-			}
-		}
-		else
-		{
-			runwayCheck = true;
-		}
-	}*/
 
 	bool CheckAdjacent() //check the adjacent objects when trying to place a specified object 
 	{
 		bool adjacentCheck = true;
-		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ);
+		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ + 0.5f);
 		if (gm.currentNode.nObjects.Count > 0)
 		{
 			foreach (LevelObject go in gm.currentNode.nObjects)
@@ -509,24 +209,37 @@ public class CheckManager : MonoBehaviour
 		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid
 		foreach (Collider collided in hitColliders)
 		{
-			if (collided.gameObject.name != "GridCollider" && collided.gameObject.name != "Object" && collided.gameObject.transform.position != lastPos)
+			if (collided.gameObject.name != "GridCollider")
 			{
-				print(collided.gameObject.name);
-				for (int i = 0; i < selectedObject.Length; i++)
+				if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z-0.5f))
 				{
-					if (lvlm.selectedObj.LObject.name == selectedObject[i] && collided.gameObject.name == hitObject[i])
+					print(collided.gameObject.name + collided.gameObject.transform.position);
+					for (int i = 0; i < selectedObjectTag.Length; i++)
 					{
-						print("false");
-						adjacentCheck = false;
-						break;
-					}
-					else
-					{
-						print("true");
-						adjacentCheck = true;
+						if ((lvlm.selectedObj.LObject.tag == selectedObjectTag[i] && collided.gameObject.tag == hitObjectTag[i])
+							|| (lvlm.selectedObj.LObject.tag == hitObjectTag[i] && collided.gameObject.tag == selectedObjectTag[i]))
+						{
+							adjacentCheck = false;
+							break;
+						}
+						else
+						{
+							for (int j = 0; j < selectedObject.Length; j++)
+							{
+								if ((lvlm.selectedObj.LObject.name == selectedObject[j] && collided.gameObject.name == hitObject[j])
+									|| (lvlm.selectedObj.LObject.name == hitObject[j] && collided.gameObject.name == selectedObject[j]))
+								{
+									adjacentCheck = false;
+									break;
+								}
+								else
+								{
+									adjacentCheck = true;
+								}
+							}
+						}
 					}
 				}
-
 			}
 		}
 		return adjacentCheck;
@@ -535,9 +248,9 @@ public class CheckManager : MonoBehaviour
 
 
 
-	
-	/*public void PlaceObjectClone() //place object more than once
+	public void PlaceObjectClone() //place object more than once
 	{
+		bool adjacentResult = true;
 		if (gm.currentNode.nObjects.Count > 0) //if there is at least an object on the grid
 		{
 			if (gm.currentNode.nObjects.Last().LObjectType != 1 && gm.currentNode.nObjects.Last().LObjectType != 4) //if the bottom object allows stacking
@@ -551,12 +264,20 @@ public class CheckManager : MonoBehaviour
 					}
 					else
 					{
-						CheckAdjacent();
+						adjacentResult = CheckAdjacent();
+						if (adjacentResult == false)
+						{
+							lvlm.CancelSelect();
+						}
+						else
+						{
+							lvlm.CloneSucceed();
+						}
 					}
 				}
 				else if (lvlm.selectedObj.LObjectType == 2) //selected object is stackable
 				{
-					lvlm.PlaceSucceed();
+					lvlm.CloneSucceed();
 				}
 				else if (lvlm.selectedObj.LObjectType == 3 || lvlm.selectedObj.LObjectType == 4) //selected object is base-only or base-only-no-stack
 				{
@@ -574,10 +295,31 @@ public class CheckManager : MonoBehaviour
 			}
 			else //if object type 3 or 4 is selected
 			{
-				CheckAdjacent();
+				adjacentResult = CheckAdjacent();
+				if (adjacentResult == false)
+				{
+					lvlm.CancelSelect();
+				}
+				else if (adjacentResult == true && (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber"))
+				{
+					bool runwayResult = true;
+					runwayResult = CheckRunway();
+					if (runwayResult == false)
+					{
+						lvlm.CancelSelect();
+					}
+					else
+					{
+						lvlm.PlaceSucceed();
+					}
+				}
+				else
+				{
+					lvlm.CloneSucceed();
+				}
 			}
 		}
-	}*/
+	}
 
 
 	public void PlaceObjectSingle() //place ONE object and no clone
@@ -603,6 +345,7 @@ public class CheckManager : MonoBehaviour
 						}
 						else
 						{
+							print("welp");
 							lvlm.PlaceSucceed();
 						}
 					}
@@ -616,6 +359,11 @@ public class CheckManager : MonoBehaviour
 					print("This can only be used at ground level");
 					lvlm.CancelSelect();
 				}
+			}
+			else
+			{
+				print("You cannot place anything on this tile.");
+				lvlm.CancelSelect();
 			}
 		}
 		else //if there is no object on the grid
@@ -632,12 +380,25 @@ public class CheckManager : MonoBehaviour
 				{
 					lvlm.CancelSelect();
 				}
+				else if (adjacentResult == true && (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber"))
+				{
+					bool runwayResult = true;
+					runwayResult = CheckRunway();
+					if (runwayResult == false)
+					{
+						lvlm.CancelSelect();
+					}
+					else
+					{
+						lvlm.PlaceSucceed();
+					}
+				}
 				else
 				{
+					
 					lvlm.PlaceSucceed();
 				}
 			}
 		}
 	}
-
 }

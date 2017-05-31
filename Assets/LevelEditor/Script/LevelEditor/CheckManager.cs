@@ -20,8 +20,8 @@ public class CheckManager : MonoBehaviour
 	//bool runwayCheck = false;
 	//bool rangeCheck = false;
 
-	string[] selectedObject = new string[] { "Runway_BlastPad", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_TouchDownZone", "Runway_AimingPoint", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower" };
-	string[] hitObject = new string[] { "Runway_DisplacedThreshold", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_TouchDownZone", "Runway_AimingPoint", "Radio_Tower", "Terminal_Corner1", "Terminal_Corner2", "Terminal_End", "Terminal_Middle", "Terminal_MiddleEnd" };
+	string[] selectedObject = new string[] { "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_TouchDownZone", "Runway_AimingPoint", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower" };
+	string[] hitObject = new string[] {"Taxi_Cross", "Taxi_Curve", "Taxi_Diagonal", "Taxi_Diagonal2", "Taxi_Diagonalflip", "Taxi_Line", "Taxi_Merge", "Taxi_MergeLine", "Taxi_RunwayBorder","Taxi_RunwayBorderDia" ,"Taxi_StraightDia", "Taxi_StraightDiaFlip", "Taxi_Tline", "Taxi_X", "Taxi_XFlip", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_TouchDownZone", "Runway_AimingPoint", "Radio_Tower", "Terminal_Corner1", "Terminal_Corner2", "Terminal_End", "Terminal_Middle", "Terminal_MiddleEnd" };
 
 	string[] selectedObjectTag = new string[] { "runway", "runway", "runwayNumber", "runwayNumber", "runwayNumber" };
 	string[] hitObjectTag = new string[] { "roadway", "apron", "roadway", "apron", "runwayNumber" };
@@ -209,11 +209,11 @@ public class CheckManager : MonoBehaviour
 		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid
 		foreach (Collider collided in hitColliders)
 		{
+			print(collided.gameObject.name);
 			if (collided.gameObject.name != "GridCollider")
 			{
 				if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z-0.5f))
 				{
-					print(collided.gameObject.name + collided.gameObject.transform.position);
 					for (int i = 0; i < selectedObjectTag.Length; i++)
 					{
 						if ((lvlm.selectedObj.LObject.tag == selectedObjectTag[i] && collided.gameObject.tag == hitObjectTag[i])
@@ -239,6 +239,7 @@ public class CheckManager : MonoBehaviour
 							}
 						}
 					}
+					break;
 				}
 			}
 		}
@@ -341,11 +342,12 @@ public class CheckManager : MonoBehaviour
 						adjacentResult = CheckAdjacent();
 						if (adjacentResult == false)
 						{
+							print("yata");
 							lvlm.CancelSelect();
 						}
 						else
 						{
-							print("welp");
+							print("madamada");
 							lvlm.PlaceSucceed();
 						}
 					}
@@ -387,6 +389,7 @@ public class CheckManager : MonoBehaviour
 					if (runwayResult == false)
 					{
 						lvlm.CancelSelect();
+						print("yata2");
 					}
 					else
 					{

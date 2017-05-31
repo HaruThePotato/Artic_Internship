@@ -20,8 +20,10 @@ public class CheckManager : MonoBehaviour
 	//bool runwayCheck = false;
 	//bool rangeCheck = false;
 
-	string[] selectedObject = new string[] { "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_TouchDownZone", "Runway_AimingPoint", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower" };
-	string[] hitObject = new string[] {"Taxi_Cross", "Taxi_Curve", "Taxi_Diagonal", "Taxi_Diagonal2", "Taxi_Diagonalflip", "Taxi_Line", "Taxi_Merge", "Taxi_MergeLine", "Taxi_RunwayBorder","Taxi_RunwayBorderDia" ,"Taxi_StraightDia", "Taxi_StraightDiaFlip", "Taxi_Tline", "Taxi_X", "Taxi_XFlip", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_TouchDownZone", "Runway_AimingPoint", "Radio_Tower", "Terminal_Corner1", "Terminal_Corner2", "Terminal_End", "Terminal_Middle", "Terminal_MiddleEnd" };
+	GameObject[] vehicle;
+
+	string[] selectedObject = new string[] { "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_TouchDownZone", "Runway_AimingPoint", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Terminal_Middle" };
+	string[] hitObject = new string[] { "Taxi_Cross", "Taxi_Curve", "Taxi_Diagonal", "Taxi_Diagonal2", "Taxi_Diagonalflip", "Taxi_Line", "Taxi_Merge", "Taxi_MergeLine", "Taxi_StraightDia", "Taxi_StraightDiaFlip", "Taxi_Tline", "Taxi_X", "Taxi_XFlip", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_TouchDownZone", "Runway_AimingPoint", "Radio_Tower", "Terminal_Corner1", "Terminal_Corner2", "Terminal_End", "Terminal_Middle", "Terminal_MiddleEnd", "Apron_GateBridgeLight", "Apron_GateBridgeLight" };
 
 	string[] selectedObjectTag = new string[] { "runway", "runway", "runwayNumber", "runwayNumber", "runwayNumber" };
 	string[] hitObjectTag = new string[] { "roadway", "apron", "roadway", "apron", "runwayNumber" };
@@ -31,6 +33,9 @@ public class CheckManager : MonoBehaviour
 
 	string[] selectedNumber = new string[] { "Runway_9", "Runway_9C", "Runway_9L", "Runway_9R", "Runway_18", "Runway_18C", "Runway_18L", "Runway_18R" };
 	string[] hitNumber = new string[] { "Runway_27", "Runway_27C", "Runway_27R", "Runway_27L", "Runway_36", "Runway_36C", "Runway_36R", "Runway_36L" };
+
+	string[] TObjectOne = new string[] { "Hangar_Front", "Hangar_Roof",  "Runway_BlastPad", "Runway_BlastPad" };
+	string[] TObjectTwo = new string[] { "Hangar_Side", "Hangar_Corner",  "Taxi_RunwayBorder", "Taxi_RunwayBorderDia" };
 
 	private static CheckManager instance = null;
 
@@ -203,16 +208,15 @@ public class CheckManager : MonoBehaviour
 		{
 			foreach (LevelObject go in gm.currentNode.nObjects)
 			{
-				lastPos.y += go.LObject.transform.GetComponentInChildren<MeshRenderer>().bounds.size.y;
+				lastPos.y += 0.9f;
 			}
 		}
 		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid
 		foreach (Collider collided in hitColliders)
 		{
-			print(collided.gameObject.name);
-			if (collided.gameObject.name != "GridCollider")
+			if (collided.gameObject.transform.position.y == lastPos.y)
 			{
-				if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z-0.5f))
+				if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f))
 				{
 					for (int i = 0; i < selectedObjectTag.Length; i++)
 					{
@@ -223,7 +227,7 @@ public class CheckManager : MonoBehaviour
 							break;
 						}
 						else
-						{
+						{					
 							for (int j = 0; j < selectedObject.Length; j++)
 							{
 								if ((lvlm.selectedObj.LObject.name == selectedObject[j] && collided.gameObject.name == hitObject[j])
@@ -234,12 +238,27 @@ public class CheckManager : MonoBehaviour
 								}
 								else
 								{
-									adjacentCheck = true;
+									if (collided.gameObject.transform.position.x == lastPos.x || collided.gameObject.transform.position.z == lastPos.z-0.5f)
+									{
+										print(collided.gameObject.name + collided.gameObject.transform.position);
+										for (int m = 0; m < TObjectOne.Length; m++)
+										{
+											if ((lvlm.selectedObj.LObject.name == TObjectOne[m] && collided.gameObject.name == TObjectTwo[m])
+												|| (lvlm.selectedObj.LObject.name == TObjectTwo[m] && collided.gameObject.name == TObjectOne[m]))
+											{
+												adjacentCheck = false;
+												break; 
+											}
+											else
+											{
+												adjacentCheck = true;
+											}
+										}
+									}
 								}
 							}
 						}
 					}
-					break;
 				}
 			}
 		}
@@ -263,6 +282,26 @@ public class CheckManager : MonoBehaviour
 						print("This can only be placed on an Apron tile.");
 						lvlm.CancelSelect();
 					}
+					else if (lvlm.selectedObj.LObject.tag == "vehicle")
+					{
+						vehicle = GameObject.FindGameObjectsWithTag("vehicle");
+						if (GameObject.FindGameObjectsWithTag("vehicle").Length > 1)
+						{
+							lvlm.CancelSelect();
+						}
+						else
+						{
+							adjacentResult = CheckAdjacent();
+							if (adjacentResult == false)
+							{
+								lvlm.CancelSelect();
+							}
+							else
+							{
+								lvlm.CloneSucceed();
+							}
+						}
+					}
 					else
 					{
 						adjacentResult = CheckAdjacent();
@@ -285,6 +324,11 @@ public class CheckManager : MonoBehaviour
 					print("This can only be used at ground level");
 					lvlm.CancelSelect();
 				}
+			}
+			else
+			{
+				print("You cannot place anything on this tile.");
+				lvlm.CancelSelect();
 			}
 		}
 		else //if there is no object on the grid
@@ -311,11 +355,12 @@ public class CheckManager : MonoBehaviour
 					}
 					else
 					{
-						lvlm.PlaceSucceed();
+						lvlm.CloneSucceed();
 					}
 				}
 				else
 				{
+
 					lvlm.CloneSucceed();
 				}
 			}
@@ -337,17 +382,35 @@ public class CheckManager : MonoBehaviour
 						print("This can only be placed on an Apron tile.");
 						lvlm.CancelSelect();
 					}
+					else if (lvlm.selectedObj.LObject.tag == "vehicle")
+					{
+						vehicle = GameObject.FindGameObjectsWithTag("vehicle");
+						if (GameObject.FindGameObjectsWithTag("vehicle").Length > 1)
+						{
+							lvlm.CancelSelect();
+						}
+						else
+						{
+							adjacentResult = CheckAdjacent();
+							if (adjacentResult == false)
+							{
+								lvlm.CancelSelect();
+							}
+							else
+							{
+								lvlm.PlaceSucceed();
+							}
+						}
+					}
 					else
 					{
 						adjacentResult = CheckAdjacent();
 						if (adjacentResult == false)
 						{
-							print("yata");
 							lvlm.CancelSelect();
 						}
 						else
 						{
-							print("madamada");
 							lvlm.PlaceSucceed();
 						}
 					}
@@ -389,7 +452,6 @@ public class CheckManager : MonoBehaviour
 					if (runwayResult == false)
 					{
 						lvlm.CancelSelect();
-						print("yata2");
 					}
 					else
 					{
@@ -398,7 +460,7 @@ public class CheckManager : MonoBehaviour
 				}
 				else
 				{
-					
+
 					lvlm.PlaceSucceed();
 				}
 			}

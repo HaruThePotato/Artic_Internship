@@ -207,16 +207,17 @@ public class LevelManager : MonoBehaviour
 		{
 			if (gm.isHovering && !uim.mouseOverUI && hObject.LObject != null && gm.currentNode.bFree) //cursor on grid not on UI, level object selected, camera not on selected grid 
 			{
-				cm.PlaceObjectClone();
-			}
+                cm.PlaceObjectClone();
+            }
 		}
 		else if (!cloneOrPlace) //if not cloning object
 		{
 			if (gm.isHovering && !uim.mouseOverUI && hObject.LObject != null && gm.currentNode.bFree) //cursor on grid not on UI, level object selected, camera not on selected grid 
 			{
-				cm.PlaceObjectSingle();
-			}
-		}
+                cm.PlaceObjectSingle();
+                //PlaceSucceed();
+            }
+        }
 	}
 
 	void DeleteObject()

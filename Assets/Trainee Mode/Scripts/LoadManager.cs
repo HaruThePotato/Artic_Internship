@@ -11,6 +11,12 @@ using System.Text.RegularExpressions;
 
 public class LoadManager : MonoBehaviour
 {
+    public GameObject[] vehicleCamera;
+
+    Vector3 xyz;
+
+    Shader standardShader;
+
     AWSscript aws;
     XMLManager xmlm;
     GridManager gm;
@@ -37,6 +43,8 @@ public class LoadManager : MonoBehaviour
     public int version;
     public string assetName;
 
+    public GameObject[] stackableObjects;
+    public GameObject[] floorObjects;
 
     private static LoadManager instance = null;
 
@@ -52,6 +60,7 @@ public class LoadManager : MonoBehaviour
 
     void Start()
     {
+        standardShader = Shader.Find("Standard");
         floorPosition = new Dictionary<string, float>();
         aws = AWSscript.GetInstance();
         xmlm = XMLManager.GetInstance();
@@ -150,8 +159,11 @@ public class LoadManager : MonoBehaviour
 
     public void callLoadSelectedLevel()
     {
-        loadingUI.SetActive(true);
-        StartCoroutine(LoadSelectedLevel());
+        if(levelSelected != null)
+        {
+            loadingUI.SetActive(true);
+            StartCoroutine(LoadSelectedLevel());
+        }
     }
 
     public IEnumerator LoadSelectedLevel()
@@ -183,12 +195,32 @@ public class LoadManager : MonoBehaviour
                         }
                         else
                         {
+                            xyz = new Vector3(lNode.objectPositions[i].x,
+                                              lNode.objectPositions[i].y,
+                                              lNode.objectPositions[i].z);
 
-                            //Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
-                            lObj.LObject = Instantiate(bundle.LoadAsset(lNode.objectIDs[i]), lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;                            //lObj.LObject = Instantiate(bundle.LoadAsset(lNode.objectIDs[i]), lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
-                            //lObj.LObject = Instantiate(objm.GetLevelObject(lNode.objectIDs[i]).LObject, lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
+                            lObj.LObject = Instantiate(bundle.LoadAsset(lNode.objectIDs[i]), /*lNode.objectPositions[i]*/xyz, Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;                            //lObj.LObject = Instantiate(bundle.LoadAsset(lNode.objectIDs[i]), lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
                             lObj.LObject.transform.GetChild(0).transform.eulerAngles = lNode.objectRotations[i];
                             lObj.LObject.transform.localScale = levelData.objectScale;
+
+                            //bool foundSame = false;
+                            for (int r = 0; r < floorObjects.Length; r++)
+                            {
+                                if(floorObjects[r].name == lNode.objectIDs[i])
+                                {
+                                    //foundSame = true;
+                                    lObj.LObject.transform.GetChild(0).GetChild(0).localScale = new Vector3(0.01112f,
+                                                                                                            0.01f,
+                                                                                                            0.01112f);
+                                    Debug.Log("WENT IN");
+                                }
+                            }
+
+                            //if(!foundSame)
+                            //{
+                            //    Debug.Log("DIDN'T WENT IN");
+                            //}
+
                             lObj.LObject.name = lNode.objectIDs[i];
 
                             if (firstRun)
@@ -198,7 +230,6 @@ public class LoadManager : MonoBehaviour
                                 floorPosition["More Z"] = 0;
                                 floorPosition["Lesser X"] = lObj.LObject.transform.position.x;
                                 floorPosition["Lesser Z"] = lObj.LObject.transform.position.z;
-
                             }
 
                             if (lObj.LObject.transform.position.x < floorPosition["Lesser X"]) // lesser of x
@@ -217,16 +248,6 @@ public class LoadManager : MonoBehaviour
                             {
                                 floorPosition["More Z"] = (lObj.LObject.transform.position.z);
                             }
-                            //if (lObj.LObject.name == "RW_RunwayNumber")
-                            //{
-                            //    for (int j = 0; j < lNode.objectIDs.Count; j++)
-                            //    {
-                            //        if (lNode.numberStrings != null) //if there is/are runway number(s) being inputted previously before saving. THIS ALLOWS THE LEVEL TO LOAD EVEN IF THERE IS NO NUMBER.
-                            //        {
-                            //            lObj.LObject.transform.Find("UICanvas").transform.Find("lane_text").gameObject.GetComponent<Text>().text = lNode.numberStrings[j];
-                            //        }
-                            //    }
-                            //}
                             lObj.LObjectType = lNode.objectTypes[i];
                         }
                     }
@@ -234,32 +255,38 @@ public class LoadManager : MonoBehaviour
                 // Unload the AssetBundles compressed contents to conserve memory
                 bundle.Unload(false);
                 CancelLoadScreen();
-                Debug.Log(floorPosition["Lesser X"]);
-                Debug.Log(floorPosition["More X"]);
-                Debug.Log(floorPosition["Lesser Z"]);
-                Debug.Log(floorPosition["More Z"]);
+                //Debug.Log(floorPosition["Lesser X"]);
+                //Debug.Log(floorPosition["More X"]);
+                //Debug.Log(floorPosition["Lesser Z"]);
+                //Debug.Log(floorPosition["More Z"]);
             } // memory is freed from the web stream (www.Dispose() gets called implicitly)
         }
         createFloor();
+        changeShader();
+        findCamera();
+    }
+
+    void findCamera()
+    {
+        //VehicleManager.GetInstance().cameraViewA = GameObject.Find("/Pushback_Vehicle/Rot/Pushback/CameraA");
+        //VehicleManager.GetInstance().cameraViewB = GameObject.Find("/Pushback_Vehicle/Rot/Pushback/CameraB");
+        //VehicleManager.GetInstance().cameraViewA = GameObject.FindWithTag("cameraA");
+        //VehicleManager.GetInstance().cameraViewB = GameObject.FindWithTag("cameraB");
+            vehicleCamera = GameObject.FindGameObjectsWithTag("vehicleCamera");
     }
 
     public void CleanCache()
     {
         if (Caching.CleanCache())
-        {
             Debug.Log("Successfully cleaned the cache.");
-        }
         else
-        {
             Debug.Log("Cache is being used.");
-        }
     }
 
     public void CancelLoadScreen()
     {
         StartCoroutine(FadeCanvas(UILoadLevel, false));
         UILoadLevel.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        //cc.cAllowCameraControls = true;
     }
 
     IEnumerator FadeCanvas(Canvas c, bool r)
@@ -293,57 +320,20 @@ public class LoadManager : MonoBehaviour
         CenterOfFloor.Add("XCenter", floorPosition["More X"] - (lengthOfFloor["X"] / 2));
         CenterOfFloor.Add("ZCenter", floorPosition["More Z"] - (lengthOfFloor["Z"] / 2));
 
-        Debug.Log(CenterOfFloor["XCenter"] + "XCenter");
-        Debug.Log(CenterOfFloor["ZCenter"] + "ZCenter");
+        //Debug.Log(CenterOfFloor["XCenter"] + "XCenter");
+        //Debug.Log(CenterOfFloor["ZCenter"] + "ZCenter");
 
         floorPrefab.GetComponent<Transform>().position = new Vector3(CenterOfFloor["XCenter"], 0, CenterOfFloor["ZCenter"]);
-        floorPrefab.GetComponent<BoxCollider>().center = new Vector3(0.5f, 0.5f, 1);
-        floorPrefab.GetComponent<BoxCollider>().size = new Vector3(lengthOfFloor["X"], 1, lengthOfFloor["Z"]);
+        floorPrefab.GetComponent<BoxCollider>().center = new Vector3(0.5f, 0.5f, 1f);
+        floorPrefab.GetComponent<BoxCollider>().size = new Vector3(lengthOfFloor["X"], 0.9f, lengthOfFloor["Z"]);
     }
 
-    //public void LoadSelectedLevel()
-    //{
-    //    if (levelSelected != null)
-    //    {
-    //        LevelDatabase levelData = xmlm.LoadLevel(levelSelected);
-
-    //        foreach (LevelNode lNode in levelData.dbList)
-    //        {
-    //            for (int i = 0; i < lNode.objectIDs.Count; i++)
-    //            {
-    //                LevelObject lObj = new LevelObject();
-    //                Debug.Log(objm.GetLevelObject(lNode.objectIDs[i]).LObject);
-    //                lObj.LObject = Instantiate(objm.GetLevelObject(lNode.objectIDs[i]).LObject, lNode.objectPositions[i], Quaternion.identity, transform.FindChild("LevelObjects")) as GameObject;
-    //                lObj.LObject.transform.transform.eulerAngles = lNode.objectRotations[i];
-    //                lObj.LObject.transform.localScale = levelData.objectScale;
-    //                lObj.LObject.name = lNode.objectIDs[i];
-    //                lObj.LObjectType = lNode.objectTypes[i];
-    //            }
-    //        }
-    //    }
-    //}
-
-    //public IEnumerator DownloadAndCache()
-    //{
-    //    // Wait for the Caching system to be ready
-    //    while (!Caching.ready)
-    //        yield return null;
-
-    //    // Load the AssetBundle file from Cache if it exists with the same version or download and store it in the cache
-    //    using (WWW www = WWW.LoadFromCacheOrDownload(BundleURL, version))
-    //    {
-    //        Debug.Log("DownloadAndCache");
-    //        yield return www;
-    //        if (www.error != null)
-    //            throw new Exception("WWW download had an error:" + www.error);
-    //        AssetBundle bundle = www.assetBundle;
-    //        if (assetName == "")
-    //            Instantiate(bundle.mainAsset);
-    //        else
-    //            Instantiate(bundle.LoadAsset(assetName));
-    //        // Unload the AssetBundles compressed contents to conserve memory
-    //        bundle.Unload(false);
-
-    //    } // memory is freed from the web stream (www.Dispose() gets called implicitly)
-    //}
+    void changeShader() // because shadow for assetbundle is cucked.
+    {
+        var renderers = FindObjectsOfType<Renderer>() as Renderer[];
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            renderers[i].material.shader = standardShader;
+        }
+    }
 }

@@ -46,7 +46,6 @@ public class LogitechSteeringWheel : MonoBehaviour {
         forcesLabel += "Set example controller properties : PageUp\n";
         forcesLabel += "Play Leds : P\n";
         activeForceAndEffect = new string[9];
-		Debug.Log(LogitechGSDK.LogiSteeringInitialize(false));
         
 
 	}
@@ -64,7 +63,6 @@ public class LogitechSteeringWheel : MonoBehaviour {
 	void Update () {
 		//All the test functions are called on the first device plugged in(index = 0)
 		if(LogitechGSDK.LogiUpdate() && LogitechGSDK.LogiIsConnected(0)){
-
             //CONTROLLER PROPERTIES
             StringBuilder deviceName = new StringBuilder(256);
             LogitechGSDK.LogiGetFriendlyProductName(0, deviceName, 256);
@@ -117,7 +115,6 @@ public class LogitechSteeringWheel : MonoBehaviour {
                 {
                     buttonStatus += "Button " + i + " pressed\n";
                 }
-
             }
             
             /* THIS AXIS ARE NEVER REPORTED BY LOGITECH CONTROLLERS 

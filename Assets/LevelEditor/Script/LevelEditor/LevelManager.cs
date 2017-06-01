@@ -10,7 +10,6 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.IO;
 using System.Linq;
-//using System.Text.RegularExpressions;
 
 public class LevelManager : MonoBehaviour
 {
@@ -319,13 +318,6 @@ public class LevelManager : MonoBehaviour
 						levelNode.objectRotations.Add(n.nObjects[i].LObject.transform.GetChild(0).transform.eulerAngles);
 						levelNode.objectTypes.Add(n.nObjects[i].LObjectType);
 						levelNode.objectIDs.Add(n.nObjects[i].LObject.name);
-						if (n.nObjects[i].LObject.name == "RW_RunwayNumber")
-						{
-							for (int j = 0; j < n.nObjects.Count; j++)
-							{
-								levelNode.numberStrings.Add(n.nObjects[i].LObject.transform.Find("UICanvas").transform.Find("lane_text").GetComponent<Text>().text);
-							}
-						}
 						//levelDB.objectBundleNames.Add(n.nObjects[i].bundleName);
 						myBundle.Add(n.nObjects[i].bundleName);
 					}
@@ -419,16 +411,6 @@ public class LevelManager : MonoBehaviour
 					lObj.LObject.transform.GetChild(0).transform.eulerAngles = lNode.objectRotations[i];
 					lObj.LObject.transform.localScale = levelData.objectScale;
 					lObj.LObject.name = lNode.objectIDs[i];
-					if (lObj.LObject.name == "RW_RunwayNumber")
-					{
-						for (int j = 0; j < lNode.objectIDs.Count; j++)
-						{
-							if (lNode.numberStrings != null) //if there is/are runway number(s) being inputted previously before saving. THIS ALLOWS THE LEVEL TO LOAD EVEN IF THERE IS NO NUMBER.
-							{
-								lObj.LObject.transform.Find("UICanvas").transform.Find("lane_text").gameObject.GetComponent<Text>().text = lNode.numberStrings[j];
-							}
-						}
-					}
 					lObj.LObjectType = lNode.objectTypes[i];
 					gm.FindNodeFromPos(lNode.nodePositionX, lNode.nodePositionZ).nObjects.Add(lObj);
 				}

@@ -39,22 +39,6 @@ public class LevelManager : MonoBehaviour
 	string levelSelected;
     string downloadSelected;
 
-    int userNumber;
-	int sameLaneNumber;
-	string runwayNumber;
-
-	GameObject numberPrefab;
-	GameObject numberCanvas;
-	GameObject numberCanvasTwo;
-	public GameObject SetNumberGO;
-	public GameObject NumberOnlyGO;
-	public GameObject NumberLCRGO;
-	public GameObject userTextboxGO;
-	public InputField userTextbox;
-	public InputField userTextboxLCR;
-	public GameObject userTextboxLCRGO;
-	private Text lane_text;
-
 	bool adjacentCheck = false;
 	bool runwayCheck = false;
 	bool rangeCheck = false;
@@ -73,17 +57,12 @@ public class LevelManager : MonoBehaviour
 
 	void Start()
 	{
-
 		gm = GridManager.GetInstance();
 		uim = UIManager.GetInstance();
 		objm = ObjectManager.GetInstance();
 		xmlm = XMLManager.GetInstance();
 		cm = CheckManager.GetInstance();
         aws = AWSscript.GetInstance();
-        userTextboxGO.SetActive(false);
-		userTextboxLCRGO.SetActive(false);
-		NumberOnlyGO.SetActive(false);
-		NumberLCRGO.SetActive(false);
 	}
 
 	void Update()
@@ -165,11 +144,6 @@ public class LevelManager : MonoBehaviour
 		{
 			CancelSelect();
 		}
-		else if (Input.GetMouseButtonDown(0) && Input.GetKey(KeyCode.R))
-		{
-			Ray ray = Camera.main.ScreenPointToRay(gm.selectedNode.nObjects.Last().LObject.transform.localPosition);
-			print(gm.currentNode.nObjects.Last().LObject);
-		}
 	}
 
 
@@ -201,26 +175,25 @@ public class LevelManager : MonoBehaviour
 		selectedObj = new LevelObject();
 	}
 
-	void PlaceObject(bool cloneOrPlace)
+	void PlaceObject(bool cloneOrPlace) //This access CheckManager for checking conditions before placing an object. ACCESS CHECKMANAGER.
 	{
 		if (cloneOrPlace) //if PlaceObject is true
 		{
 			if (gm.isHovering && !uim.mouseOverUI && hObject.LObject != null && gm.currentNode.bFree) //cursor on grid not on UI, level object selected, camera not on selected grid 
 			{
-                cm.PlaceObjectClone();
+                cm.PlaceObjectClone(); 
             }
 		}
 		else if (!cloneOrPlace) //if not cloning object
 		{
 			if (gm.isHovering && !uim.mouseOverUI && hObject.LObject != null && gm.currentNode.bFree) //cursor on grid not on UI, level object selected, camera not on selected grid 
 			{
-                cm.PlaceObjectSingle();
-                //PlaceSucceed();
+                cm.PlaceObjectSingle(); 
             }
         }
 	}
 
-	/*void PlaceObject(bool cloneOrPlace)
+	/*void PlaceObject(bool cloneOrPlace) //This only checks if the object is stackable/non-stackable before placing the object. DOES NOT ACCESS CHECKMANAGER.
 	{
 		if (cloneOrPlace) //if PlaceObject is true
 		{
@@ -302,237 +275,6 @@ public class LevelManager : MonoBehaviour
 			}
 		}
 	}
-
-	public void ShowSetButtons()
-	{
-		SetNumberGO.SetActive(false);
-		userTextboxGO.SetActive(false);
-		NumberOnlyGO.SetActive(true);
-		NumberLCRGO.SetActive(true);
-	}
-
-	/*public void GetUserInputNum() //get user input from Set Runway Number (Number Only) input textfield, check for range and same lane number
-	{
-		NumberOnlyGO.SetActive(false);
-		NumberLCRGO.SetActive(false);
-		userTextboxGO.SetActive(true);
-		if (Input.GetKey(KeyCode.Return) && userTextbox.text != "") //if user press Return(Enter) key and the inputfield is not left empty
-		{
-			runwayNumber = userTextbox.text;
-			int.TryParse(runwayNumber, out userNumber); //read the string/text and acquire numerical value
-			SetNumberGO.SetActive(true);
-			userTextboxGO.SetActive(false);
-			if (userNumber > 0 && userNumber < 37)
-			{
-				if (gm.selectedNode.nObjects.Last().LObject.name == "RW_RunwayNumber")
-				{
-					numberCanvas = gm.selectedNode.nObjects.Last().LObject.transform.Find("UICanvas").gameObject;
-					if (numberCanvas != null) //if UICanvas is found, raycast forward, right, back and left
-					{
-						Vector3 lastPos = new Vector3(gm.selectedNode.nPosX, gm.selectedNode.nObjects.Last().LObject.transform.position.y, gm.selectedNode.nPosZ);
-						RaycastHit hit;
-						if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
-							|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
-							|| Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
-							|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
-						{
-							if (hit.collider)
-							{
-								numberCanvasTwo = hit.collider.gameObject.transform.Find("UICanvas").transform.Find("lane_text").gameObject;
-								if (numberCanvasTwo != null)
-								{ //if another RW_RunwayNumber is found on the same X or Z axis, check and compare their values
-									int.TryParse(numberCanvasTwo.GetComponent<Text>().text, out sameLaneNumber);
-									if (sameLaneNumber == 0)
-									{
-										lane_text = numberCanvas.GetComponentInChildren<Text>();
-										lane_text.text = "" + userNumber;
-									}
-									else if (userNumber > sameLaneNumber)
-									{
-										if (userNumber - sameLaneNumber == 18)
-										{
-											lane_text = numberCanvas.GetComponentInChildren<Text>();
-											lane_text.text = "" + userNumber;
-										}
-										else
-										{
-											print("The numbers must have a difference of 18. Opposite in a compass.");
-										}
-									}
-									else if (userNumber < sameLaneNumber)
-									{
-										if (sameLaneNumber - userNumber == 18)
-										{
-											lane_text = numberCanvas.GetComponentInChildren<Text>();
-											lane_text.text = "" + userNumber;
-										}
-										else
-										{
-											print("The numbers must have a difference of 18. Opposite in a compass");
-										}
-									}
-									else
-									{
-										print("The numbers cannot be equal");
-									}
-								}
-							}
-							else
-							{
-								lane_text = numberCanvas.GetComponentInChildren<Text>();
-								lane_text.text = "" + userNumber;
-							}
-						}
-						else
-						{
-							lane_text = numberCanvas.GetComponentInChildren<Text>();
-							lane_text.text = "" + userNumber;
-						}
-					}
-					else
-					{
-						print("Please select the grid with the runway number that you wish to edit.");
-					}
-				}
-				else
-				{
-					print("Please select the grid with the runway number that you wish to edit.");
-				}
-			}
-			else
-			{
-				print("Number is out of range.");
-			}
-		}
-		else
-		{
-			SetNumberGO.SetActive(true);
-			print("Please enter a runway number.");
-		}
-	}
-
-	public void GetUserInputNumLCR() //get user input from Set Runway Number (Number & L/C/R) input textfield, check for range and same lane number
-	{
-		NumberOnlyGO.SetActive(false);
-		NumberLCRGO.SetActive(false);
-		userTextboxLCRGO.SetActive(true);
-		if (Input.GetKey(KeyCode.Return) && userTextboxLCR.text != "") //if user press Return(Enter) key and the inputfield is not left empty
-		{
-			string[] runwayNumber = Regex.Split(userTextboxLCR.text, @"\D+"); //filter out non-numeric value
-			foreach (string value in runwayNumber)
-			{
-				int userNumber;
-				if (int.TryParse(value, out userNumber)) //read the string "value" and acquire numerical value
-				{
-					SetNumberGO.SetActive(true);
-					userTextboxLCRGO.SetActive(false);
-					if (userNumber > 0 && userNumber < 37)
-					{
-						if (gm.selectedNode.nObjects.Last().LObject.name == "RW_RunwayNumber")
-						{
-							numberCanvas = gm.selectedNode.nObjects.Last().LObject.transform.Find("UICanvas").gameObject;
-							if (numberCanvas != null)
-							{//if UICanvas is found, raycast forward, right, back and left
-								Vector3 lastPos = new Vector3(gm.selectedNode.nPosX, gm.selectedNode.nObjects.Last().LObject.transform.position.y, gm.selectedNode.nPosZ);
-								RaycastHit hit;
-								if (Physics.Raycast(lastPos, -transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
-									|| Physics.Raycast(lastPos, -transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
-									|| Physics.Raycast(lastPos, transform.right, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
-									|| Physics.Raycast(lastPos, transform.forward, out hit, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
-								{
-									if (hit.collider)
-									{
-										numberCanvasTwo = hit.collider.gameObject.transform.Find("UICanvas").transform.Find("lane_text").gameObject;
-										if (numberCanvasTwo != null)
-										{//if another RW_RunwayNumber is found on the same X or Z axis, check and compare their values
-											string[] runwayNumberTwo = Regex.Split(numberCanvasTwo.GetComponent<Text>().text, @"\D+");
-											foreach (string valueTwo in runwayNumberTwo)
-											{
-												int sameLaneNumber;
-												int.TryParse(valueTwo, out sameLaneNumber);
-												if (sameLaneNumber == 0)
-												{
-													lane_text = numberCanvas.GetComponentInChildren<Text>();
-													lane_text.text = userTextboxLCR.text;
-												}
-												else if (userNumber > sameLaneNumber)
-												{
-													if (userNumber - sameLaneNumber == 18)
-													{
-														lane_text = numberCanvas.GetComponentInChildren<Text>();
-														lane_text.text = userTextboxLCR.text;
-													}
-													else
-													{
-														print("The numbers must have a difference of 18. Opposite in a compass.");
-													}
-													break;
-												}
-												else if (userNumber < sameLaneNumber)
-												{
-													if (sameLaneNumber - userNumber == 18)
-													{
-														lane_text = numberCanvas.GetComponentInChildren<Text>();
-														lane_text.text = userTextboxLCR.text;
-													}
-													else
-													{
-														print("The numbers must have a difference of 18. Opposite in a compass");
-													}
-													break;
-												}
-												else
-												{
-													print("The numbers cannot be equal");
-													break;
-												}
-											}
-										}
-										else
-										{
-											print("There is something wrong with the opposite runway number");
-										}
-									}
-									else
-									{
-										lane_text = numberCanvas.GetComponentInChildren<Text>();
-										lane_text.text = userTextboxLCR.text;
-									}
-								}
-								else
-								{
-									lane_text = numberCanvas.GetComponentInChildren<Text>();
-									lane_text.text = userTextboxLCR.text;
-								}
-							}
-							else
-							{
-
-								print("Please select the grid with the runway number that you wish to edit.");
-							}
-						}
-						else
-						{
-							print("Please select the grid with the runway number that you wish to edit.");
-						}
-					}
-					else
-					{
-						print("Number is out of range.");
-					}
-				}
-				else
-				{
-					print("Please enter at least one number");
-				}
-			}
-		}
-		else
-		{
-			SetNumberGO.SetActive(true);
-			print("Please enter a runway number.");
-		}
-	}*/
 
 	//Button Functions 
 	public void NewLevelButton()

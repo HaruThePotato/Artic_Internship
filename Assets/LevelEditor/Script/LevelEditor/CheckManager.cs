@@ -22,20 +22,35 @@ public class CheckManager : MonoBehaviour
 
 	GameObject[] vehicle;
 
-	string[] selectedObject = new string[] { "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_TouchDownZone", "Runway_AimingPoint", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Terminal_Middle" };
-	string[] hitObject = new string[] { "Taxi_Cross", "Taxi_Curve", "Taxi_Diagonal", "Taxi_Diagonal2", "Taxi_Diagonalflip", "Taxi_Line", "Taxi_Merge", "Taxi_MergeLine", "Taxi_StraightDia", "Taxi_StraightDiaFlip", "Taxi_Tline", "Taxi_X", "Taxi_XFlip", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_TouchDownZone", "Runway_AimingPoint", "Radio_Tower", "Terminal_Corner1", "Terminal_Corner2", "Terminal_End", "Terminal_Middle", "Terminal_MiddleEnd", "Apron_GateBridgeLight", "Apron_GateBridgeLight" };
+	//Insert 2 objects' names in selectedObject and hitObject if they cannot be placed adjacent to each other. Enter new line per 10 objecs for easier management
+	string[] selectedObject = new string[] { "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad",
+		"Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_BlastPad", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_TouchDownZone", "Runway_AimingPoint", "Radio_Tower",
+		"Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Radio_Tower", "Taxi_Cross", "Taxi_Cross", "Taxi_Curve", "Taxi_Line",
+	    "Plane_A320", "Plane_A350", "Plane_A380", "Plane_B777-300er", "Pushback_Vehicle"};
+	string[] hitObject = new string[] { "Taxi_Cross", "Taxi_Curve", "Taxi_Diagonal", "Taxi_Diagonal2", "Taxi_Diagonalflip", "Taxi_Line", "Taxi_Merge", "Taxi_MergeLine", "Taxi_StraightDia", "Taxi_StraightDiaFlip",
+		"Taxi_Tline", "Taxi_X", "Taxi_XFlip", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_TouchDownZone", "Runway_AimingPoint", "Radio_Tower",
+		"Terminal_Corner1", "Terminal_Corner2", "Terminal_End", "Terminal_Middle", "Terminal_MiddleEnd", "Apron_GateBridgeLight", "Taxi_Diagonal", "Taxi_RunwayBorderDia", "Taxi_RunwayBorderDia", "Taxi_RunwayBorderDia",
+	    "Hangar_Roof", "Hangar_Roof", "Hangar_Roof", "Hangar_Roof", "Hangar_Roof"};
 
-	string[] selectedObjectTag = new string[] { "runway", "runway", "runwayNumber", "runwayNumber", "runwayNumber" };
-	string[] hitObjectTag = new string[] { "roadway", "apron", "roadway", "apron", "runwayNumber" };
+	//Insert 2 object tags in selectedObjectTag and hitObjectTag if they cannot be placed adjacent to each other. Enter new line per 10 objecs for easier madnagement
+	string[] selectedObjectTag = new string[] { "runway", "runway", "runwayNumber", "runwayNumber", "runwayNumber", "hangar"};
+	string[] hitObjectTag = new string[] { "roadway", "apron", "roadway", "apron", "runwayNumber", "apronOnly"};
 
+	//Insert 2 runway objects' names in selectedRunway and hitRunway if they can be placed next to each other. Enter new line per 10 objecs for easier management
 	string[] selectedRunway = new string[] { "Runway_BlastPad", "Runway_DisplacedThreshold2", "Runway_Threshold", "Runway_Threshold", "Runway_Line", "Runway_Line", "Runway_AimingPoint" };
 	string[] hitRunway = new string[] { "Runway_BlastPad", "Runway_DisplacedThreshold", "Runway_DisplacedThreshold2", "Runway_BlastPad", "Runway_TouchDownZone", "Runway_Line", "Runway_Line" };
 
+	//Insert 2 runway numbers's names in selectedNumber and hitNumber if they can be placed next to each other.
 	string[] selectedNumber = new string[] { "Runway_9", "Runway_9C", "Runway_9L", "Runway_9R", "Runway_18", "Runway_18C", "Runway_18L", "Runway_18R" };
 	string[] hitNumber = new string[] { "Runway_27", "Runway_27C", "Runway_27R", "Runway_27L", "Runway_36", "Runway_36C", "Runway_36R", "Runway_36L" };
 
-	string[] TObjectOne = new string[] { "Hangar_Front", "Hangar_Roof",  "Runway_BlastPad", "Runway_BlastPad" };
-	string[] TObjectTwo = new string[] { "Hangar_Side", "Hangar_Corner",  "Taxi_RunwayBorder", "Taxi_RunwayBorderDia" };
+	//Insert 2 objects' names in TObjectOne and TObjectTwo if they can be placed diagonally but not next to each other. Enter new line per 10 objecs for easier management
+	string[] TObjectOne = new string[] { "Hangar_Front", "Hangar_Roof",  "Runway_BlastPad", "Runway_BlastPad", "Terminal_Middle", "Terminal_MiddleEnd", "Taxi_Cross", "Taxi_Diagonal", "Taxi_Diagonal2", "Taxi_Diagonalflip",
+	    "Taxi_Line", "Taxi_RunwayBorder", "Taxi_RunwayBorderDia", "Taxi_StraightDia", "Taxi_StraightDiaFlip", "Taxi_Tline", "Taxi_X","Taxi_XFlip", "Taxi_Curve", "Taxi_Merge",
+		 "Plane_A320", "Plane_A350", "Plane_A380", "Plane_B777-300er", "Pushback_Vehicle"};
+	string[] TObjectTwo = new string[] { "Hangar_Side", "Hangar_Corner",  "Taxi_RunwayBorder", "Taxi_RunwayBorderDia", "Apron_GateBridgeLight", "Apron_GateBridgeLight", "Vehicle_Towline", "Vehicle_Towline", "Vehicle_Towline", "Vehicle_Towline",
+	    "Vehicle_Towline", "Vehicle_Towline", "Vehicle_Towline", "Vehicle_Towline", "Vehicle_Towline", "Vehicle_Towline", "Vehicle_Towline", "Vehicle_Towline", "Vehicle_Towline", "Vehicle_Towline",
+	    "Terminal_Middle", "Terminal_Middle", "Terminal_Middle", "Terminal_Middle", "Terminal_Middle"};
 
 	private static CheckManager instance = null;
 
@@ -70,20 +85,20 @@ public class CheckManager : MonoBehaviour
 		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ + 0.5f); //Extra 0.5f for correction of 0.5 in Rot and Collider
 		RaycastHit hit;
 		if (Physics.Raycast(lastPos, -transform.right, out hit, 1, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
-			|| Physics.Raycast(lastPos, -transform.forward, out hit, 1, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast left and back
+			|| Physics.Raycast(lastPos, -transform.forward, out hit, 1, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast left or back in layers runwayMarkings and runwayNumber
 		{
 			for (int i = 0; i < selectedRunway.Length; i++)
 			{
 				if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
-				{
+				{//check if the selectedObj is runwayNumber tagged and the collidedObj is Runway_Threshold
 					RaycastHit hitTwo;
-					if (Physics.Raycast(lastPos, -transform.right, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
-						|| Physics.Raycast(lastPos, -transform.forward, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
+					if (Physics.Raycast(lastPos, -transform.right, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber")) 
+						|| Physics.Raycast(lastPos, -transform.forward, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))) //raycast left and back in layer runwayNumber
 					{
 						for (int j = 0; j < selectedRunway.Length; j++)
 						{
 							if ((lvlm.selectedObj.LObject.name == selectedNumber[j] && hitTwo.collider.gameObject.name == hitNumber[j])
-								|| (lvlm.selectedObj.LObject.name == hitNumber[j] && hitTwo.collider.gameObject.name == selectedNumber[j]))
+								|| (lvlm.selectedObj.LObject.name == hitNumber[j] && hitTwo.collider.gameObject.name == selectedNumber[j])) //check selectedNumber and hitNumber strings
 							{
 								runwayCheck = true;
 								break;
@@ -95,12 +110,12 @@ public class CheckManager : MonoBehaviour
 						}
 					}
 					else if (Physics.Raycast(lastPos, transform.right, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
-						|| Physics.Raycast(lastPos, transform.forward, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
+						|| Physics.Raycast(lastPos, transform.forward, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))) //raycasts right and forward in layer runwayNumber
 					{
 						for (int j = 0; j < selectedRunway.Length; j++)
 						{
 							if ((lvlm.selectedObj.LObject.name == selectedNumber[j] && hitTwo.collider.gameObject.name == hitNumber[j])
-								|| (lvlm.selectedObj.LObject.name == hitNumber[j] && hitTwo.collider.gameObject.name == selectedNumber[j]))
+								|| (lvlm.selectedObj.LObject.name == hitNumber[j] && hitTwo.collider.gameObject.name == selectedNumber[j])) //check selectedNumber and hitNumber strings
 							{
 								runwayCheck = true;
 								break;
@@ -113,11 +128,11 @@ public class CheckManager : MonoBehaviour
 					}
 				}
 				else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
-				{
+				{//check if selectedObj is Runway_TouchDownZOne and collidedObj is runwayNumber tagged
 					runwayCheck = true;
 					break;
 				}
-				else if ((lvlm.selectedObj.LObject.name == selectedRunway[i] && hit.collider.gameObject.name == hitRunway[i])
+				else if ((lvlm.selectedObj.LObject.name == selectedRunway[i] && hit.collider.gameObject.name == hitRunway[i] )//check selectedNumber and hitNumber strings
 					|| (lvlm.selectedObj.LObject.name == hitRunway[i] && hit.collider.gameObject.name == selectedRunway[i]))
 				{
 					runwayCheck = true;
@@ -130,20 +145,20 @@ public class CheckManager : MonoBehaviour
 			}
 		}
 		else if (Physics.Raycast(lastPos, transform.right, out hit, 1, LayerMask.GetMask("runwayMarkings", "runwayNumber"))
-				|| Physics.Raycast(lastPos, transform.forward, out hit, 1, LayerMask.GetMask("runwayMarkings", "runwayNumber"))) //raycast right and forward
-		{
+				|| Physics.Raycast(lastPos, transform.forward, out hit, 1, LayerMask.GetMask("runwayMarkings", "runwayNumber")))
+		{//raycasts right and forward in layers runwayMarkings and runwayNumber
 			for (int i = 0; i < selectedRunway.Length; i++)
 			{
 				if (lvlm.selectedObj.LObject.tag == "runwayNumber" && hit.collider.gameObject.name == "Runway_Threshold")
-				{
+				{//check if the selectedObj is runwayNumber tagged and the collidedObj is Runway_Threshold
 					RaycastHit hitTwo;
 					if (Physics.Raycast(lastPos, -transform.right, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
-						|| Physics.Raycast(lastPos, -transform.forward, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
+						|| Physics.Raycast(lastPos, -transform.forward, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))) //raycasts left and back in layer runwayNumber
 					{
 						for (int j = 0; j < selectedRunway.Length; j++)
 						{
 							if ((lvlm.selectedObj.LObject.name == selectedNumber[j] && hitTwo.collider.gameObject.name == hitNumber[j])
-								|| (lvlm.selectedObj.LObject.name == hitNumber[j] && hitTwo.collider.gameObject.name == selectedNumber[j]))
+								|| (lvlm.selectedObj.LObject.name == hitNumber[j] && hitTwo.collider.gameObject.name == selectedNumber[j])) //check selectedNumber and hitNumber strings
 							{
 								runwayCheck = true;
 								break;
@@ -155,12 +170,12 @@ public class CheckManager : MonoBehaviour
 						}
 					}
 					else if (Physics.Raycast(lastPos, transform.right, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))
-						|| Physics.Raycast(lastPos, transform.forward, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber")))
+						|| Physics.Raycast(lastPos, transform.forward, out hitTwo, Mathf.Infinity, LayerMask.GetMask("runwayNumber"))) //raycasts right and forward in layer runwayNumber
 					{
 						for (int j = 0; j < selectedRunway.Length; j++)
 						{
 							if ((lvlm.selectedObj.LObject.name == selectedNumber[j] && hitTwo.collider.gameObject.name == hitNumber[j])
-								|| (lvlm.selectedObj.LObject.name == hitNumber[j] && hitTwo.collider.gameObject.name == selectedNumber[j]))
+								|| (lvlm.selectedObj.LObject.name == hitNumber[j] && hitTwo.collider.gameObject.name == selectedNumber[j])) //check selectedNumber and hitNumber strings
 							{
 								runwayCheck = true;
 								break;
@@ -173,11 +188,11 @@ public class CheckManager : MonoBehaviour
 					}
 				}
 				else if (lvlm.selectedObj.LObject.name == "Runway_TouchDownZone" && hit.collider.gameObject.tag == "runwayNumber")
-				{
+				{//check if selectedObj is Runway_TouchDownZOne and collidedObj is runwayNumber tagged
 					runwayCheck = true;
 					break;
 				}
-				else if ((lvlm.selectedObj.LObject.name == selectedRunway[i] && hit.collider.gameObject.name == hitRunway[i])
+				else if ((lvlm.selectedObj.LObject.name == selectedRunway[i] && hit.collider.gameObject.name == hitRunway[i]) //check selectedRunway and hitRunway strings
 					|| (lvlm.selectedObj.LObject.name == hitRunway[i] && hit.collider.gameObject.name == selectedRunway[i]))
 				{
 					runwayCheck = true;
@@ -190,7 +205,7 @@ public class CheckManager : MonoBehaviour
 			}
 		}
 		else if (lvlm.selectedObj.LObject.name == "Runway_BlastPad" || lvlm.selectedObj.LObject.name == "Runway_DisplacedThreshold")
-		{
+		{//check if selectedObj is Runway_Blastpad/DisplacedThreshold if no raycast was raycasted due to no object
 			runwayCheck = true;
 		}
 		else
@@ -206,7 +221,7 @@ public class CheckManager : MonoBehaviour
 		Vector3 lastPos = new Vector3(gm.currentNode.nPosX, lvlm.selectedObj.LObject.transform.position.y, gm.currentNode.nPosZ + 0.5f);
 		if (gm.currentNode.nObjects.Count > 0)
 		{
-			foreach (LevelObject go in gm.currentNode.nObjects)
+			foreach (LevelObject go in gm.currentNode.nObjects) //adds 0.9 to y coordinate of lastPos for each object present on the grid
 			{
 				lastPos.y += 0.9f;
 			}
@@ -214,42 +229,42 @@ public class CheckManager : MonoBehaviour
 		Collider[] hitColliders = Physics.OverlapSphere(lastPos, 1); //cast a sphere with radius of 1 grid
 		foreach (Collider collided in hitColliders)
 		{
-			if (collided.gameObject.transform.position.y == lastPos.y)
+			if (collided.gameObject.transform.position.y == lastPos.y) //ensures that only the objects on the same y level can be detected by OverlapSphere
 			{
-				if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f))
-				{
+				print(collided.gameObject.name);
+				if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f)) //ignores selectedObj itself
+				{		
 					for (int i = 0; i < selectedObjectTag.Length; i++)
 					{
-						if ((lvlm.selectedObj.LObject.tag == selectedObjectTag[i] && collided.gameObject.tag == hitObjectTag[i])
-							|| (lvlm.selectedObj.LObject.tag == hitObjectTag[i] && collided.gameObject.tag == selectedObjectTag[i]))
+						if ((lvlm.selectedObj.LObject.tag == selectedObjectTag[i] && collided.gameObject.tag == hitObjectTag[i]) 
+							|| (lvlm.selectedObj.LObject.tag == hitObjectTag[i] && collided.gameObject.tag == selectedObjectTag[i])) //checks selectedObjectTag and hitObjectTag strings
 						{
 							adjacentCheck = false;
 							break;
 						}
-						else
+						else //passed the first checking of tags (adjacent)
 						{					
 							for (int j = 0; j < selectedObject.Length; j++)
 							{
 								if ((lvlm.selectedObj.LObject.name == selectedObject[j] && collided.gameObject.name == hitObject[j])
-									|| (lvlm.selectedObj.LObject.name == hitObject[j] && collided.gameObject.name == selectedObject[j]))
+									|| (lvlm.selectedObj.LObject.name == hitObject[j] && collided.gameObject.name == selectedObject[j])) //checks selectedObject and hitObject strings
 								{
 									adjacentCheck = false;
 									break;
 								}
-								else
+								else //passed the second checking of names (adjacent)
 								{
 									if (collided.gameObject.transform.position.x == lastPos.x || collided.gameObject.transform.position.z == lastPos.z-0.5f)
 									{
-										print(collided.gameObject.name + collided.gameObject.transform.position);
 										for (int m = 0; m < TObjectOne.Length; m++)
 										{
 											if ((lvlm.selectedObj.LObject.name == TObjectOne[m] && collided.gameObject.name == TObjectTwo[m])
-												|| (lvlm.selectedObj.LObject.name == TObjectTwo[m] && collided.gameObject.name == TObjectOne[m]))
+												|| (lvlm.selectedObj.LObject.name == TObjectTwo[m] && collided.gameObject.name == TObjectOne[m])) //checks TObjectOneand TObjectTwo strings
 											{
 												adjacentCheck = false;
 												break; 
 											}
-											else
+											else //passed the third checking of names (ignores diagonal)
 											{
 												adjacentCheck = true;
 											}
@@ -287,19 +302,12 @@ public class CheckManager : MonoBehaviour
 						vehicle = GameObject.FindGameObjectsWithTag("vehicle");
 						if (GameObject.FindGameObjectsWithTag("vehicle").Length > 1)
 						{
-							lvlm.CancelSelect();
+							print("You can only place 1 PushBack Vehicle.");
+							lvlm.CancelSelect();						
 						}
 						else
 						{
-							adjacentResult = CheckAdjacent();
-							if (adjacentResult == false)
-							{
-								lvlm.CancelSelect();
-							}
-							else
-							{
-								lvlm.CloneSucceed();
-							}
+							lvlm.CloneSucceed();
 						}
 					}
 					else
@@ -307,7 +315,8 @@ public class CheckManager : MonoBehaviour
 						adjacentResult = CheckAdjacent();
 						if (adjacentResult == false)
 						{
-							lvlm.CancelSelect();
+							print("You cannot place the selected object here.");
+							lvlm.CancelSelect();	
 						}
 						else
 						{
@@ -343,14 +352,16 @@ public class CheckManager : MonoBehaviour
 				adjacentResult = CheckAdjacent();
 				if (adjacentResult == false)
 				{
+					print("You cannot place the selected object here.");
 					lvlm.CancelSelect();
 				}
-				else if (adjacentResult == true && (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber"))
+				else if (adjacentResult == true && (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber")) //if CheckAdjacent passed and selectedObj is runway object, run CheckRunway
 				{
 					bool runwayResult = true;
 					runwayResult = CheckRunway();
 					if (runwayResult == false)
 					{
+						print("Check your Runway objects' placement and the Runway Number.");
 						lvlm.CancelSelect();
 					}
 					else
@@ -358,9 +369,8 @@ public class CheckManager : MonoBehaviour
 						lvlm.CloneSucceed();
 					}
 				}
-				else
+				else //if CheckAjacent passed and selectedObj is not runway object, place object
 				{
-
 					lvlm.CloneSucceed();
 				}
 			}
@@ -387,6 +397,7 @@ public class CheckManager : MonoBehaviour
 						vehicle = GameObject.FindGameObjectsWithTag("vehicle");
 						if (GameObject.FindGameObjectsWithTag("vehicle").Length > 1)
 						{
+							print("You can only place 1 PushBack Vehicle.");
 							lvlm.CancelSelect();
 						}
 						else
@@ -394,6 +405,7 @@ public class CheckManager : MonoBehaviour
 							adjacentResult = CheckAdjacent();
 							if (adjacentResult == false)
 							{
+								print("You cannot place the selected object here.");
 								lvlm.CancelSelect();
 							}
 							else
@@ -407,7 +419,8 @@ public class CheckManager : MonoBehaviour
 						adjacentResult = CheckAdjacent();
 						if (adjacentResult == false)
 						{
-							lvlm.CancelSelect();
+							print("You cannot place the selected object here.");
+							lvlm.CancelSelect();	
 						}
 						else
 						{
@@ -443,14 +456,16 @@ public class CheckManager : MonoBehaviour
 				adjacentResult = CheckAdjacent();
 				if (adjacentResult == false)
 				{
+					print("You cannot place the selected object here.");
 					lvlm.CancelSelect();
 				}
-				else if (adjacentResult == true && (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber"))
+				else if (adjacentResult == true && (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber")) //if CheckAdjacent passed and selectedObj is runway object, run CheckRunway
 				{
 					bool runwayResult = true;
 					runwayResult = CheckRunway();
 					if (runwayResult == false)
 					{
+						print("Check your Runway objects' placement and the Runway Number.");
 						lvlm.CancelSelect();
 					}
 					else
@@ -458,9 +473,8 @@ public class CheckManager : MonoBehaviour
 						lvlm.PlaceSucceed();
 					}
 				}
-				else
+				else //if CheckAjacent passed and selectedObj is not runway object, place object
 				{
-
 					lvlm.PlaceSucceed();
 				}
 			}

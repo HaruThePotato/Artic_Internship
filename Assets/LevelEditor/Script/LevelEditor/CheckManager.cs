@@ -6,7 +6,6 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 public class CheckManager : MonoBehaviour
 {
@@ -294,7 +293,7 @@ public class CheckManager : MonoBehaviour
 				{
 					if ((lvlm.selectedObj.LObject.tag == "apronOnly" || lvlm.selectedObj.LObject.tag == "hangar") && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects and building on apron
 					{
-						print("This can only be placed on an Apron tile.");
+						uim.Status.text = ("This can only be placed on an Apron tile.");
 						lvlm.CancelSelect();
 					}
 					else if (lvlm.selectedObj.LObject.tag == "vehicle")
@@ -302,7 +301,7 @@ public class CheckManager : MonoBehaviour
 						vehicle = GameObject.FindGameObjectsWithTag("vehicle");
 						if (GameObject.FindGameObjectsWithTag("vehicle").Length > 1)
 						{
-							print("You can only place 1 PushBack Vehicle.");
+							uim.Status.text = ("You can only place 1 PushBack Vehicle.");
 							lvlm.CancelSelect();						
 						}
 						else
@@ -315,7 +314,7 @@ public class CheckManager : MonoBehaviour
 						adjacentResult = CheckAdjacent();
 						if (adjacentResult == false)
 						{
-							print("You cannot place the selected object here.");
+							uim.Status.text = ("You cannot place the selected object here.");
 							lvlm.CancelSelect();	
 						}
 						else
@@ -330,13 +329,13 @@ public class CheckManager : MonoBehaviour
 				}
 				else if (lvlm.selectedObj.LObjectType == 3 || lvlm.selectedObj.LObjectType == 4) //selected object is base-only or base-only-no-stack
 				{
-					print("This can only be used at ground level");
+					uim.Status.text = ("This can only be used at ground level");
 					lvlm.CancelSelect();
 				}
 			}
 			else
 			{
-				print("You cannot place anything on this tile.");
+				uim.Status.text = ("You cannot place anything on this tile.");
 				lvlm.CancelSelect();
 			}
 		}
@@ -344,7 +343,7 @@ public class CheckManager : MonoBehaviour
 		{
 			if (lvlm.selectedObj.LObjectType == 1 || lvlm.selectedObj.LObjectType == 2) //if object type 1, 2, or 3 is selected 
 			{
-				print("Place a ground object first");
+				uim.Status.text = ("Place a ground object first");
 				lvlm.CancelSelect();
 			}
 			else //if object type 3 or 4 is selected
@@ -352,7 +351,7 @@ public class CheckManager : MonoBehaviour
 				adjacentResult = CheckAdjacent();
 				if (adjacentResult == false)
 				{
-					print("You cannot place the selected object here.");
+					uim.Status.text = ("You cannot place the selected object here.");
 					lvlm.CancelSelect();
 				}
 				else if (adjacentResult == true && (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber")) //if CheckAdjacent passed and selectedObj is runway object, run CheckRunway
@@ -361,7 +360,7 @@ public class CheckManager : MonoBehaviour
 					runwayResult = CheckRunway();
 					if (runwayResult == false)
 					{
-						print("Check your Runway objects' placement and the Runway Number.");
+						uim.Status.text = ("Check your Runway objects' placement and the Runway Number.");
 						lvlm.CancelSelect();
 					}
 					else
@@ -389,7 +388,7 @@ public class CheckManager : MonoBehaviour
 				{
 					if ((lvlm.selectedObj.LObject.tag == "apronOnly" || lvlm.selectedObj.LObject.tag == "hangar") && gm.currentNode.nObjects.Last().LObject.tag != "apron") //selected apronOnly objects and building on apron
 					{
-						print("This can only be placed on an Apron tile.");
+						uim.Status.text = ("This can only be placed on an Apron tile.");
 						lvlm.CancelSelect();
 					}
 					else if (lvlm.selectedObj.LObject.tag == "vehicle")
@@ -397,7 +396,7 @@ public class CheckManager : MonoBehaviour
 						vehicle = GameObject.FindGameObjectsWithTag("vehicle");
 						if (GameObject.FindGameObjectsWithTag("vehicle").Length > 1)
 						{
-							print("You can only place 1 PushBack Vehicle.");
+							uim.Status.text = ("You can only place 1 PushBack Vehicle.");
 							lvlm.CancelSelect();
 						}
 						else
@@ -405,7 +404,7 @@ public class CheckManager : MonoBehaviour
 							adjacentResult = CheckAdjacent();
 							if (adjacentResult == false)
 							{
-								print("You cannot place the selected object here.");
+								uim.Status.text = ("You cannot place the selected object here.");
 								lvlm.CancelSelect();
 							}
 							else
@@ -419,7 +418,7 @@ public class CheckManager : MonoBehaviour
 						adjacentResult = CheckAdjacent();
 						if (adjacentResult == false)
 						{
-							print("You cannot place the selected object here.");
+							uim.Status.text = ("You cannot place the selected object here.");
 							lvlm.CancelSelect();	
 						}
 						else
@@ -434,13 +433,13 @@ public class CheckManager : MonoBehaviour
 				}
 				else if (lvlm.selectedObj.LObjectType == 3 || lvlm.selectedObj.LObjectType == 4) //selected object is base-only or base-only-no-stack
 				{
-					print("This can only be used at ground level");
+					uim.Status.text = ("This can only be used at ground level");
 					lvlm.CancelSelect();
 				}
 			}
 			else
 			{
-				print("You cannot place anything on this tile.");
+				uim.Status.text = ("You cannot place anything on this tile.");
 				lvlm.CancelSelect();
 			}
 		}
@@ -448,7 +447,7 @@ public class CheckManager : MonoBehaviour
 		{
 			if (lvlm.selectedObj.LObjectType == 1 || lvlm.selectedObj.LObjectType == 2) //if object type 1, 2, or 3 is selected 
 			{
-				print("Place a ground object first");
+				uim.Status.text = ("Place a ground object first");
 				lvlm.CancelSelect();
 			}
 			else //if object type 3 or 4 is selected
@@ -456,7 +455,7 @@ public class CheckManager : MonoBehaviour
 				adjacentResult = CheckAdjacent();
 				if (adjacentResult == false)
 				{
-					print("You cannot place the selected object here.");
+					uim.Status.text = ("You cannot place the selected object here.");
 					lvlm.CancelSelect();
 				}
 				else if (adjacentResult == true && (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber")) //if CheckAdjacent passed and selectedObj is runway object, run CheckRunway
@@ -467,6 +466,7 @@ public class CheckManager : MonoBehaviour
 					{
 						print("Check your Runway objects' placement and the Runway Number.");
 						lvlm.CancelSelect();
+						uim.Status.text = ("Check your Runway objects' placement and the Runway Number.");
 					}
 					else
 					{

@@ -37,10 +37,6 @@ public class VehicleManager : MonoBehaviour {
     /* changes from cameraA to cameraB */
     bool drivingPosition;
 
-    /* GameObject of Camera */
-    public GameObject[] vehicleCamera;
-    public GameObject vehicleTractor;
-
     private static VehicleManager instance = null;
 
     public static VehicleManager GetInstance()
@@ -54,14 +50,14 @@ public class VehicleManager : MonoBehaviour {
 
          enginesource = GetComponent<AudioSource>();
 
-        momentumAccelerate = 0.2;
-        momentumTurning = 0.2;
+        momentumAccelerate = 0.002f;
+        momentumTurning = 0.2f;
 
         drivingPosition = true;
         rb = GetComponent<Rigidbody>();
 
-        lengthOfAcceleration = 4f; // 0 to 5 Acceleration // How fast the vehicle can go
-        lengthOfTurning = 2f;
+        lengthOfAcceleration = 0.05f; // 0 to 5 Acceleration // How fast the vehicle can go
+        lengthOfTurning = 20f;
     }
 
     void Update()
@@ -70,21 +66,14 @@ public class VehicleManager : MonoBehaviour {
         engineStart();
         convertRangePosition();
         switchDrivingPosition();
-        accelerationControl(drivingPosition);
         //Debug.Log(getWheelButtonPressed());
         //if (Input.GetButton("StartEngine")) Debug.Log("HELLO");
+        Debug.Log(accelerationTime + " | " + turningTime);
     }
-
-    int getWheelButtonPressed()
+    
+    void FixedUpdate()
     {
-        for (int i = 0; i < 128; i++)
-        {
-            if (logitechSDK.rgbButtons[i] == 128)
-            {
-                return i;
-            }
-        }
-        return 0;
+        accelerationControl(drivingPosition);
     }
 
     //int getWheelButtonPressed()
@@ -140,11 +129,11 @@ public class VehicleManager : MonoBehaviour {
                 ranOnceEngine = true;
                 if (engineStartBool)
                 {
-                    enginesource.Stop(); slowDownVehicle = true;
+                    /*enginesource.Stop(); */slowDownVehicle = true; Debug.Log("Stop");
                 }
                 else
                 {
-                    enginesource.Play(); slowDownVehicle = false;
+                    /*enginesource.Play(); */slowDownVehicle = false; Debug.Log("Start");
                 }
                 engineStartBool = !engineStartBool;
             }
@@ -165,10 +154,10 @@ public class VehicleManager : MonoBehaviour {
     void accelerationControl(bool n)
     {
         //forces the start acceleration to be 1f // fixes rotation on 0.01f speed -.-
-        if (acceleration < 0.5f && acceleration > 0f)
-        {
-            acceleration = 0.5f;
-        }
+        //if (acceleration < 0.5f && acceleration > 0f)
+        //{
+        //    acceleration = 0.5f;
+        //}
         if (accelerationTime < momentumAccelerate && acceleration == 0)
         {
             accelerationTime = 0;
@@ -204,17 +193,18 @@ public class VehicleManager : MonoBehaviour {
 
     void driveVehicle(double value)
     {
-        var v = transform.forward * (float)value;
-        v.y = rb.velocity.y;
-        rb.velocity = v;
+        //Vector3 v = transform.forward * ((float)value);
+        //v.y = rb.velocity.y;
+        //rb.MovePosition(v);
+        rb.MovePosition(transform.position + transform.forward * ((float)value / 10));
     }
 
     void turningVehicle(bool n)
     {
         if (n)
-            turningTime = ((accelerationTime * turning));
+            turningTime = (((accelerationTime * 10) * turning));
         else
-            turningTime = -((accelerationTime * turning));
+            turningTime = -(((accelerationTime * 10) * turning));
 
         if (n)
         {
@@ -235,16 +225,16 @@ public class VehicleManager : MonoBehaviour {
         {
             drivingPosition = !drivingPosition;
         }
+        if (drivingPosition) // A is active
+        {
+            LoadManager.GetInstance().vehicleCamera[1].SetActive(true);
+            LoadManager.GetInstance().vehicleCamera[0].SetActive(false);
+        }
+        else // B is active
+        {
+            LoadManager.GetInstance().vehicleCamera[0].SetActive(true);
+            LoadManager.GetInstance().vehicleCamera[1].SetActive(false);
+        }
 
-        //if (drivingPosition)
-        //{
-        //    cameraViewB.SetActive(false);
-        //    cameraViewA.SetActive(true);
-        //}
-        //else
-        //{
-        //    cameraViewB.SetActive(true);
-        //    cameraViewA.SetActive(false);
-        //}
     }
 }

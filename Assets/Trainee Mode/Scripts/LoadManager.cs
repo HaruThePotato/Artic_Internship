@@ -11,7 +11,11 @@ using System.Text.RegularExpressions;
 
 public class LoadManager : MonoBehaviour
 {
+    public int startPositionOfCamera; // A = 0, B = 1
     public GameObject[] vehicleCamera;
+    public GameObject[] vehicle;
+    public GameObject mainCamera;
+    bool levelReady;
 
     Vector3 xyz;
 
@@ -159,7 +163,7 @@ public class LoadManager : MonoBehaviour
 
     public void callLoadSelectedLevel()
     {
-        if(levelSelected != null)
+        if (levelSelected != null)
         {
             loadingUI.SetActive(true);
             StartCoroutine(LoadSelectedLevel());
@@ -188,13 +192,13 @@ public class LoadManager : MonoBehaviour
                     for (int i = 0; i < lNode.objectIDs.Count; i++)
                     {
                         LevelObject lObj = new LevelObject();
-                        if (assetName == "")
-                        {
-                            Instantiate(bundle.mainAsset);
-                            Debug.Log("Asset has no name.");
-                        }
-                        else
-                        {
+                        //if (assetName == "")
+                        //{
+                        //    Instantiate(bundle.mainAsset);
+                        //    Debug.Log("Asset has no name.");
+                        //}
+                        //else
+                        //{
                             xyz = new Vector3(lNode.objectPositions[i].x,
                                               lNode.objectPositions[i].y,
                                               lNode.objectPositions[i].z);
@@ -206,7 +210,7 @@ public class LoadManager : MonoBehaviour
                             //bool foundSame = false;
                             for (int r = 0; r < floorObjects.Length; r++)
                             {
-                                if(floorObjects[r].name == lNode.objectIDs[i])
+                                if (floorObjects[r].name == lNode.objectIDs[i])
                                 {
                                     //foundSame = true;
                                     lObj.LObject.transform.GetChild(0).GetChild(0).localScale = new Vector3(0.01112f,
@@ -249,12 +253,11 @@ public class LoadManager : MonoBehaviour
                                 floorPosition["More Z"] = (lObj.LObject.transform.position.z);
                             }
                             lObj.LObjectType = lNode.objectTypes[i];
-                        }
+                        //}
                     }
                 }
                 // Unload the AssetBundles compressed contents to conserve memory
                 bundle.Unload(false);
-                CancelLoadScreen();
                 //Debug.Log(floorPosition["Lesser X"]);
                 //Debug.Log(floorPosition["More X"]);
                 //Debug.Log(floorPosition["Lesser Z"]);
@@ -262,17 +265,34 @@ public class LoadManager : MonoBehaviour
             } // memory is freed from the web stream (www.Dispose() gets called implicitly)
         }
         createFloor();
-        changeShader();
+        CancelLoadScreen();
         findCamera();
+        prepareLevel();
     }
 
     void findCamera()
     {
-        //VehicleManager.GetInstance().cameraViewA = GameObject.Find("/Pushback_Vehicle/Rot/Pushback/CameraA");
-        //VehicleManager.GetInstance().cameraViewB = GameObject.Find("/Pushback_Vehicle/Rot/Pushback/CameraB");
-        //VehicleManager.GetInstance().cameraViewA = GameObject.FindWithTag("cameraA");
-        //VehicleManager.GetInstance().cameraViewB = GameObject.FindWithTag("cameraB");
-            vehicleCamera = GameObject.FindGameObjectsWithTag("vehicleCamera");
+        vehicleCamera = GameObject.FindGameObjectsWithTag("vehicleCamera");
+        vehicle = GameObject.FindGameObjectsWithTag("vehicle");
+        vehicle[0].transform.position = new Vector3(vehicle[0].transform.position.x, vehicle[0].transform.position.y, vehicle[0].transform.position.z + 0.5f);
+    }
+
+    void prepareLevel()
+    {
+        mainCamera.SetActive(false);
+        if (startPositionOfCamera == 0)
+        {
+            vehicleCamera[0].SetActive(true);
+            vehicleCamera[1].SetActive(false);
+        }
+        else if (startPositionOfCamera == 1)
+        {
+            vehicleCamera[0].SetActive(false);
+            vehicleCamera[1].SetActive(true);
+        }
+        levelReady = true;
+        vehicle[0].AddComponent(Type.GetType("VehicleManager"));
+        vehicle[0].AddComponent(Type.GetType("LogitechSteeringWheel"));
     }
 
     public void CleanCache()
@@ -328,12 +348,13 @@ public class LoadManager : MonoBehaviour
         floorPrefab.GetComponent<BoxCollider>().size = new Vector3(lengthOfFloor["X"], 0.9f, lengthOfFloor["Z"]);
     }
 
-    void changeShader() // because shadow for assetbundle is cucked.
-    {
-        var renderers = FindObjectsOfType<Renderer>() as Renderer[];
-        for (int i = 0; i < renderers.Length; i++)
-        {
-            renderers[i].material.shader = standardShader;
-        }
-    }
+    //void changeShader()
+    //{
+        //var renderers = FindObjectsOfType<Renderer>() as Renderer[];
+        //for (int i = 0; i < renderers.Length; i++)
+        //{
+        //    Debug.Log(standardShader);
+        //    renderers[i].material.shader = standardShader;
+        //}
+    //}
 }

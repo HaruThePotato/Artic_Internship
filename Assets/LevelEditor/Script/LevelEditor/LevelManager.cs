@@ -392,14 +392,12 @@ public class LevelManager : MonoBehaviour
 	public void SelectLevel(string n)
 	{
 		levelSelected = n;
-		uim.selectLevelName.text = "Level Selected: " + n;
 	}
 
 	public void LoadSelectedLevel()
 	{
 		if (levelSelected != null)
 		{
-			uim.selectLevelName.text = "Level Selected: ";
 			uim.levelName.text = levelSelected;
 			if (uim.mouseOverUI && !bHoldingObject)
 			{

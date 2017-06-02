@@ -9,7 +9,10 @@ public class CreateAssetBundles
     [MenuItem("Assets/Build AssetBundles")]
     static void BuildAllAssetBundles()
     {
-        BuildPipeline.BuildAssetBundles("Assets/AssetBundles/Bundles", BuildAssetBundleOptions.None, BuildTarget.StandaloneOSXUniversal);
+        //BuildPipeline.BuildAssetBundles("Assets/AssetBundles/Bundles", BuildAssetBundleOptions.None, BuildTarget.StandaloneOSXUniversal);
+        BuildPipeline.BuildAssetBundles("Assets/AssetBundles/Bundles",
+                                         BuildAssetBundleOptions.None,
+                                         BuildTarget.StandaloneWindows);
     }
 }
 #endif

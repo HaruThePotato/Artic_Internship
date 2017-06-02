@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VehicleManager : MonoBehaviour {
+public class VehicleManager : MonoBehaviour
+{
 
     Rigidbody rb;
     LogitechGSDK.DIJOYSTATE2ENGINES logitechSDK;
@@ -43,6 +44,11 @@ public class VehicleManager : MonoBehaviour {
     string clutch;
     string previousClutch;
     bool vehicleReady;
+    string actualClutch;
+
+    /* checks if user was from accelerate and switches to reverse without waiting for momentum end */
+    bool momentumEnded;
+
 
     private static VehicleManager instance = null;
 
@@ -55,7 +61,7 @@ public class VehicleManager : MonoBehaviour {
     {
         slowDownVehicle = true;
 
-         enginesource = GetComponent<AudioSource>();
+        enginesource = GetComponent<AudioSource>();
 
         momentumAccelerate = 0.002f;
         momentumTurning = 0.2f;
@@ -75,59 +81,15 @@ public class VehicleManager : MonoBehaviour {
         convertRangePosition();
         switchDrivingPosition();
         setClutch();
-        //Debug.Log(getWheelButtonPressed());
-        //Debug.Log(accelerationTime + " | " + acceleration + " | " + brake);
+
+        Debug.Log(clutch);
     }
-    
+
     void FixedUpdate()
     {
         brakingVehicle();
         accelerationControl(drivingPosition);
     }
-
-    //int getWheelButtonPressed()
-    //{
-    //    bool check = true;
-    //    for (int i = 0; i < 128; i++)
-    //    {
-    //        if (logitechSDK.rgbButtons[i] == 128)
-    //        {
-    //            wheelButtonPressed = i;
-    //            check = false;
-    //        }
-    //        else
-    //        {
-    //            if (check)
-    //            {
-    //                wheelButtonPressed = 999;
-    //            }
-    //        }
-    //    }
-    //    return wheelButtonPressed;
-    //}
-
-    //void engineStart()
-    //{
-    //    if (getWheelButtonPressed() == 23)
-    //    {
-    //        if (ranOnceEngine)
-    //        {
-    //            ranOnceEngine = false;
-    //            if (engineStartBool)
-    //            {
-    //                enginesource.Stop(); slowDownVehicle = true;
-    //            }
-    //            else
-    //            {
-    //                enginesource.Play(); slowDownVehicle = false;
-    //            }
-    //            engineStartBool = !engineStartBool;
-    //        }
-    //    }
-
-    //    if (getWheelButtonPressed() == 0)
-    //        ranOnceEngine = true;
-    //}
 
     void engineStart()
     {
@@ -138,11 +100,13 @@ public class VehicleManager : MonoBehaviour {
                 ranOnceEngine = true;
                 if (engineStartBool)
                 {
-                    /*enginesource.Stop(); */slowDownVehicle = true; Debug.Log("Stop");
+                    /*enginesource.Stop(); */
+                    slowDownVehicle = true; Debug.Log("Stop");
                 }
                 else
                 {
-                    /*enginesource.Play(); */slowDownVehicle = false; Debug.Log("Start");
+                    /*enginesource.Play(); */
+                    slowDownVehicle = false; Debug.Log("Start");
                 }
                 engineStartBool = !engineStartBool;
             }
@@ -157,28 +121,33 @@ public class VehicleManager : MonoBehaviour {
     {
         if (Input.GetButton("Accelerate1") || Input.GetButton("Accelerate2") || Input.GetButton("Accelerate3") || Input.GetButton("Accelerate4"))
         {
-            clutch = "Accelerate";
-            //if(!ranOnceAccelerationClutch)
-            //{
-            //    ranOnceAccelerationClutch = true;
-            //    ranOnceBrakeClutch = false;
-            //    accelerationTime = 0;
-            //}
+            if(clutch == "Neutral" && accelerationTime <= 0)
+                clutch = "Accelerate";
         }
-        else if(Input.GetButton("Reverse1") || Input.GetButton("Reverse2") || Input.GetButton("Reverse3"))
+        else if (Input.GetButton("Reverse1") || Input.GetButton("Reverse2") || Input.GetButton("Reverse3"))
         {
-            clutch = "Reverse";
-            //if (!ranOnceAccelerationClutch)
-            //{
-            //    ranOnceBrakeClutch = true;
-            //    ranOnceAccelerationClutch = false;
-            //    accelerationTime = 0;
-            //}
+            if (clutch == "Neutral" && accelerationTime <= 0)
+                clutch = "Reverse";
         }
         else
         {
             clutch = "Neutral";
         }
+
+        //if(clutch == "Accelerate")
+        //{
+        //    if (accelerationTime <= 0)
+        //        actualClutch = "Accelerate";
+        //}
+        //else if (clutch == "Reverse")
+        //{
+        //    if (accelerationTime <= 0)
+        //        actualClutch = "Reverse";
+        //}
+        //else if (clutch == "Neutral")
+        //{
+        //    actualClutch = "Neutral";
+        //}
     }
 
     void convertRangePosition() // Changes 500 to -500 into 0 to 1000
@@ -191,88 +160,81 @@ public class VehicleManager : MonoBehaviour {
     //Moves the vehicle forward & stops if no acceleration is given, changes view of the camera
     void accelerationControl(bool n)
     {
-            //forces the start acceleration to be 1f // fixes rotation on 0.01f speed -.-
-            //if (acceleration < 0.5f && acceleration > 0f)
-            //{
-            //    acceleration = 0.5f;
-            //}
-            if (accelerationTime < momentumAccelerate && acceleration == 0)
-            {
-                accelerationTime = 0;
-            }
-            else if (accelerationTime > acceleration || slowDownVehicle || clutch == "Neutral") // Stopping
-            {
-                if (accelerationTime > 0)
-                {
-                    accelerationTime -= momentumAccelerate;
-                    vehicleReady = false;
-                }
-                else
-                {
-                    vehicleReady = true;
-                }
-            }
-            else if (accelerationTime < acceleration) // Drive Forward
-            {
-                accelerationTime += momentumAccelerate;
-                if (accelerationTime > lengthOfAcceleration)
-                {
-                    accelerationTime = lengthOfAcceleration;
-                }
-            }
-
+        if (accelerationTime < momentumAccelerate && acceleration == 0)
+        {
+            accelerationTime = 0;
+            momentumEnded = true;
+        }
+        else if (accelerationTime > acceleration || slowDownVehicle || clutch == "Neutral") // Stopping
+        {
             if (accelerationTime > 0)
             {
-                if (n)
-                {
-                    if(clutch == "Reverse")
-                    {
-                        driveVehicle(accelerationTime);
-                        previousClutch = "Reverse";
-                    }
-                    else if(clutch == "Accelerate")
-                    {
-                        driveVehicle(-accelerationTime);
-                        previousClutch = "Accelerate";
-                    }
-                    else if(clutch == "Neutral")
-                    {
-                        if(previousClutch == "Accelerate")
-                            driveVehicle(-accelerationTime);
-                        else if (previousClutch == "Reverse")
-                            driveVehicle(accelerationTime);
-                    }
-                    turningVehicle(drivingPosition);
-                }
-                else
-                {
-                    if (clutch == "Reverse")
-                    {
-                        driveVehicle(-accelerationTime);
-                        previousClutch = "Reverse";
-                    }
-                    else if (clutch == "Accelerate")
-                    {
-                        driveVehicle(accelerationTime);
-                        previousClutch = "Accelerate";
-                    }
-                    else if (clutch == "Neutral")
-                    {
-                        if (previousClutch == "Accelerate")
-                            driveVehicle(accelerationTime);
-                        else if (previousClutch == "Reverse")
-                            driveVehicle(-accelerationTime);
-                    }
-                    turningVehicle(drivingPosition);
-                }
+                accelerationTime -= momentumAccelerate;
+                vehicleReady = false;
             }
+            else
+            {
+                vehicleReady = true;
+            }
+            momentumEnded = false;
+        }
+        else if (accelerationTime < acceleration) // Drive Forward
+        {
+            accelerationTime += momentumAccelerate;
+            if (accelerationTime > lengthOfAcceleration)
+                accelerationTime = lengthOfAcceleration;
+            momentumEnded = false;
+        }
+
+        if (accelerationTime > 0)
+        {
+            if (n)
+            {
+                if (clutch == "Reverse")
+                {
+                    driveVehicle(accelerationTime);
+                    previousClutch = "Reverse";
+                }
+                else if (clutch == "Accelerate")
+                {
+                    driveVehicle(-accelerationTime);
+                    previousClutch = "Accelerate";
+                }
+                else if (clutch == "Neutral")
+                {
+                    if (previousClutch == "Accelerate")
+                        driveVehicle(-accelerationTime);
+                    else if (previousClutch == "Reverse")
+                        driveVehicle(accelerationTime);
+                }
+                turningVehicle(drivingPosition, clutch);
+            }
+            else
+            {
+                if (clutch == "Reverse")
+                {
+                    driveVehicle(-accelerationTime);
+                    previousClutch = "Reverse";
+                }
+                else if (clutch == "Accelerate")
+                {
+                    driveVehicle(accelerationTime);
+                    previousClutch = "Accelerate";
+                }
+                else if (clutch == "Neutral")
+                {
+                    if (previousClutch == "Accelerate")
+                        driveVehicle(accelerationTime);
+                    else if (previousClutch == "Reverse")
+                        driveVehicle(-accelerationTime);
+                }
+                turningVehicle(drivingPosition, clutch);
+            }
+        }
     }
 
     void driveVehicle(double value)
     {
-        //Vector3 v = transform.forward * ((float)value);
-        //v.y = rb.velocity.y;
-        //rb.MovePosition(v);
         rb.MovePosition(transform.position + transform.forward * ((float)value / 10));
     }
 
@@ -281,7 +243,7 @@ public class VehicleManager : MonoBehaviour {
         acceleration -= brake;
     }
 
-    void turningVehicle(bool n)
+    void turningVehicle(bool n, string clutch)
     {
         if (n)
             turningTime = (((accelerationTime * 10) * turning));
@@ -290,13 +252,55 @@ public class VehicleManager : MonoBehaviour {
 
         if (n)
         {
-            var desiredRotQ = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + (float)-turningTime, transform.eulerAngles.x);
-            transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * 10f);
+            if (clutch == "Accelerate")
+            {
+                var desiredRotQ = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + (float)-turningTime, transform.eulerAngles.x);
+                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * 10f);
+            }
+            else if (clutch == "Reverse")
+            {
+                var desiredRotQ = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + (float)turningTime, transform.eulerAngles.x);
+                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * 10f);
+            }
+            else
+            {
+                if (previousClutch == "Reverse")
+                {
+                    var desiredRotQ = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + (float)turningTime, transform.eulerAngles.x);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * 10f);
+                }
+                else
+                {
+                    var desiredRotQ = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + (float)-turningTime, transform.eulerAngles.x);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * 10f);
+                }
+            }
         }
         else
         {
-            var desiredRotQ = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + (float)turningTime, transform.eulerAngles.x);
-            transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * 10f);
+            if (clutch == "Accelerate")
+            {
+                var desiredRotQ = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + (float)turningTime, transform.eulerAngles.x);
+                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * 10f);
+            }
+            else if (clutch == "Reverse")
+            {
+                var desiredRotQ = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + (float)-turningTime, transform.eulerAngles.x);
+                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * 10f);
+            }
+            else
+            {
+                if (previousClutch == "Reverse")
+                {
+                    var desiredRotQ = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + (float)-turningTime, transform.eulerAngles.x);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * 10f);
+                }
+                else
+                {
+                    var desiredRotQ = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y + (float)turningTime, transform.eulerAngles.x);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * 10f);
+                }
+            }
         }
     }
 
@@ -317,6 +321,5 @@ public class VehicleManager : MonoBehaviour {
             LoadManager.GetInstance().vehicleCamera[0].SetActive(true);
             LoadManager.GetInstance().vehicleCamera[1].SetActive(false);
         }
-
     }
 }

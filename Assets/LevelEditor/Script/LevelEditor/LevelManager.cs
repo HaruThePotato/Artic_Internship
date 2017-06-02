@@ -471,6 +471,7 @@ public class LevelManager : MonoBehaviour
 
     public void loadDownloadsInContainer()
     {
+        Debug.Log("HI");
         levelSelected = null;
         Transform t = uim.UIDownload.transform.GetChild(0).GetChild(0).FindChild("DownloadPanel").GetChild(0);
         if (t.childCount > 0)
@@ -486,6 +487,7 @@ public class LevelManager : MonoBehaviour
             downloadButton.transform.GetChild(0).GetComponent<Text>().text = objects.Substring(0, objects.Length - 5).Replace("level/", "");/*Path.GetFileName(objects).Substring(0, Path.GetFileName(objects).Length - 4);*/
             downloadButton.name = objects.Substring(0, objects.Length - 5).Replace("level/", "");
             downloadButton.GetComponent<Button>().onClick.AddListener(() => { SelectDownload(downloadButton.name); });
+            Debug.Log(objects);
         }
     }
 

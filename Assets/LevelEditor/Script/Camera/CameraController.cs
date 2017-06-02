@@ -67,7 +67,7 @@ public class CameraController : MonoBehaviour {
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Alpha0))
+		if (Input.GetKeyDown(KeyCode.Tab))
 		{
 			useDragPanning = !useDragPanning;
 		}
@@ -83,6 +83,17 @@ public class CameraController : MonoBehaviour {
 
 			if (!useDragPanning)
 			{
+				if (Input.GetMouseButton(2) && Input.GetKey(KeyCode.LeftAlt))
+				{
+					AdjustRotation();
+				}
+				else if (Input.GetMouseButton(2))
+				{
+					AdjustMovement2();
+				}
+			}
+			else
+			{
 				//Rotating with middle mouse and movement with borders
 				if (Input.GetMouseButton(2))
 				{
@@ -92,18 +103,8 @@ public class CameraController : MonoBehaviour {
 				{
 					AdjustMovement();
 				}
-			}
-			else
-			{
 				//Rotating and movement with middle mouse
-				if (Input.GetMouseButton(2) && Input.GetKey(KeyCode.LeftAlt))
-				{
-					AdjustRotation();
-				}
-				else if (Input.GetMouseButton(2))
-				{
-					AdjustMovement2();
-				}
+				
 			}
 
 			//Reset Camera to center
@@ -119,8 +120,8 @@ public class CameraController : MonoBehaviour {
 			//Movement with WASD
 			AdjustMovement3();
 
-			//Rotate camera with Arrow Keys
-			AdjustRotation2();
+			/*//Rotate camera with Arrow Keys
+			AdjustRotation2();*/
 
 			if (Input.GetKey(KeyCode.Q)) //Zoom out with Q
 			{
@@ -204,7 +205,7 @@ public class CameraController : MonoBehaviour {
         cRotator.transform.localRotation = Quaternion.Euler(new Vector3(Mathf.Clamp(currentPitch, cMinRotationY, cMaxRotationY), 0, 0));
     }
 
-	void AdjustRotation2()
+	/*void AdjustRotation2()
 	{
 		if (Input.GetKey(KeyCode.DownArrow)) //camera to ground
 		{
@@ -228,5 +229,5 @@ public class CameraController : MonoBehaviour {
 			currentYaw = -(invertYaw ? -cRotationSpeed : cRotationSpeed);
 			transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0, currentYaw, 0));
 		}
-	}
+	}*/
 }

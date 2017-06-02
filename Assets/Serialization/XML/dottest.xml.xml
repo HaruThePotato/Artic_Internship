@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LevelDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <dbList>
+    <LevelNode>
+      <nodePositionX>43</nodePositionX>
+      <nodePositionZ>43</nodePositionZ>
+      <objectPositions>
+        <Vector3>
+          <x>43</x>
+          <y>0</y>
+          <z>43</z>
+        </Vector3>
+      </objectPositions>
+      <objectRotations>
+        <Vector3>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </Vector3>
+      </objectRotations>
+      <objectTypes>
+        <int>3</int>
+      </objectTypes>
+      <objectIDs>
+        <string>Runway_9R</string>
+      </objectIDs>
+      <numberStrings />
+    </LevelNode>
+  </dbList>
+  <cameraPosition>
+    <x>50</x>
+    <y>0</y>
+    <z>50</z>
+  </cameraPosition>
+  <objectScale>
+    <x>1</x>
+    <y>1</y>
+    <z>1</z>
+  </objectScale>
+  <objectBundleNames>
+    <string xsi:nil="true" />
+  </objectBundleNames>
+</LevelDatabase>

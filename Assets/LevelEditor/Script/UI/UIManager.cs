@@ -41,6 +41,7 @@ public class UIManager : MonoBehaviour {
 
     CameraController cc;
 
+	public Text selectLevelName; //text to show when trainer selected a level in load menu
 	public Text levelName; //text to store level name information for displaying in input textfield
 	string xml = ".xml";
 	string blank = "";
@@ -123,7 +124,8 @@ public class UIManager : MonoBehaviour {
     {
         if (mouseOverUI && !holdingObject)
         {
-            UIall.GetComponent<CanvasGroup>().blocksRaycasts = false;
+			selectLevelName.text = null;
+			UIall.GetComponent<CanvasGroup>().blocksRaycasts = false;
             StartCoroutine(FadeCanvas(UIload, true));
             UIload.GetComponent<CanvasGroup>().blocksRaycasts = true;
             cc.cAllowCameraControls = false;
@@ -134,7 +136,8 @@ public class UIManager : MonoBehaviour {
     {
         if (mouseOverUI && !holdingObject)
         {
-            StartCoroutine(FadeCanvas(UIload, false));
+			selectLevelName.text = null;
+			StartCoroutine(FadeCanvas(UIload, false));
             UIload.GetComponent<CanvasGroup>().blocksRaycasts = false;
             UIall.GetComponent<CanvasGroup>().blocksRaycasts = true;
             cc.cAllowCameraControls = true;
@@ -145,7 +148,7 @@ public class UIManager : MonoBehaviour {
     {
         if (mouseOverUI && !holdingObject)
         {
-            UIall.GetComponent<CanvasGroup>().blocksRaycasts = false;
+			UIall.GetComponent<CanvasGroup>().blocksRaycasts = false;
             StartCoroutine(FadeCanvas(UIDownload, true));
             UIDownload.GetComponent<CanvasGroup>().blocksRaycasts = true;
             cc.cAllowCameraControls = false;

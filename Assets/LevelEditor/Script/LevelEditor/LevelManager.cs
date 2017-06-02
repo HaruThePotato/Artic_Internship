@@ -392,12 +392,15 @@ public class LevelManager : MonoBehaviour
 	public void SelectLevel(string n)
 	{
 		levelSelected = n;
+		uim.selectedLevelName.text = "Level Selected: " + n;
+		uim.selectedLevelName.text = uim.selectedLevelName.text.Replace(uim.xml, uim.blank);
 	}
 
 	public void LoadSelectedLevel()
 	{
 		if (levelSelected != null)
 		{
+			uim.selectedLevelName.text = null;
 			uim.levelName.text = levelSelected;
 			if (uim.mouseOverUI && !bHoldingObject)
 			{
@@ -471,7 +474,6 @@ public class LevelManager : MonoBehaviour
 
     public void loadDownloadsInContainer()
     {
-        Debug.Log("HI");
         levelSelected = null;
         Transform t = uim.UIDownload.transform.GetChild(0).GetChild(0).FindChild("DownloadPanel").GetChild(0);
         if (t.childCount > 0)

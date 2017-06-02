@@ -7,9 +7,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class UIManager : MonoBehaviour {
 
-    [Header("UI References")]
+	LevelManager lvlm;
+
+	[Header("UI References")]
     [Tooltip("Main canvas for all UI elements")]
     public Canvas UIall;
     [Tooltip("UI canvas for \"SAVE\" UI")]
@@ -38,7 +41,11 @@ public class UIManager : MonoBehaviour {
 
     CameraController cc;
 
-    private static UIManager instance = null;
+	public Text levelName; //text to store level name information for displaying in input textfield
+	string xml = ".xml";
+	string blank = "";
+	
+	private static UIManager instance = null;
 
     public static UIManager GetInstance()
     {
@@ -81,11 +88,23 @@ public class UIManager : MonoBehaviour {
     {
         if (mouseOverUI && !holdingObject)
         {
-            UIsave.transform.GetChild(0).GetChild(0).FindChild("SaveInput").GetComponent<InputField>().text = "";
-            UIall.GetComponent<CanvasGroup>().blocksRaycasts = false;
-            StartCoroutine(FadeCanvas(UIsave, true));
-            UIsave.GetComponent<CanvasGroup>().blocksRaycasts = true;
-            cc.cAllowCameraControls = false;
+			if (levelName.text != "") //if there is a name detected for the level already from loadin/saving
+			{
+				levelName.text = levelName.text.Replace(xml, blank);
+				UIsave.transform.GetChild(0).GetChild(0).FindChild("SaveInput").GetComponent<InputField>().text = levelName.text;
+				UIall.GetComponent<CanvasGroup>().blocksRaycasts = false;
+				StartCoroutine(FadeCanvas(UIsave, true));
+				UIsave.GetComponent<CanvasGroup>().blocksRaycasts = true;
+				cc.cAllowCameraControls = false;
+			}
+			else if (levelName.text == "") //if the level is new
+			{
+				UIsave.transform.GetChild(0).GetChild(0).FindChild("SaveInput").GetComponent<InputField>().text = "";
+				UIall.GetComponent<CanvasGroup>().blocksRaycasts = false;
+				StartCoroutine(FadeCanvas(UIsave, true));
+				UIsave.GetComponent<CanvasGroup>().blocksRaycasts = true;
+				cc.cAllowCameraControls = false;
+			}
         }
     }
 

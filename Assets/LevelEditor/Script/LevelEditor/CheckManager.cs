@@ -230,7 +230,6 @@ public class CheckManager : MonoBehaviour
 		{
 			if (collided.gameObject.transform.position.y == lastPos.y) //ensures that only the objects on the same y level can be detected by OverlapSphere
 			{
-				print(collided.gameObject.name);
 				if (!(collided.gameObject.transform.position.x == lastPos.x && collided.gameObject.transform.position.z == lastPos.z - 0.5f)) //ignores selectedObj itself
 				{		
 					for (int i = 0; i < selectedObjectTag.Length; i++)
@@ -356,7 +355,7 @@ public class CheckManager : MonoBehaviour
 				}
 				else if (adjacentResult == true && (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber")) //if CheckAdjacent passed and selectedObj is runway object, run CheckRunway
 				{
-					bool runwayResult = true;
+					/*bool runwayResult = true;
 					runwayResult = CheckRunway();
 					if (runwayResult == false)
 					{
@@ -366,7 +365,8 @@ public class CheckManager : MonoBehaviour
 					else
 					{
 						lvlm.CloneSucceed();
-					}
+					}*/ //use this to check for runway order
+					lvlm.CloneSucceed();
 				}
 				else //if CheckAjacent passed and selectedObj is not runway object, place object
 				{
@@ -460,7 +460,7 @@ public class CheckManager : MonoBehaviour
 				}
 				else if (adjacentResult == true && (lvlm.selectedObj.LObject.tag == "runway" || lvlm.selectedObj.LObject.tag == "runwayNumber")) //if CheckAdjacent passed and selectedObj is runway object, run CheckRunway
 				{
-					bool runwayResult = true;
+					/*bool runwayResult = true;
 					runwayResult = CheckRunway();
 					if (runwayResult == false)
 					{
@@ -471,7 +471,8 @@ public class CheckManager : MonoBehaviour
 					else
 					{
 						lvlm.PlaceSucceed();
-					}
+					}*/ //use this to check for runway order
+					lvlm.PlaceSucceed();
 				}
 				else //if CheckAjacent passed and selectedObj is not runway object, place object
 				{

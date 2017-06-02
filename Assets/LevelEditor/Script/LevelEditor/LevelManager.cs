@@ -35,7 +35,7 @@ public class LevelManager : MonoBehaviour
 	[System.NonSerialized]
 	public bool bHoldingObject = false;
 
-	string levelSelected;
+	public string levelSelected;
     string downloadSelected;
 
 	bool adjacentCheck = false;
@@ -119,7 +119,7 @@ public class LevelManager : MonoBehaviour
 			PlaceObject(true);
 		}
 		//Delete objects on button down
-		else if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0) && !bHoldingObject || Input.GetKeyDown(KeyCode.Mouse4))
+		else if (Input.GetKey(KeyCode.LeftShift) && Input.GetMouseButtonDown(0) && !bHoldingObject)
 		{
 			DeleteObject();
 		}
@@ -138,8 +138,8 @@ public class LevelManager : MonoBehaviour
 		{
 			PlaceObject(false);
 		}
-		//Cancels selected object on key F
-		else if (Input.GetKey(KeyCode.F) || Input.GetKeyDown(KeyCode.Mouse3) && bHoldingObject)
+		//Cancels selected object on key R
+		else if ((Input.GetKey(KeyCode.R) && bHoldingObject))
 		{
 			CancelSelect();
 		}
@@ -289,19 +289,21 @@ public class LevelManager : MonoBehaviour
 					{
 						Destroy(lo.LObject);
 					}
-					n.nObjects.Clear();
-					uim.Status.text = "New Level";
+					n.nObjects.Clear();					
 				}
 			}
+			uim.levelName.text = "";
+			uim.Status.text = "New Level";
 		}
 	}
-
+	
 	public void SaveLevelButton()
 	{
 		LevelDatabase levelDB = new LevelDatabase();
 		string input = uim.UIsave.transform.GetChild(0).GetChild(0).FindChild("SaveInput").GetComponent<InputField>().text;
 		if (input != "")
 		{
+			uim.levelName.text = input;
 			levelDB.cameraPosition = gm.cameraPlacementObject.transform.position;
 			levelDB.objectScale = gm.myGrid[0, 0].nVisualGrid.transform.localScale;
 			List<string> myBundle = new List<string>();
@@ -396,7 +398,22 @@ public class LevelManager : MonoBehaviour
 	{
 		if (levelSelected != null)
 		{
-			NewLevelButton();
+			uim.levelName.text = levelSelected;
+			if (uim.mouseOverUI && !bHoldingObject)
+			{
+				gm.ResetCameraObject();
+				foreach (Node n in gm.myGrid)
+				{
+					if (n.nObjects.Count > 0)
+					{
+						foreach (LevelObject lo in n.nObjects)
+						{
+							Destroy(lo.LObject);
+						}
+						n.nObjects.Clear();
+					}
+				}
+			}
 			LevelDatabase levelData = xmlm.LoadLevel(levelSelected);
 			gm.cameraPlacementObject.transform.position = levelData.cameraPosition;
 			gm.pCam = gm.FindNodeFromPos(levelData.cameraPosition.x, levelData.cameraPosition.z);
@@ -435,7 +452,7 @@ public class LevelManager : MonoBehaviour
     {
         uim.Status.text = "Connecting...";
         Debug.Log("Connecting to AWS S3 Database.");
-        listOfDownloadables = aws.getListOfBucketObjects("LoadManager");
+        listOfDownloadables = aws.getListOfBucketObjects("LevelManager");
     }
 
     public void callDownload()

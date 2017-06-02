@@ -92,10 +92,10 @@ public class ObjectManager : MonoBehaviour {
             tab.name = "Tab " + (i+1);
             float w = (Screen.width * 0.95f) / tabNumber.Length;
             tab.transform.FindChild("TabPanel").GetComponent<RectTransform>().sizeDelta = new Vector2(w, Screen.height * 0.037f);
-            tab.transform.FindChild("TabPanel").GetComponent<RectTransform>().position = new Vector3((i * w), Screen.height * 0.2f, 0);
+			tab.transform.FindChild("TabPanel").GetComponent<RectTransform>().position = new Vector3((i * w), Screen.height * 0.2f, 0);
             tab.transform.FindChild("TabPanel").transform.GetChild(0).GetComponent<Text>().text = "" + tabNumber[i].tabName;
-            tab.transform.FindChild("MainPanel").GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height * 0.2f);
-        }
+			tab.transform.FindChild("MainPanel").GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height * 0.2f);
+		}
     }
 
     void PopulateTabs()
@@ -107,6 +107,7 @@ public class ObjectManager : MonoBehaviour {
                 GameObject tObject = Instantiate(tabButtonPrefab, uim.UIall.transform.FindChild("Tab " + (i+1)).FindChild("MainPanel").GetChild(0)) as GameObject;
                 tObject.GetComponent<Image>().sprite = tabNumber[i].tabItem[j].objectImage;
                 tObject.name = tabNumber[i].tabItem[j].objectPrefab.name;
+				tObject.GetComponentInChildren<Text>().text = tObject.name; //replace "spawn" with object name
                 tObject.GetComponent<Button>().onClick.AddListener(() => { GetSelectedObject(tObject.name); });
             }
         }
